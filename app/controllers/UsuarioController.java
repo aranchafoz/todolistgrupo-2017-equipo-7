@@ -43,7 +43,7 @@ public class UsuarioController extends Controller {
          return badRequest(formRegistro.render(form, "No coinciden la contraseña y la confirmación"));
       }
       Usuario usuario = usuarioService.creaUsuario(datosRegistro.login, datosRegistro.email, datosRegistro.password);
-      return ok(saludo.render("Creado " + usuario.toString()));
+      return redirect(controllers.routes.UsuarioController.formularioLogin());
    }
 
    public Result formularioLogin() {
@@ -64,7 +64,7 @@ public class UsuarioController extends Controller {
          // la sesión de Play
          // https://www.playframework.com/documentation/2.5.x/JavaSessionFlash
          session("connected", usuario.getId().toString());
-         return ok(saludo.render("Logeado " + usuario.toString()));
+         return redirect(controllers.routes.GestionTareasController.listaTareas(usuario.getId()));
       }
    }
 
@@ -74,7 +74,7 @@ public class UsuarioController extends Controller {
    public Result logout() {
       String connectedUserStr = session("connected");
       session().remove("connected");
-      return ok(saludo.render("Adios usuario " + connectedUserStr));
+      return redirect(controllers.routes.UsuarioController.loginUsuario());
    }
 
    @Security.Authenticated(ActionAuthenticator.class)
