@@ -35,6 +35,7 @@ public class JPAUsuarioRepository implements UsuarioRepository {
          Usuario usuarioBD = entityManager.find(Usuario.class, usuario.getId());
          usuarioBD.setNombre(usuario.getNombre());
          usuarioBD.setApellidos(usuario.getApellidos());
+         usuarioBD.setFechaNacimiento(usuario.getFechaNacimiento());
          return usuarioBD;
       });
    }

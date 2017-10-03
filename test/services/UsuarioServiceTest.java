@@ -19,6 +19,9 @@ import models.JPAUsuarioRepository;
 import services.UsuarioService;
 import services.UsuarioServiceException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class UsuarioServiceTest {
    static Database db;
@@ -115,13 +118,18 @@ public class UsuarioServiceTest {
 
    // Test 11: modificación de usuario
    @Test
-   public void modificacionUsuario() {
+   public void modificacionUsuario() throws Exception {
       UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
       UsuarioService usuarioService = new UsuarioService(repository);
+
       long idUsuario = 1000L;
-      usuarioService.modificaUsuario(idUsuario, "Pepe", "DePrueba");
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+      Date fechaNacimiento = sdf.parse("10-12-1993");
+
+      usuarioService.modificaUsuario(idUsuario, "Pepe", "DePrueba", fechaNacimiento);
       Usuario usuario = usuarioService.obtenerUsuario(idUsuario);
       assertEquals("Pepe", usuario.getNombre());
       assertEquals("DePrueba", usuario.getApellidos());
+      assertEquals(fechaNacimiento, usuario.getFechaNacimiento());
    }
 }
