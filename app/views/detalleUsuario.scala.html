@@ -1,7 +1,12 @@
 @(usuario: Usuario)
 
 @main("Detalle de usuario") {
-   <h1>Detalle del usuario @usuario.getId()</h1>
+   <h1>
+     Detalle del usuario @usuario.getId() &nbsp;
+     <a href="@routes.UsuarioController.formularioEditaUsuario(usuario.getId())">
+       <span class="glyphicon glyphicon-pencil"></span>
+     </a>
+     </h1>
    <ul>
       <li><strong>Login: </strong> @usuario.getLogin()</li>
       <li><strong>Email: </strong> @usuario.getEmail()</li>
