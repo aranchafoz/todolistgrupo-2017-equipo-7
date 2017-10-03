@@ -1,4 +1,4 @@
-@(idUsuario: Long, nombre: String, apellidos: String, mensaje: String)
+@(idUsuario: Long, nombre: String, apellidos: String, fechaNacimiento: Date, mensaje: String)
 @main("Modificar Usuario") {
    @if(mensaje != "") {
       <div class="alert alert-danger">
@@ -12,6 +12,8 @@
          Nombre:  <input type="text" size=70 name="nombre" value= "@nombre">
         </br>
          Apellidos:  <input type="text" size=70 name="apellidos" value= "@apellidos">
+        </br>
+         Fecha de nacimiento:  <input type="date" name="fechaNacimiento" value="@fechaNacimiento">
       </fieldset>
       <p/>
       <p>

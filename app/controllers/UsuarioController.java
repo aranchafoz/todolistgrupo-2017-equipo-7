@@ -13,6 +13,9 @@ import services.UsuarioService;
 import models.Usuario;
 import security.ActionAuthenticator;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UsuarioController extends Controller {
 
    @Inject FormFactory formFactory;
@@ -109,17 +112,20 @@ public class UsuarioController extends Controller {
            return ok(formModificacionUsuario.render(usuario.getId(),
            usuario.getNombre(),
            usuario.getApellidos(),
+           usuario.getFechaNacimiento(),
            ""));
         }
       }
    }
 
    @Security.Authenticated(ActionAuthenticator.class)
-   public Result grabaUsuarioModificado(Long idUsuario) {
+   public Result grabaUsuarioModificado(Long idUsuario) throws Exception{
       DynamicForm requestData = formFactory.form().bindFromRequest();
       String nuevoNombre = requestData.get("nombre");
       String nuevoApellidos = requestData.get("apellidos");
-      Usuario usuario = usuarioService.modificaUsuario(idUsuario, nuevoNombre, nuevoApellidos, null);
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+      Date fechaNacimiento = sdf.parse(requestData.get("fechaNacimiento"));
+      Usuario usuario = usuarioService.modificaUsuario(idUsuario, nuevoNombre, nuevoApellidos, fechaNacimiento);
       return redirect(controllers.routes.UsuarioController.detalleUsuario(usuario.getId()));
    }
 }
