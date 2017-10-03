@@ -6,6 +6,7 @@ import views.html.*;
 import javax.inject.*;
 import play.data.Form;
 import play.data.FormFactory;
+import play.data.DynamicForm;
 import play.Logger;
 
 import services.UsuarioService;
@@ -100,7 +101,25 @@ public class UsuarioController extends Controller {
       if (usuario == null) {
          return notFound("Usuario no encontrado");
       } else {
-          return ok(saludo.render("Usuario encontrado: " + usuario.getId()));
+        String connectedUserStr = session("connected");
+        Long connectedUser =  Long.valueOf(connectedUserStr);
+        if (connectedUser != usuario.getId()) {
+           return unauthorized("Lo siento, no estás autorizado");
+        } else {
+           return ok(formModificacionUsuario.render(usuario.getId(),
+           usuario.getNombre(),
+           usuario.getApellidos(),
+           ""));
+        }
       }
+   }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result grabaUsuarioModificado(Long idUsuario) {
+      DynamicForm requestData = formFactory.form().bindFromRequest();
+      String nuevoNombre = requestData.get("nombre");
+      String nuevoApellidos = requestData.get("apellidos");
+      Usuario usuario = usuarioService.modificaUsuario(idUsuario, nuevoNombre, nuevoApellidos, null);
+      return redirect(controllers.routes.UsuarioController.detalleUsuario(usuario.getId()));
    }
 }

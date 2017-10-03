@@ -1,0 +1,22 @@
+@(idUsuario: Long, nombre: String, apellidos: String, mensaje: String)
+@main("Modificar Usuario") {
+   @if(mensaje != "") {
+      <div class="alert alert-danger">
+         @mensaje
+      </div>
+   }
+   <h1>Modificar usuario</h1>
+   @helper.form(action = routes.UsuarioController.grabaUsuarioModificado(idUsuario)) {
+      <fieldset>
+         <legend>Usuario</legend>
+         Nombre:  <input type="text" size=70 name="nombre" value= "@nombre">
+        </br>
+         Apellidos:  <input type="text" size=70 name="apellidos" value= "@apellidos">
+      </fieldset>
+      <p/>
+      <p>
+         <input type="submit" class="btn btn-primary" value="Guardar">
+         <a class="btn btn-warning" href="@routes.UsuarioController.detalleUsuario(idUsuario)">Cancelar</a>
+      </p>
+   }
+}
