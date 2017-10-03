@@ -20,6 +20,8 @@ GET     /login                  controllers.UsuarioController.formularioLogin()
 POST    /login                  controllers.UsuarioController.loginUsuario()
 GET     /logout                 controllers.UsuarioController.logout()
 GET     /usuarios/:id           controllers.UsuarioController.detalleUsuario(id: Long)
+GET     /usuarios/:id/editar    controllers.UsuarioController.formularioEditaUsuario(id: Long)
+POST    /usuarios/:id/editar    controllers.UsuarioController.grabaUsuarioModificado(id: Long)
 
 GET     /usuarios/:id/tareas/nueva  controllers.GestionTareasController.formularioNuevaTarea(id: Long)
 POST    /usuarios/:id/tareas/nueva  controllers.GestionTareasController.creaNuevaTarea(id: Long)

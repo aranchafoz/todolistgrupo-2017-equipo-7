@@ -123,7 +123,7 @@ public class UsuarioServiceTest {
       UsuarioService usuarioService = new UsuarioService(repository);
 
       long idUsuario = 1000L;
-      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
       Date fechaNacimiento = sdf.parse("10-12-1993");
 
       usuarioService.modificaUsuario(idUsuario, "Pepe", "DePrueba", fechaNacimiento);
