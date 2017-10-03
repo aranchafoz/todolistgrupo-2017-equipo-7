@@ -112,4 +112,16 @@ public class UsuarioServiceTest {
       assertNotNull(usuario);
       assertEquals("juangutierrez", usuario.getLogin());
    }
+
+   // Test 11: modificación de usuario
+   @Test
+   public void modificacionUsuario() {
+      UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
+      UsuarioService usuarioService = new UsuarioService(repository);
+      long idUsuario = 1000L;
+      usuarioService.modificaUsuario(idUsuario, "Pepe", "DePrueba");
+      Usuario usuario = usuarioService.obtenerUsuario(idUsuario);
+      assertEquals("Pepe", usuario.getNombre());
+      assertEquals("DePrueba", usuario.getApellidos());
+   }
 }

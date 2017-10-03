@@ -25,6 +25,20 @@ public class UsuarioService {
       return repository.add(usuario);
    }
 
+   public Usuario obtenerUsuario(Long idUsuario) {
+      return repository.findById(idUsuario);
+   }
+
+   public Usuario modificaUsuario(Long idUsuario, String nuevoNombre, String nuevoApellidos) {
+      Usuario usuario = repository.findById(idUsuario);
+      if (usuario == null)
+           throw new UsuarioServiceException("No existe usuario");
+      usuario.setNombre(nuevoNombre);
+      usuario.setApellidos(nuevoApellidos);
+      usuario = repository.update(usuario);
+      return usuario;
+   }
+
    public Usuario findUsuarioPorLogin(String login) {
       return repository.findByLogin(login);
    }
