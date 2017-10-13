@@ -4,4 +4,7 @@
          password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
     <Tarea id="1000" titulo="Renovar DNI" usuarioId="1000"/>
     <Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000"/>
+    <Usuario id="2000" login="pepemartinez" nombre="Pepe" apellidos="Martinez"
+        password="qwerty" eMail="pepe.martinez@gmail.com" fechaNacimiento="1996-12-10"/>
+    <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000"/>
  </dataset>
