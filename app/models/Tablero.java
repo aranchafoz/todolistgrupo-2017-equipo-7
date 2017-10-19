@@ -9,11 +9,9 @@ public class Tablero {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
   private String nombre;
-  // Relación muchos-a-uno entre tareas y usuario
+
   @ManyToOne
-  // Nombre de la columna en la BD que guarda físicamente
-  // el ID del usuario con el que está asociado un tablero
-  @JoinColumn(name="usuarioId")
+  @JoinColumn(name="administradorId")
   public Usuario administrador;
 
   public Tablero() {}
@@ -23,11 +21,27 @@ public class Tablero {
     this.nombre = nombre;
   }
 
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
   public String getNombre() {
     return nombre;
   }
 
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
   public Usuario getAdministrador() {
     return administrador;
+  }
+
+  public void setAdministrador(Usuario usuario) {
+    this.administrador = administrador;
   }
 }
