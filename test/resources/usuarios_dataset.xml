@@ -2,9 +2,16 @@
  <dataset>
     <Usuario id="1000" login="juangutierrez" nombre="Juan" apellidos="Gutierrez"
          password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
+    <Usuario id="1001" login="juangutierrez2" nombre="Juan" apellidos="Gutierrez Dos"
+         password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
+    <Usuario id="1002" login="juangutierrez3" nombre="Juan" apellidos="Gutierrez Tres"
+         password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
     <Tarea id="1000" titulo="Renovar DNI" usuarioId="1000"/>
     <Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000"/>
     <Usuario id="2000" login="pepemartinez" nombre="Pepe" apellidos="Martinez"
         password="qwerty" eMail="pepe.martinez@gmail.com" fechaNacimiento="1996-12-10"/>
     <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000"/>
+    <Tablero id="1000" nombre="Tablero test 1" administradorId="1000"/>
+    <Tablero id="1001" nombre="Tablero test 2" administradorId="1000"/>
+    <Persona_Tablero/>
  </dataset>
