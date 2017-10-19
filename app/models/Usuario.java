@@ -29,6 +29,8 @@ public class Usuario {
    public Set<Tarea> tareas = new HashSet<Tarea>();
    @OneToMany(mappedBy="administrador", fetch=FetchType.EAGER)
    private Set<Tablero> administrados = new HashSet<Tablero>();
+   @ManyToMany(mappedBy="participantes", fetch=FetchType.EAGER)
+   private Set<Tablero> tableros = new HashSet<Tablero>();
 
    // Un constructor vacío necesario para JPA
    public Usuario() {}
@@ -111,6 +113,14 @@ public class Usuario {
 
    public void setAdministrados(Set<Tablero> administrados) {
       this.administrados = administrados;
+   }
+
+   public Set<Tablero> getTableros() {
+      return tableros;
+   }
+
+   public void setTableros(Set<Tablero> tableros) {
+      this.tableros = tableros;
    }
 
    public String toString() {
