@@ -79,4 +79,20 @@ public class ModeloRepositorioTableroTest {
       });
       return nombre;
    }
+   // Un usuario pueda administrar varios tableros
+   @Test
+   public void testUsuarioAdministraVariosTableros() {
+      UsuarioRepository usuarioRepository = injector.instanceOf(UsuarioRepository.class);
+      TableroRepository tableroRepository = injector.instanceOf(TableroRepository.class);
+      Usuario administrador = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+      administrador = usuarioRepository.add(administrador);
+      Tablero tablero1 = new Tablero(administrador, "Tablero 1");
+      tableroRepository.add(tablero1);
+      Tablero tablero2 = new Tablero(administrador, "Tablero 2");
+      tableroRepository.add(tablero2);
+      // Recuperamos el administrador del repository
+      administrador = usuarioRepository.findById(administrador.getId());
+      // Y comprobamos si tiene los tableros
+      assertEquals(2, administrador.getAdministrados().size());
+   }
 }
