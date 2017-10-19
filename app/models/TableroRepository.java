@@ -6,4 +6,5 @@ import java.util.List;
 
 @ImplementedBy(JPATableroRepository.class)
 public interface TableroRepository {
+  public Tablero add(Tablero tablero);
 }

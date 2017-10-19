@@ -7,4 +7,5 @@
     <Usuario id="2000" login="pepemartinez" nombre="Pepe" apellidos="Martinez"
         password="qwerty" eMail="pepe.martinez@gmail.com" fechaNacimiento="1996-12-10"/>
     <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000"/>
+    <Tablero/>
  </dataset>
