@@ -6,8 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.*;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 import play.data.format.*;
 
@@ -26,7 +26,7 @@ public class Usuario {
    private Date fechaNacimiento;
    // Relación uno-a-muchos entre usuario y tarea
    @OneToMany(mappedBy="usuario", fetch=FetchType.EAGER)
-   public List<Tarea> tareas = new ArrayList<Tarea>();
+   public Set<Tarea> tareas = new HashSet<Tarea>();
 
    // Un constructor vacío necesario para JPA
    public Usuario() {}
@@ -95,11 +95,11 @@ public class Usuario {
       this.fechaNacimiento = fechaNacimiento;
    }
 
-   public List<Tarea> getTareas() {
+   public Set<Tarea> getTareas() {
       return tareas;
    }
 
-   public void setTareas(List<Tarea> tareas) {
+   public void setTareas(Set<Tarea> tareas) {
       this.tareas = tareas;
    }
 
@@ -129,7 +129,7 @@ public class Usuario {
       Usuario other = (Usuario) obj;
       // Si tenemos los ID, comparamos por ID
       if (id != null && other.id != null)
-      return (id == other.id);
+      return ((long) id == (long) other.id);
       // sino comparamos por campos obligatorios
       else {
          if (login == null) {
