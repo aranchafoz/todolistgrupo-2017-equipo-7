@@ -19,6 +19,7 @@ import play.inject.guice.GuiceInjectorBuilder;
 import play.Environment;
 
 import services.TableroService;
+import services.TableroServiceException;
 // Métodos de servicio para:
 // - crear un tablero y
 // - para obtener el listado de tableros administrados por un usuario.
@@ -70,5 +71,12 @@ public class ServicioTableroTest {
     long idUsuario = 1000L;
     tableroService.nuevoTablero(idUsuario, "Nuevo tablero test 1");
     assertEquals(3, tableroService.allTablerosAdministradosUsuario(1000L).size());
+  }
+
+  // Test 4: exceptionSiUsuarioNoExisteRecuperandoSusTableros
+  @Test(expected = TableroServiceException.class)
+  public void crearNuevoUsuarioLoginNoExistenteLanzaExcepcion(){
+     TableroService tableroService = newTableroService();
+     List<Tablero> tableros = tableroService.allTablerosAdministradosUsuario(1011L);
   }
 }
