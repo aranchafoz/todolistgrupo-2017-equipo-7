@@ -32,4 +32,13 @@ public class TableroService {
     Collections.sort(tableros, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
     return tableros;
   }
+
+  public Tablero nuevoTablero(Long idUsuario, String nombre) {
+    Usuario usuario = usuarioRepository.findById(idUsuario);
+    if (usuario == null) {
+      throw new TableroServiceException("Usuario no existente");
+    }
+    Tablero tablero = new Tablero(usuario, nombre);
+    return tableroRepository.add(tablero);
+  }
 }

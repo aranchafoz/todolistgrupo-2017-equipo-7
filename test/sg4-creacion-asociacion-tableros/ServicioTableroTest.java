@@ -62,4 +62,13 @@ public class ServicioTableroTest {
      assertEquals("Tablero test 1", tableros.get(0).getNombre());
      assertEquals("Tablero test 2", tableros.get(1).getNombre());
   }
+
+  // Test 3: nuevoTableroService
+  @Test
+  public void nuevoTableroService() {
+    TableroService tableroService = newTableroService();
+    long idUsuario = 1000L;
+    tableroService.nuevoTablero(idUsuario, "Nuevo tablero test 1");
+    assertEquals(3, tableroService.allTablerosAdministradosUsuario(1000L).size());
+  }
 }
