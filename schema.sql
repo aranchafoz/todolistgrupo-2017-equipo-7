@@ -25,21 +25,12 @@ DROP TABLE IF EXISTS `Persona_Tablero`;
 CREATE TABLE `Persona_Tablero` (
   `tableros_id` bigint(20) NOT NULL,
   `participantes_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`tableros_id`,`participantes_id`),
   KEY `FKnghbrhyh7eal30o78h3293n72` (`participantes_id`),
-  KEY `FKbpw5yq3ofgud0ra8a916kddjm` (`tableros_id`),
   CONSTRAINT `FKbpw5yq3ofgud0ra8a916kddjm` FOREIGN KEY (`tableros_id`) REFERENCES `Tablero` (`id`),
   CONSTRAINT `FKnghbrhyh7eal30o78h3293n72` FOREIGN KEY (`participantes_id`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Persona_Tablero`
---
-
-LOCK TABLES `Persona_Tablero` WRITE;
-/*!40000 ALTER TABLE `Persona_Tablero` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Persona_Tablero` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Tablero`
@@ -59,15 +50,6 @@ CREATE TABLE `Tablero` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Tablero`
---
-
-LOCK TABLES `Tablero` WRITE;
-/*!40000 ALTER TABLE `Tablero` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Tablero` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Tarea`
 --
 
@@ -83,15 +65,6 @@ CREATE TABLE `Tarea` (
   CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Tarea`
---
-
-LOCK TABLES `Tarea` WRITE;
-/*!40000 ALTER TABLE `Tarea` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Tarea` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Usuario`
@@ -113,16 +86,6 @@ CREATE TABLE `Usuario` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Usuario`
---
-
-LOCK TABLES `Usuario` WRITE;
-/*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-INSERT INTO `Usuario` VALUES (1,NULL,'elfaryvive@laluchasigue.com',NULL,'elfary',NULL,'elfary'),(2,NULL,'qwere@gmil.com',NULL,'qwer',NULL,'1234');
-/*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `hibernate_sequence`
 --
 
@@ -133,6 +96,7 @@ CREATE TABLE `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 --
 -- Dumping data for table `hibernate_sequence`
@@ -152,5 +116,3 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2017-10-20 13:45:54
