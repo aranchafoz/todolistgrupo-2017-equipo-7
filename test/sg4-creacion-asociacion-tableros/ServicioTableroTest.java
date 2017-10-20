@@ -47,7 +47,14 @@ public class ServicioTableroTest {
     return injector.instanceOf(TableroService.class);
   }
 
-  // Test 1: allTablerosUsuarioEstanOrdenados
+  // Test 1: Crear TableroService
+  @Test
+  public void crearTableroService() {
+    TableroService tableroService = injector.instanceOf(TableroService.class);
+    assertNotNull(tableroService);
+  }
+
+  // Test 2: allTablerosUsuarioEstanOrdenados
   @Test
   public void allTablerosAdministradosUsuarioEstanOrdenadas() {
      TableroService tableroService = newTableroService();
