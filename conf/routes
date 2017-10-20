@@ -30,5 +30,9 @@ GET     /tareas/:id/editar          controllers.GestionTareasController.formular
 POST    /tareas/:id/editar          controllers.GestionTareasController.grabaTareaModificada(id: Long)
 DELETE  /tareas/:id                 controllers.GestionTareasController.borraTarea(id: Long)
 
+GET     /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.formularioNuevoTablero(id: Long)
+POST    /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.creaNuevoTablero(id: Long)
+GET     /usuarios/:id/tableros-administrados  controllers.GestionTablerosController.listaTablerosAdministrados(id: Long)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
