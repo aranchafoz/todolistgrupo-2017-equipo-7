@@ -1,0 +1,28 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE TABLE `Persona_Tablero` (
+  `tableros_id` bigint(20) NOT NULL,
+  `participantes_id` bigint(20) NOT NULL,
+  KEY `FKnghbrhyh7eal30o78h3293n72` (`participantes_id`),
+  KEY `FKbpw5yq3ofgud0ra8a916kddjm` (`tableros_id`),
+  CONSTRAINT `FKbpw5yq3ofgud0ra8a916kddjm` FOREIGN KEY (`tableros_id`) REFERENCES `Tablero` (`id`),
+  CONSTRAINT `FKnghbrhyh7eal30o78h3293n72` FOREIGN KEY (`participantes_id`) REFERENCES `Usuario` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `Tablero` (
+  `id` bigint(20) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `administradorId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKq82919iay2b8h77msdj8289p0` (`administradorId`),
+  CONSTRAINT `FKq82919iay2b8h77msdj8289p0` FOREIGN KEY (`administradorId`) REFERENCES `Usuario` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
