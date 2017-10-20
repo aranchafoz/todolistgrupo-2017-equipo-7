@@ -16,7 +16,8 @@
 @main("Tareas del usuario @usuario.getLogin()", scripts) {
 
     <h3><a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">Mi Perfil</a></h3>
-    <h4>Mis tableros <a href="@routes.GestionTablerosController.formularioNuevoTablero(usuario.getId())">+</a></h4>
+    <br>
+    <h4><a href="@routes.GestionTablerosController.listaTablerosAdministrados(usuario.getId())">Mis tableros</a></h4>
     <h2> Listado de tareas de @usuario.getLogin()</h2>
 
     <table class="table table-striped">

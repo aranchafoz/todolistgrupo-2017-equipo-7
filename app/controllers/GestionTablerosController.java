@@ -52,8 +52,22 @@ public class GestionTablerosController extends Controller {
         }
         Tablero tablero = tableroForm.get();
         tableroService.nuevoTablero(idUsuario, tablero.getNombre());
-        int numTableros = tableroService.allTablerosAdministradosUsuario(idUsuario).size();
-        return ok(saludo.render("Total tableros: " + numTableros));
+        flash("aviso", "El tablero se ha grabado correctamente");
+        return redirect(controllers.routes.GestionTablerosController.listaTablerosAdministrados(idUsuario));
+     }
+  }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result listaTablerosAdministrados(Long idUsuario) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      String aviso = flash("aviso");
+      Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+      List<Tablero> tableros = tableroService.allTablerosAdministradosUsuario(idUsuario);
+      return ok(listaTablerosAdministrados.render(tableros, usuario, aviso));
     }
   }
  }
