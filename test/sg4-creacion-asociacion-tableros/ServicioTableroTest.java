@@ -22,7 +22,11 @@ import services.TableroService;
 import services.TableroServiceException;
 // Métodos de servicio para:
 // - crear un tablero y
-// - para obtener el listado de tableros administrados por un usuario.
+// - obtener el listado de:
+//    - tableros administrados por un usuario.
+//    - tableros en los que participa el usuario.
+//    - resto de tableros (en los que el usuario ni participa ni es administrador).
+// - apuntarse a un tablero (como participante)
 public class ServicioTableroTest {
   static private Injector injector;
 
@@ -48,6 +52,7 @@ public class ServicioTableroTest {
     return injector.instanceOf(TableroService.class);
   }
 
+  // Issue #2
   // Test 1: Crear TableroService
   @Test
   public void crearTableroService() {
@@ -78,5 +83,15 @@ public class ServicioTableroTest {
   public void crearNuevoUsuarioLoginNoExistenteLanzaExcepcion(){
      TableroService tableroService = newTableroService();
      List<Tablero> tableros = tableroService.allTablerosAdministradosUsuario(1011L);
+  }
+
+  // Issue #4
+  // Test 5: obtenerTablero
+  @Test
+  public void obtenerTablero() {
+    TableroService tableroService = newTableroService();
+    Tablero tablero = tableroService.obtenerTablero(1000L);
+    assertNotNull(tablero);
+    assertEquals("Tablero test 1", tablero.getNombre());
   }
 }

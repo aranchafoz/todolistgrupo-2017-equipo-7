@@ -41,4 +41,8 @@ public class TableroService {
     Tablero tablero = new Tablero(usuario, nombre);
     return tableroRepository.add(tablero);
   }
+
+  public Tablero obtenerTablero(Long idTablero) {
+     return tableroRepository.findById(idTablero);
+  }
 }
