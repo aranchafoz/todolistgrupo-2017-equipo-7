@@ -5,6 +5,7 @@ import play.db.jpa.JPAApi;
 
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.EntityManager;
 
 public class JPATableroRepository implements TableroRepository {
@@ -33,6 +34,14 @@ public class JPATableroRepository implements TableroRepository {
    public Tablero findById(Long idTablero) {
       return jpaApi.withTransaction(entityManager -> {
          return entityManager.find(Tablero.class, idTablero);
+      });
+   }
+
+   public List<Tablero> getAllTableros() {
+      return jpaApi.withTransaction(entityManager -> {
+         TypedQuery<Tablero> query = entityManager.createQuery(
+                   "select t from Tablero t", Tablero.class);
+         return query.getResultList();
       });
    }
 }

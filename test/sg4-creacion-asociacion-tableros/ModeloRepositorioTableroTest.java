@@ -14,6 +14,7 @@ import play.db.Databases;
 import java.sql.*;
 
 import java.util.Set;
+import java.util.List;
 
 import play.db.jpa.*;
 
@@ -170,5 +171,14 @@ public class ModeloRepositorioTableroTest {
       assertEquals(1, usuario1.getTableros().size());
       assertTrue(tablero.getParticipantes().contains(usuario1));
       assertTrue(usuario1.getTableros().contains(tablero));
+   }
+
+   // Crear funcion getAllTableros() en el TableroRepository.
+   @Test
+   public void testGetAllTableros() {
+      TableroRepository tableroRepository = injector.instanceOf(TableroRepository.class);
+      List<Tablero> tableros = tableroRepository.getAllTableros();
+      assertNotNull(tableros);
+      assertEquals(5, tableros.size());
    }
 }

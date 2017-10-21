@@ -13,5 +13,9 @@
     <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000"/>
     <Tablero id="1000" nombre="Tablero test 1" administradorId="1000"/>
     <Tablero id="1001" nombre="Tablero test 2" administradorId="1000"/>
-    <Persona_Tablero/>
+    <Tablero id="2000" nombre="Tablero test propio 1" administradorId="2000"/>
+    <Tablero id="2001" nombre="Tablero test propio 2" administradorId="2000"/>
+    <Tablero id="2002" nombre="Tablero test propio 3" administradorId="2000"/>
+    <Persona_Tablero tableros_id="2000" participantes_id="2000"/>
+    <Persona_Tablero tableros_id="2001" participantes_id="2000"/>
  </dataset>
