@@ -103,4 +103,13 @@ public class ServicioTableroTest {
      assertEquals("Tablero test propio 1", tableros.get(0).getNombre());
      assertEquals("Tablero test propio 2", tableros.get(1).getNombre());
   }
+
+  // Test 6: apuntaUsuarioTablero
+  public void apuntaUsuarioTablero() {
+    TableroService tableroService = newTableroService();
+    long idUsuario = 2000L;
+    long idTablero = 2002L;
+    tableroService.apuntaParticipante(idUsuario, idTablero);
+    assertEquals(3, tableroService.allTablerosParticipadosUsuario(2000L).size());
+  }
 }

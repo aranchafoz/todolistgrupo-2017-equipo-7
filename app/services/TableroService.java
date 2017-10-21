@@ -53,4 +53,14 @@ public class TableroService {
     Collections.sort(tableros, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
     return tableros;
   }
+
+  public Tablero apuntaParticipante(Long idUsuario, Long idTablero) {
+    Usuario usuario = usuarioRepository.findById(idUsuario);
+    Tablero tablero = tableroRepository.findById(idTablero);
+
+    tablero.getParticipantes().add(usuario);
+
+    tablero = tableroRepository.update(tablero);
+    return tablero;
+  }
 }
