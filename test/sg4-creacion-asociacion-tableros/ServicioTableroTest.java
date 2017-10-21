@@ -60,7 +60,7 @@ public class ServicioTableroTest {
     assertNotNull(tableroService);
   }
 
-  // Test 2: allTablerosUsuarioEstanOrdenados
+  // Test 2: allTablerosAdministradosUsuarioEstanOrdenadas
   @Test
   public void allTablerosAdministradosUsuarioEstanOrdenadas() {
      TableroService tableroService = newTableroService();
@@ -93,5 +93,14 @@ public class ServicioTableroTest {
     Tablero tablero = tableroService.obtenerTablero(1000L);
     assertNotNull(tablero);
     assertEquals("Tablero test 1", tablero.getNombre());
+  }
+
+  // Test 6: allTablerosParticipadosUsuarioEstanOrdenados
+  @Test
+  public void allTablerosParticipadosUsuarioEstanOrdenados() {
+     TableroService tableroService = newTableroService();
+     List<Tablero> tableros = tableroService.allTablerosParticipadosUsuario(2000L);
+     assertEquals("Tablero test propio 1", tableros.get(0).getNombre());
+     assertEquals("Tablero test propio 2", tableros.get(1).getNombre());
   }
 }

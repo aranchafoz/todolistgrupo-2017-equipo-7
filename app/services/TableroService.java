@@ -45,4 +45,12 @@ public class TableroService {
   public Tablero obtenerTablero(Long idTablero) {
      return tableroRepository.findById(idTablero);
   }
+
+  public List<Tablero> allTablerosParticipadosUsuario(Long idUsuario) {
+    Usuario usuario = usuarioRepository.findById(idUsuario);
+    List<Tablero> tableros = new ArrayList<Tablero>();
+    tableros.addAll(usuario.getTableros());
+    Collections.sort(tableros, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+    return tableros;
+  }
 }
