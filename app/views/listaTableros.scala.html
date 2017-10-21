@@ -1,0 +1,47 @@
+@(tablerosAdministrados: List[Tablero], tablerosParticipados: List[Tablero], usuario: Usuario, mensaje: String)
+@main("Tableros administrados del usuario @usuario.getLogin()") {
+
+    <h2> Tableros de @usuario.getLogin()</h2>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Administrados</th>
+            <th></th>
+        </tr>
+    @for(tablero <- tablerosAdministrados) {
+        <tr>
+            <td>@tablero.getNombre()</td>
+            <td></td>
+        </tr>
+      }
+
+        <tr>
+            <td><a href="@routes.GestionTablerosController.formularioNuevoTablero(usuario.getId())">
+                <span class="glyphicon glyphicon-plus"/></a></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <th>Participo en ...</th>
+            <th></th>
+        </tr>
+    @for(tablero <- tablerosParticipados) {
+        <tr>
+            <td>@tablero.getNombre()</td>
+            <td></td>
+        </tr>
+      }
+
+        <tr>
+            <td></td>
+            <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
+        </tr>
+
+  </table>
+
+  @if(mensaje != null) {
+      <div class="alert alert-success">
+          @mensaje
+      </div>
+  }
+}
