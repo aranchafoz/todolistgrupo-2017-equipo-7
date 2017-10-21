@@ -133,4 +133,13 @@ public class ServicioTableroTest {
      TableroService tableroService = newTableroService();
      tableroService.apuntaParticipante(2000L,2200L);
   }
+
+  // Test 11: obtenerRestoTableros
+  @Test
+  public void obtenerRestoTablerosEstanOrdenados() {
+    TableroService tableroService = newTableroService();
+    List<Tablero> tableros = tableroService.obtenerRestoTableros(2000L);
+    assertEquals("Tablero test 1", tableros.get(0).getNombre());
+    assertEquals("Tablero test 2", tableros.get(1).getNombre());
+  }
 }

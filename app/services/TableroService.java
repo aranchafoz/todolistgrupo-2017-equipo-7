@@ -70,4 +70,21 @@ public class TableroService {
     tablero = tableroRepository.update(tablero);
     return tablero;
   }
+
+  public List<Tablero> obtenerRestoTableros(Long idUsuario) {
+    Usuario usuario = usuarioRepository.findById(idUsuario);
+    if (usuario == null) {
+      throw new TableroServiceException("Usuario no existente");
+    }
+
+    List<Tablero> tablerosExcluidos = new ArrayList<Tablero>();
+    tablerosExcluidos.addAll(usuario.getTableros());
+    tablerosExcluidos.addAll(usuario.getAdministrados());
+
+    List<Tablero> tableros = tableroRepository.getAllTableros();
+    
+    tableros.removeAll(tablerosExcluidos);
+    Collections.sort(tableros, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+    return tableros;
+  }
 }
