@@ -68,7 +68,8 @@ public class GestionTablerosController extends Controller {
       Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
       List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(idUsuario);
       List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(idUsuario);
-      return ok(listaTableros.render(tablerosAdministrados, tablerosParticipados, usuario, aviso));
+      List<Tablero> restoTableros = tableroService.obtenerRestoTableros(idUsuario);
+      return ok(listaTableros.render(tablerosAdministrados, tablerosParticipados, restoTableros, usuario, aviso));
     }
   }
  }
