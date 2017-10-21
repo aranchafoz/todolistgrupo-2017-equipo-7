@@ -104,12 +104,33 @@ public class ServicioTableroTest {
      assertEquals("Tablero test propio 2", tableros.get(1).getNombre());
   }
 
-  // Test 6: apuntaUsuarioTablero
+  // Test 4: exceptionSiUsuarioNoExisteRecuperandoSusTablerosParticipados
+  @Test(expected = TableroServiceException.class)
+  public void allTablerosParticipadosUsuarioNoExistente(){
+     TableroService tableroService = newTableroService();
+     List<Tablero> tableros = tableroService.allTablerosParticipadosUsuario(2200L);
+  }
+
+  // Test 8: apuntaUsuarioTablero
   public void apuntaUsuarioTablero() {
     TableroService tableroService = newTableroService();
     long idUsuario = 2000L;
     long idTablero = 2002L;
     tableroService.apuntaParticipante(idUsuario, idTablero);
     assertEquals(3, tableroService.allTablerosParticipadosUsuario(2000L).size());
+  }
+
+  // Test 9: exceptionSiUsuarioNoExisteApuntandoleAUnTablero
+  @Test(expected = TableroServiceException.class)
+  public void apuntaUsuarioIdNoExistenteLanzaExcepcion(){
+     TableroService tableroService = newTableroService();
+     tableroService.apuntaParticipante(2200L,2000L);
+  }
+
+  // Test 10: exceptionSiUsuarioNoExisteApuntandoleAUnTablero
+  @Test(expected = TableroServiceException.class)
+  public void apuntaUsuarioTableroNoExistenteLanzaExcepcion(){
+     TableroService tableroService = newTableroService();
+     tableroService.apuntaParticipante(2000L,2200L);
   }
 }
