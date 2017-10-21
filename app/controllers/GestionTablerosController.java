@@ -72,4 +72,18 @@ public class GestionTablerosController extends Controller {
       return ok(listaTableros.render(tablerosAdministrados, tablerosParticipados, restoTableros, usuario, aviso));
     }
   }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result apuntarse(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      tableroService.apuntaParticipante(idUsuario, idTablero);
+
+      flash("aviso", "El usuario se ha apuntado correctamente");
+      return redirect(controllers.routes.GestionTablerosController.listaTableros(idUsuario));
+    }
+  }
  }

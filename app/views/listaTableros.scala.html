@@ -2,6 +2,13 @@
 @main("Tableros administrados del usuario @usuario.getLogin()") {
 
   <h5><a href="@routes.UsuarioController.logout()">Salir</a></h5>
+
+  @if(mensaje != null) {
+      <div class="alert alert-success">
+          @mensaje
+      </div>
+  }
+
   <h2> Tableros de @usuario.getLogin()</h2>
 
   <table class="table table-striped">
@@ -46,14 +53,8 @@
     @for(tablero <- restoTableros) {
         <tr>
             <td>@tablero.getNombre()</td>
-            <td></td>
+            <td><a href="@routes.GestionTablerosController.apuntarse(usuario.getId(), tablero.getId())">Apuntarse</a></td>
         </tr>
       }
   </table>
-
-  @if(mensaje != null) {
-      <div class="alert alert-success">
-          @mensaje
-      </div>
-  }
 }
