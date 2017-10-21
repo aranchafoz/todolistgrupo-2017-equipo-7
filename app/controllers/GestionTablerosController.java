@@ -53,12 +53,12 @@ public class GestionTablerosController extends Controller {
         Tablero tablero = tableroForm.get();
         tableroService.nuevoTablero(idUsuario, tablero.getNombre());
         flash("aviso", "El tablero se ha grabado correctamente");
-        return redirect(controllers.routes.GestionTablerosController.listaTablerosAdministrados(idUsuario));
+        return redirect(controllers.routes.GestionTablerosController.listaTableros(idUsuario));
      }
   }
 
   @Security.Authenticated(ActionAuthenticator.class)
-  public Result listaTablerosAdministrados(Long idUsuario) {
+  public Result listaTableros(Long idUsuario) {
     String connectedUserStr = session("connected");
     Long connectedUser =  Long.valueOf(connectedUserStr);
     if (connectedUser != idUsuario) {
@@ -66,8 +66,24 @@ public class GestionTablerosController extends Controller {
     } else {
       String aviso = flash("aviso");
       Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-      List<Tablero> tableros = tableroService.allTablerosAdministradosUsuario(idUsuario);
-      return ok(listaTablerosAdministrados.render(tableros, usuario, aviso));
+      List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(idUsuario);
+      List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(idUsuario);
+      List<Tablero> restoTableros = tableroService.obtenerRestoTableros(idUsuario);
+      return ok(listaTableros.render(tablerosAdministrados, tablerosParticipados, restoTableros, usuario, aviso));
+    }
+  }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result apuntarse(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      tableroService.apuntaParticipante(idUsuario, idTablero);
+
+      flash("aviso", "El usuario se ha apuntado correctamente");
+      return redirect(controllers.routes.GestionTablerosController.listaTableros(idUsuario));
     }
   }
  }
