@@ -18,7 +18,9 @@
         </tr>
     @for(tablero <- tablerosAdministrados) {
         <tr>
-            <td>@tablero.getNombre()</td>
+            <td><a href="@routes.GestionTablerosController.detalleTablero(usuario.getId(), tablero.getId())">
+              @tablero.getNombre()
+            </a></td>
             <td></td>
         </tr>
       }
@@ -35,7 +37,9 @@
         </tr>
     @for(tablero <- tablerosParticipados) {
         <tr>
-            <td>@tablero.getNombre()</td>
+            <td><a href="@routes.GestionTablerosController.detalleTablero(usuario.getId(), tablero.getId())">
+              @tablero.getNombre()
+            </a></td>
             <td></td>
         </tr>
       }
@@ -52,7 +56,9 @@
   <table class="table table-striped">
     @for(tablero <- restoTableros) {
         <tr>
-            <td>@tablero.getNombre()</td>
+            <td><a href="@routes.GestionTablerosController.detalleTablero(usuario.getId(), tablero.getId())">
+              @tablero.getNombre()
+            </a></td>
             <td><a href="@routes.GestionTablerosController.apuntarse(usuario.getId(), tablero.getId())">Apuntarse</a></td>
         </tr>
       }
