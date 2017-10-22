@@ -33,7 +33,8 @@ DELETE  /tareas/:id                 controllers.GestionTareasController.borraTar
 GET     /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.creaNuevoTablero(id: Long)
 GET     /usuarios/:id/tableros                controllers.GestionTablerosController.listaTableros(id: Long)
-GET    /usuarios/:id/tableros/:idTablero/apuntarse      controllers.GestionTablerosController.apuntarse(id: Long, idTablero: Long)
+GET     /usuarios/:id/tableros/:idTablero                controllers.GestionTablerosController.detalleTablero(id: Long, idTablero: Long)
+GET     /usuarios/:id/tableros/:idTablero/apuntarse      controllers.GestionTablerosController.apuntarse(id: Long, idTablero: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
