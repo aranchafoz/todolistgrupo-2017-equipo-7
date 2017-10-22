@@ -10,6 +10,7 @@ import play.data.DynamicForm;
 import play.Logger;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import services.UsuarioService;
 import services.TableroService;
@@ -84,6 +85,24 @@ public class GestionTablerosController extends Controller {
 
       flash("aviso", "El usuario se ha apuntado correctamente");
       return redirect(controllers.routes.GestionTablerosController.listaTableros(idUsuario));
+    }
+  }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result detalleTablero(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      Tablero tablero = tableroService.obtenerTablero(idTablero);
+      if (tablero == null) {
+         return notFound("Tablero no encontrado");
+      } else {
+        List<Usuario> participantes = new ArrayList<Usuario>();
+        participantes.addAll(tablero.getParticipantes());
+        return ok(detalleTablero.render(tablero, participantes));
+      }
     }
   }
  }

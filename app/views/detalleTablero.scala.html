@@ -1,0 +1,24 @@
+@(tablero: Tablero, participantes: List[Usuario])
+
+@main("Detalle de tablero") {
+   <h1>
+     Detalle del tablero @tablero.getNombre()
+     </h1>
+   <ul>
+      <li><strong>Nombre: </strong> @tablero.getNombre()</li>
+      <li><strong>Administrador: </strong> @tablero.getAdministrador().getLogin()</li>
+      <h4> Participantes </h4>
+      <table class="table table-striped">
+            <tr>
+                <th>Login</th>
+                <th>Email</th>
+            </tr>
+        @for(participante <- participantes) {
+            <tr>
+                <td>@participante.getLogin()</td>
+                <td>@participante.getEmail()</td>
+            </tr>
+          }
+      </table>
+   </ul>
+}
