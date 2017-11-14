@@ -69,7 +69,7 @@ public class TareaTest {
 
       assertEquals("juangutierrez", tarea.getUsuario().getLogin());
       assertEquals("juangutierrez@gmail.com", tarea.getUsuario().getEmail());
-      assertEquals("Práctica 1 de", tarea.getTitulo());
+      assertEquals("Práctica 1 de MADS", tarea.getTitulo());
    }
 
    // Test #14: testEqualsTareasConId
