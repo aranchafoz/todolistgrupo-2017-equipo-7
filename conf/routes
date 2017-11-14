@@ -12,6 +12,7 @@ GET     /message                    controllers.AsyncController.message
 
 # Nuestra aplicación
 
+GET     /acerca                 controllers.HomeController.acercaDe()
 GET     /                       controllers.UsuarioController.formularioLogin()
 GET     /saludo/:msg            controllers.UsuarioController.saludo(msg: String)
 GET     /registro               controllers.UsuarioController.formularioRegistro()
