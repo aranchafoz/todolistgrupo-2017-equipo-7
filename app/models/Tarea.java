@@ -8,6 +8,12 @@ public class Tarea {
    @GeneratedValue(strategy=GenerationType.AUTO)
    private Long id;
    private String titulo;
+   @Formats.DateTime(pattern="dd-MM-yyyy") // para el formulario
+   @Temporal(TemporalType.DATE)
+   private Date fechaCreacion;
+   @Formats.DateTime(pattern="dd-MM-yyyy") // para el formulario
+   @Temporal(TemporalType.DATE)
+   private Date fechaLimite;
    // Relación muchos-a-uno entre tareas y usuario
    @ManyToOne
    // Nombre de la columna en la BD que guarda físicamente
@@ -17,9 +23,11 @@ public class Tarea {
 
    public Tarea() {}
 
-   public Tarea(Usuario usuario, String titulo) {
+   public Tarea(Usuario usuario, String titulo, Date fechaCreacion, Date fechaLimite) {
       this.usuario = usuario;
       this.titulo = titulo;
+      this.fechaCreacion = fechaCreacion;
+      this.fechaLimite = fechaLimite;
    }
 
    // Getters y setters necesarios para JPA
@@ -47,6 +55,12 @@ public class Tarea {
    public void setUsuario(Usuario usuario) {
       this.usuario = usuario;
    }
+
+   public Date getFechaCreacion { return fechaCreacion; }
+
+   public Date getFechaLimite { return fechaLimite; }
+
+   public void setFechaLimite { this.fechaLimite = fechaLimite; }
 
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",
