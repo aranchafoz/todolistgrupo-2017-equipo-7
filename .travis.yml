@@ -2,13 +2,16 @@ sudo: required
 
 language: bash
 
+env:
+  - TRAVIS_BUILD_NUMBER: 0.2
+
 services:
   - docker
 
 before_install:
-   - docker build -t alvaromd/mads-todolist-2017:0.2 .
+   - docker build -t alvaromd/mads-todolist-2017:${TRAVIS_BUILD_NUMBER} .
    - docker run -d --rm -p 3306:3306 --name play-mysql -e MYSQL_ROOT_PASSWORD=mads -e MYSQL_DATABASE=mads mysql
 
 script:
-   - docker run --rm alvaromd/mads-todolist-2017:0.2 /bin/bash -c "sbt test"
-   - docker run --link play-mysql:mysql --rm -e DB_URL="jdbc:mysql://play-mysql:3306/mads" -e DB_USER_NAME="root" -e DB_USER_PASSWD="mads" alvaromd/mads-todolist-2017:0.2 /bin/bash -c "sbt '; set javaOptions += \"-Dconfig.file=conf/integration.conf\"; test'"
+   - docker run --rm alvaromd/mads-todolist-2017:${TRAVIS_BUILD_NUMBER} /bin/bash -c "sbt test"
+   - docker run --link play-mysql:mysql --rm -e DB_URL="jdbc:mysql://play-mysql:3306/mads" -e DB_USER_NAME="root" -e DB_USER_PASSWD="mads" alvaromd/mads-todolist-2017:${TRAVIS_BUILD_NUMBER} /bin/bash -c "sbt '; set javaOptions += \"-Dconfig.file=conf/integration.conf\"; test'"
