@@ -2,8 +2,6 @@ sudo: required
 
 language: bash
 
-env:
-  - TRAVIS_BUILD_NUMBER: 0.2
 
 services:
   - docker
