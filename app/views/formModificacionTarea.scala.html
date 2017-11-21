@@ -1,4 +1,4 @@
-@(usuario: Usuario, idTarea: Long, titulo: String, mensaje: String)
+@(usuario: Usuario, idTarea: Long, titulo: String, fechaLimite: Date, mensaje: String)
 @main("Modificar Tarea", usuario) {
    @if(mensaje != "") {
       <div class="alert alert-danger">
@@ -10,6 +10,9 @@
       <fieldset>
          <legend>Tarea</legend>
          Título:  <input type="text" size=70 name="titulo" value= "@titulo">
+      </fieldset>
+      <fieldset>
+         Fecha Límite: <input type="date" size=70 name="fechaLimite" value= "@fechaLimite">
       </fieldset>
       <p/>
       <p>
