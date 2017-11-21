@@ -1,6 +1,6 @@
 @(usuario: Usuario)
 
-@main("Detalle de usuario") {
+@main("Detalle de usuario", usuario) {
    <h1>
      Detalle del usuario @usuario.getId() &nbsp;
      <a href="@routes.UsuarioController.formularioEditaUsuario(usuario.getId())">
