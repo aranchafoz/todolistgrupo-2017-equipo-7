@@ -1,5 +1,5 @@
-@(usuario: Usuario, idTarea: Long, titulo: String, mensaje: String)
-@main("Modificar Tarea", usuario) {
+@(idUsuario: Long, idTarea: Long, titulo: String, mensaje: String)
+@main("Modificar Tarea") {
    @if(mensaje != "") {
       <div class="alert alert-danger">
          @mensaje
@@ -14,7 +14,7 @@
       <p/>
       <p>
          <input type="submit" class="btn btn-primary" value="Guardar">
-         <a class="btn btn-warning" href="@routes.GestionTareasController.listaTareas(usuario.getId())">Cancelar</a>
+         <a class="btn btn-warning" href="@routes.GestionTareasController.listaTareas(idUsuario)">Cancelar</a>
       </p>
    }
 }

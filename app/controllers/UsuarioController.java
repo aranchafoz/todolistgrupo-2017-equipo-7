@@ -109,7 +109,10 @@ public class UsuarioController extends Controller {
         if (connectedUser != usuario.getId()) {
            return unauthorized("Lo siento, no estás autorizado");
         } else {
-           return ok(formModificacionUsuario.render(usuario,
+           return ok(formModificacionUsuario.render(usuario.getId(),
+           usuario.getNombre(),
+           usuario.getApellidos(),
+           usuario.getFechaNacimiento(),
            ""));
         }
       }
