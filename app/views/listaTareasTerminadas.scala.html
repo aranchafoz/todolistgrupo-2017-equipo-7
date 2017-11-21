@@ -1,0 +1,73 @@
+@(tareas: List[Tarea], usuario: Usuario, mensaje: String)
+@scripts = {
+    <script type="text/javascript">
+        function del(urlBorrar) {
+            $.ajax({
+                url: urlBorrar,
+                type: 'DELETE',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+
+        function terminar(urlTerminar) {
+          $.ajax({
+            url: urlTerminar,
+            type: 'POST',
+            success: function (results) {
+              location.reload();
+            }
+          })
+        }
+    </script>
+}
+@main("Tareas del usuario @usuario.getLogin()", scripts) {
+
+    <h3><a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">Mi Perfil</a></h3>
+    <br>
+    <h4><a href="@routes.GestionTablerosController.listaTableros(usuario.getId())">Mis tableros</a></h4>
+    <h2> Listado de tareas de @usuario.getLogin()</h2>
+
+    <ul class="nav nav-tabs">
+      <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
+      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
+    </ul>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Tareas</th>
+            <th>Acción</th>
+        </tr>
+    @for(tarea <- tareas) {
+        <tr>
+            <td>@tarea.getTitulo()</td>
+            <td>
+              @if(tarea.getTerminada() != true) {
+              <a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                <a style="cursor: pointer"
+                onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
+                <span class="glyphicon glyphicon-off"></span></a>
+              }
+                <a onmouseover="" style="cursor: pointer;"
+                onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+        </tr>
+      }
+
+      <tr>
+          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
+              <span class="glyphicon glyphicon-plus"/></a></td>
+          <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
+      </tr>
+
+  </table>
+
+  @if(mensaje != null) {
+      <div class="alert alert-success">
+          @mensaje
+      </div>
+  }
+}
