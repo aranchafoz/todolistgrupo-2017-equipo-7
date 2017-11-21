@@ -1,24 +1,24 @@
-@(idUsuario: Long, nombre: String, apellidos: String, fechaNacimiento: Date, mensaje: String)
-@main("Modificar Usuario") {
+@(usuario: Usuario, mensaje: String)
+@main("Modificar Usuario", usuario) {
    @if(mensaje != "") {
       <div class="alert alert-danger">
          @mensaje
       </div>
    }
    <h1>Modificar usuario</h1>
-   @helper.form(action = routes.UsuarioController.grabaUsuarioModificado(idUsuario)) {
+   @helper.form(action = routes.UsuarioController.grabaUsuarioModificado(usuario.getId())) {
       <fieldset>
          <legend>Usuario</legend>
-         Nombre:  <input type="text" size=70 name="nombre" value= "@nombre">
+         Nombre:  <input type="text" size=70 name="nombre" value= "@usuario.getNombre()">
         </br>
-         Apellidos:  <input type="text" size=70 name="apellidos" value= "@apellidos">
+         Apellidos:  <input type="text" size=70 name="apellidos" value= "@usuario.getApellidos()">
         </br>
-         Fecha de nacimiento:  <input type="date" name="fechaNacimiento" value="@fechaNacimiento">
+         Fecha de nacimiento:  <input type="date" name="fechaNacimiento" value="@usuario.getFechaNacimiento()">
       </fieldset>
       <p/>
       <p>
          <input type="submit" class="btn btn-primary" value="Guardar">
-         <a class="btn btn-warning" href="@routes.UsuarioController.detalleUsuario(idUsuario)">Cancelar</a>
+         <a class="btn btn-warning" href="@routes.UsuarioController.detalleUsuario(usuario.getId())">Cancelar</a>
       </p>
    }
 }
