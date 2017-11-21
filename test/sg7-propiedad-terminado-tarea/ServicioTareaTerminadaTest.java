@@ -71,4 +71,17 @@ public class ServicioTareaTerminadaTest {
      assertTrue(t.getTerminada());
    }
 
+   @Test
+   public void tareasTerminadasTest() {
+     TareaService tareaService = newTareaService();
+     long idUsuario = 1000L;
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler");
+     List<Tarea> tareas = tareaService.allTareasTerminadasUsuario(idUsuario);
+     
+     assertEquals(0, tareas.size());
+     Tarea t = tareaService.marcarTerminada(tarea.getId());
+     tareas = tareaService.allTareasTerminadasUsuario(idUsuario);
+     assertEquals(1, tareas.size());
+   }
+
  }

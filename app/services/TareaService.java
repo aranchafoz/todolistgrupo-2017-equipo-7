@@ -36,6 +36,25 @@ public class TareaService {
       return tareas;
    }
 
+   public List<Tarea> allTareasTerminadasUsuario(Long idUsuario) {
+     Usuario usuario = usuarioRepository.findById(idUsuario);
+     if (usuario == null) {
+         throw new TareaServiceException("Usuario no existente");
+      }
+
+      List <Tarea> tareas = new ArrayList<Tarea>();
+      tareas.addAll(usuario.getTareas());
+      List <Tarea> definitivas = new ArrayList<Tarea>();
+
+      for(Tarea t: tareas) {
+        if (t.getTerminada()) {
+          definitivas.add(t);
+        }
+      }
+      Collections.sort(definitivas, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+      return definitivas;
+   }
+
    public Tarea nuevaTarea(Long idUsuario, String titulo, Date fechaLimite) {
       Usuario usuario = usuarioRepository.findById(idUsuario);
       if (usuario == null) {
