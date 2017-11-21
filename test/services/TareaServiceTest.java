@@ -81,7 +81,7 @@ public class TareaServiceTest {
    public void nuevaTareaUsuario() {
       TareaService tareaService = newTareaService();
       long idUsuario = 1000L;
-      tareaService.nuevaTarea(idUsuario, "Pagar el alquiler");
+      tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", null);
       assertEquals(3, tareaService.allTareasUsuario(1000L).size());
    }
 
@@ -90,7 +90,7 @@ public class TareaServiceTest {
    public void modificacionTarea() {
       TareaService tareaService = newTareaService();
       long idTarea = 1000L;
-      tareaService.modificaTarea(idTarea, "Pagar el alquiler");
+      tareaService.modificaTarea(idTarea, "Pagar el alquiler", null);
       Tarea tarea = tareaService.obtenerTarea(idTarea);
       assertEquals("Pagar el alquiler", tarea.getTitulo());
    }
