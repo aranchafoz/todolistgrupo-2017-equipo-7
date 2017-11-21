@@ -6,11 +6,11 @@
          password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
     <Usuario id="1002" login="juangutierrez3" nombre="Juan" apellidos="Gutierrez Tres"
          password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
-    <Tarea id="1000" titulo="Renovar DNI" usuarioId="1000" fechaCreacion="1996-12-10" fechaLimite="2017-12-10"/>
-    <Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000" />
+    <Tarea id="1000" titulo="Renovar DNI" usuarioId="1000" terminada="false" fechaCreacion="1996-12-10" fechaLimite="2017-12-10"/>
+    <Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000" terminada="false"/>
     <Usuario id="2000" login="pepemartinez" nombre="Pepe" apellidos="Martinez"
         password="qwerty" eMail="pepe.martinez@gmail.com" fechaNacimiento="1996-12-10"/>
-    <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000"/>
+    <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000" terminada="false"/>
     <Tablero id="1000" nombre="Tablero test 1" administradorId="1000"/>
     <Tablero id="1001" nombre="Tablero test 2" administradorId="1000"/>
     <Tablero id="2000" nombre="Tablero test propio 1" administradorId="2000"/>

@@ -1,6 +1,6 @@
-@(tablero: Tablero, participantes: List[Usuario])
+@(tablero: Tablero, participantes: List[Usuario], usuario: Usuario)
 
-@main("Detalle de tablero") {
+@main("Detalle de tablero", usuario) {
    <h1>
      Detalle del tablero @tablero.getNombre()
      </h1>

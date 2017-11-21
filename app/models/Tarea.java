@@ -18,6 +18,7 @@ public class Tarea {
    @Formats.DateTime(pattern="dd-MM-yyyy")
    @Temporal(TemporalType.DATE)
    private Date fechaLimite;
+   private boolean terminada;
    // Relación muchos-a-uno entre tareas y usuario
    @ManyToOne
    // Nombre de la columna en la BD que guarda físicamente
@@ -30,6 +31,7 @@ public class Tarea {
    public Tarea(Usuario usuario, String titulo) {
       this.usuario = usuario;
       this.titulo = titulo;
+      this.terminada = false;
       this.fechaCreacion = new Date();
       this.fechaLimite = null;
    }
@@ -37,6 +39,7 @@ public class Tarea {
    public Tarea(Usuario usuario, String titulo, Date fechaLimite) {
       this.usuario = usuario;
       this.titulo = titulo;
+      this.terminada = false;
       this.fechaCreacion = new Date();
       this.fechaLimite = fechaLimite;
    }
@@ -67,11 +70,21 @@ public class Tarea {
       this.usuario = usuario;
    }
 
+<<<<<<< HEAD
    public Date getFechaCreacion() { return fechaCreacion; }
 
    public Date getFechaLimite() { return fechaLimite; }
 
    public void setFechaLimite(Date fechaLimite) { this.fechaLimite = fechaLimite; }
+=======
+   public boolean getTerminada() {
+     return this.terminada;
+   }
+
+   public void setTerminada(boolean terminada) {
+     this.terminada = terminada;
+   }
+>>>>>>> 5ecacd50b5e84ae2700f27d4029b6a2bd15ce90a
 
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",
