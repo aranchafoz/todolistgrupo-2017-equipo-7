@@ -1,6 +1,10 @@
 package models;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.text.DateFormat;
+import play.data.format.*;
+import java.lang.String;
 
 @Entity
 public class Tarea {
@@ -8,10 +12,10 @@ public class Tarea {
    @GeneratedValue(strategy=GenerationType.AUTO)
    private Long id;
    private String titulo;
-   @Formats.DateTime(pattern="dd-MM-yyyy") // para el formulario
+   @Formats.DateTime(pattern="dd-MM-yyyy")
    @Temporal(TemporalType.DATE)
    private Date fechaCreacion;
-   @Formats.DateTime(pattern="dd-MM-yyyy") // para el formulario
+   @Formats.DateTime(pattern="dd-MM-yyyy")
    @Temporal(TemporalType.DATE)
    private Date fechaLimite;
    // Relación muchos-a-uno entre tareas y usuario
@@ -23,10 +27,17 @@ public class Tarea {
 
    public Tarea() {}
 
-   public Tarea(Usuario usuario, String titulo, Date fechaCreacion, Date fechaLimite) {
+   public Tarea(Usuario usuario, String titulo) {
       this.usuario = usuario;
       this.titulo = titulo;
-      this.fechaCreacion = fechaCreacion;
+      this.fechaCreacion = new Date();
+      this.fechaLimite = null;
+   }
+
+   public Tarea(Usuario usuario, String titulo, Date fechaLimite) {
+      this.usuario = usuario;
+      this.titulo = titulo;
+      this.fechaCreacion = new Date();
       this.fechaLimite = fechaLimite;
    }
 
@@ -56,11 +67,11 @@ public class Tarea {
       this.usuario = usuario;
    }
 
-   public Date getFechaCreacion { return fechaCreacion; }
+   public Date getFechaCreacion() { return fechaCreacion; }
 
-   public Date getFechaLimite { return fechaLimite; }
+   public Date getFechaLimite() { return fechaLimite; }
 
-   public void setFechaLimite { this.fechaLimite = fechaLimite; }
+   public void setFechaLimite(Date fechaLimite) { this.fechaLimite = fechaLimite; }
 
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",
