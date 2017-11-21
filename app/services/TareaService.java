@@ -10,6 +10,7 @@ import models.Usuario;
 import models.UsuarioRepository;
 import models.Tarea;
 import models.TareaRepository;
+import java.util.Date;
 
 
 public class TareaService {
@@ -54,12 +55,12 @@ public class TareaService {
       return definitivas;
    }
 
-   public Tarea nuevaTarea(Long idUsuario, String titulo) {
+   public Tarea nuevaTarea(Long idUsuario, String titulo, Date fechaLimite) {
       Usuario usuario = usuarioRepository.findById(idUsuario);
       if (usuario == null) {
          throw new TareaServiceException("Usuario no existente");
       }
-      Tarea tarea = new Tarea(usuario, titulo);
+      Tarea tarea = new Tarea(usuario, titulo, fechaLimite);
       return tareaRepository.add(tarea);
    }
 
@@ -67,11 +68,12 @@ public class TareaService {
       return tareaRepository.findById(idTarea);
    }
 
-   public Tarea modificaTarea(Long idTarea, String nuevoTitulo) {
+   public Tarea modificaTarea(Long idTarea, String nuevoTitulo, Date fechaLimite) {
       Tarea tarea = tareaRepository.findById(idTarea);
       if (tarea == null)
            throw new TareaServiceException("No existe tarea");
       tarea.setTitulo(nuevoTitulo);
+      tarea.setFechaLimite(fechaLimite);
       tarea = tareaRepository.update(tarea);
       return tarea;
    }

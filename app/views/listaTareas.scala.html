@@ -35,12 +35,17 @@
     <table class="table table-striped">
         <tr>
             <th>Tareas</th>
+            <th>Fecha Límite</th>
             <th>Acción</th>
         </tr>
     @for(tarea <- tareas) {
       @if(tarea.getTerminada() != true) {
           <tr>
               <td>@tarea.getTitulo()</td>
+              <td>@if(tarea.getFechaLimite() != null) {
+                      @tarea.getFechaLimite().format("dd-MM-yyyy")
+                  }
+              </td>
               <td>
                 @if(tarea.getTerminada() != true) {
                 <a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
@@ -59,6 +64,7 @@
       <tr>
           <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
               <span class="glyphicon glyphicon-plus"/></a></td>
+          <td></td>
           <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
       </tr>
 
