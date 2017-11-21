@@ -30,6 +30,7 @@ GET     /usuarios/:id/tareas        controllers.GestionTareasController.listaTar
 GET     /tareas/:id/editar          controllers.GestionTareasController.formularioEditaTarea(id: Long)
 POST    /tareas/:id/editar          controllers.GestionTareasController.grabaTareaModificada(id: Long)
 DELETE  /tareas/:id                 controllers.GestionTareasController.borraTarea(id: Long)
+POST    /tareas/:id/terminar        controllers.GestionTareasController.terminaTarea(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.creaNuevoTablero(id: Long)
