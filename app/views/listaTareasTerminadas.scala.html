@@ -31,8 +31,8 @@
     <h2> Listado de tareas de @usuario.getLogin()</h2>
 
     <ul class="nav nav-tabs">
-      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
-      <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
+      <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
+      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
     </ul>
 
     <table class="table table-striped">
@@ -41,22 +41,20 @@
             <th>Acción</th>
         </tr>
     @for(tarea <- tareas) {
-      @if(tarea.getTerminada() != true) {
-          <tr>
-              <td>@tarea.getTitulo()</td>
-              <td>
-                @if(tarea.getTerminada() != true) {
-                <a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
-                  <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-                  <a style="cursor: pointer"
-                  onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
-                  <span class="glyphicon glyphicon-off"></span></a>
-                }
-                  <a onmouseover="" style="cursor: pointer;"
-                  onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
-          </tr>
-        }
+        <tr>
+            <td>@tarea.getTitulo()</td>
+            <td>
+              @if(tarea.getTerminada() != true) {
+              <a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                <a style="cursor: pointer"
+                onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
+                <span class="glyphicon glyphicon-off"></span></a>
+              }
+                <a onmouseover="" style="cursor: pointer;"
+                onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+        </tr>
       }
 
       <tr>
