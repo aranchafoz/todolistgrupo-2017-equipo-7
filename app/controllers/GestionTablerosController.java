@@ -101,8 +101,7 @@ public class GestionTablerosController extends Controller {
       } else {
         List<Usuario> participantes = new ArrayList<Usuario>();
         participantes.addAll(tablero.getParticipantes());
-        Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
-        return ok(detalleTablero.render(tablero, participantes, usuario));
+        return ok(detalleTablero.render(tablero, participantes));
       }
     }
   }

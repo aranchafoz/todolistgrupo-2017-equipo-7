@@ -1,5 +1,7 @@
 @(tablerosAdministrados: List[Tablero], tablerosParticipados: List[Tablero], restoTableros: List[Tablero], usuario: Usuario, mensaje: String)
-@main("Tableros administrados del usuario @usuario.getLogin()", usuario) {
+@main("Tableros administrados del usuario @usuario.getLogin()") {
+
+  <h5><a href="@routes.UsuarioController.logout()">Salir</a></h5>
 
   @if(mensaje != null) {
       <div class="alert alert-success">
