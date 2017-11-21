@@ -63,4 +63,12 @@ public class TareaService {
           throw new TareaServiceException("No existe tarea");
      tareaRepository.delete(idTarea);
   }
+
+  public Tarea marcarTerminada(Long idTarea) {
+    Tarea tarea = tareaRepository.findById(idTarea);
+    if (tarea == null) throw new TareaServiceException("No existe tarea");
+    tarea.setTerminada(true);
+    tarea = tareaRepository.update(tarea);
+    return tarea;
+  }
 }
