@@ -70,21 +70,15 @@ public class Tarea {
       this.usuario = usuario;
    }
 
-<<<<<<< HEAD
    public Date getFechaCreacion() { return fechaCreacion; }
 
    public Date getFechaLimite() { return fechaLimite; }
 
    public void setFechaLimite(Date fechaLimite) { this.fechaLimite = fechaLimite; }
-=======
-   public boolean getTerminada() {
-     return this.terminada;
-   }
 
-   public void setTerminada(boolean terminada) {
-     this.terminada = terminada;
-   }
->>>>>>> 5ecacd50b5e84ae2700f27d4029b6a2bd15ce90a
+   public boolean getTerminada() { return this.terminada; }
+
+   public void setTerminada(boolean terminada) { this.terminada = terminada; }
 
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",
