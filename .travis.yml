@@ -5,6 +5,11 @@ language: bash
 services:
   - docker
 
+branches:
+ only:
+ - master
+ - production
+
 before_install:
    - docker build -t alvaromd/mads-todolist-2017:$TRAVIS_BUILD_NUMBER .
    - docker run -d --rm -p 3306:3306 --name play-mysql -e MYSQL_ROOT_PASSWORD=mads -e MYSQL_DATABASE=mads mysql
@@ -17,4 +22,7 @@ after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker push alvaromd/mads-todolist-2017;
+    docker tag alvaromd/mads-todolist-2017:$TRAVIS_BUILD_NUMBER alvaromd/mads-todolist-2017:latest;
+    docker push alvaromd/mads-todolist-2017:latest;
     fi
+
