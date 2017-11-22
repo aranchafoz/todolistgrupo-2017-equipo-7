@@ -19,6 +19,7 @@ public class Tarea {
    @Temporal(TemporalType.DATE)
    private Date fechaLimite;
    private boolean terminada;
+   private String descripcion;
    // Relación muchos-a-uno entre tareas y usuario
    @ManyToOne
    // Nombre de la columna en la BD que guarda físicamente
@@ -34,6 +35,7 @@ public class Tarea {
       this.terminada = false;
       this.fechaCreacion = new Date();
       this.fechaLimite = null;
+      this.descripcion = "";
    }
 
    public Tarea(Usuario usuario, String titulo, Date fechaLimite) {
@@ -79,6 +81,10 @@ public class Tarea {
    public boolean getTerminada() { return this.terminada; }
 
    public void setTerminada(boolean terminada) { this.terminada = terminada; }
+
+   public String getDescripcion() { return this.descripcion; }
+
+   public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",
