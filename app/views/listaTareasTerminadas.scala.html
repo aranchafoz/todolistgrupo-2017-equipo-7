@@ -23,7 +23,7 @@
         }
     </script>
 }
-@main("Tareas del usuario @usuario.getLogin()", scripts) {
+@main("Tareas del usuario @usuario.getLogin()", usuario, scripts) {
 
     <h3><a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">Mi Perfil</a></h3>
     <br>
