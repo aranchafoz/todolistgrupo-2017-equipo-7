@@ -96,4 +96,20 @@ public class ModeloColumnaTest {
       return nombre;
    }
 
+   // Un tablero pueda tener varias columnas
+   @Test
+   public void testTableroTieneVariasColumnas() {
+      ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
+      TableroRepository tableroRepository = injector.instanceOf(TableroRepository.class);
+      Tablero tablero = tableroRepository.findById(1000L);
+      Columna columna1 = new Columna(tablero, "Columna 1");
+      columna1 = columnaRepository.add(columna1);
+      Columna columna2 = new Columna(tablero, "Columna 2");
+      columna2 = columnaRepository.add(columna2);
+      // Recuperamos el tablero del repository
+      tablero = tableroRepository.findById(tablero.getId());
+      // Y comprobamos si tiene las columnas
+      assertEquals(2, tablero.getColumnas().size());
+   }
+
 }
