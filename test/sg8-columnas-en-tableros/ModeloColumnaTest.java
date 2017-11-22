@@ -27,6 +27,9 @@ import java.io.FileInputStream;
 import models.Columna;
 import models.Tablero;
 import models.Usuario;
+import models.TableroRepository;
+import models.ColumnaRepository;
+import models.JPAColumnaRepository;
 
 public class ModeloColumnaTest {
   static Database db;
@@ -63,6 +66,34 @@ public class ModeloColumnaTest {
      assertEquals("Columna 1", columna.getNombre());
   }
 
+  @Test
+  public void testObtenerColumnaRepository() {
+    ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
+    assertNotNull(columnaRepository);
+  }
 
+  // Crear funcion add() en el TableroRepository.
+   @Test
+   public void testAddColumnaInsertsDatabase() {
+      ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
+      TableroRepository tableroRepository = injector.instanceOf(TableroRepository.class);
+      Tablero tablero = tableroRepository.findById(1000L);
+      Columna columna = new Columna(tablero, "Columna 1");
+      columna = columnaRepository.add(columna);
+      assertNotNull(columna.getId());
+      assertEquals("Columna 1", getNombreFromColumnaDB(columna.getId()));
+   }
+
+   private String getNombreFromColumnaDB(Long columnaId) {
+      String nombre = db.withConnection(connection -> {
+         String selectStatement = "SELECT Nombre FROM Columna WHERE ID = ? ";
+         PreparedStatement prepStmt = connection.prepareStatement(selectStatement);
+         prepStmt.setLong(1, columnaId);
+         ResultSet rs = prepStmt.executeQuery();
+         rs.next();
+         return rs.getString("Nombre");
+      });
+      return nombre;
+   }
 
 }
