@@ -75,7 +75,7 @@ public class ServicioTareaTerminadaTest {
    public void tareasTerminadasTest() {
      TareaService tareaService = newTareaService();
      long idUsuario = 1000L;
-     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler");
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", null);
      List<Tarea> tareas = tareaService.allTareasTerminadasUsuario(idUsuario);
      
      assertEquals(0, tareas.size());
