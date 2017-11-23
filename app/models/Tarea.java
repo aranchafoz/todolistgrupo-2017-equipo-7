@@ -38,14 +38,6 @@ public class Tarea {
       this.descripcion = "";
    }
 
-   public Tarea(Usuario usuario, String titulo, Date fechaLimite) {
-      this.usuario = usuario;
-      this.titulo = titulo;
-      this.terminada = false;
-      this.fechaCreacion = new Date();
-      this.fechaLimite = fechaLimite;
-   }
-
    // Getters y setters necesarios para JPA
 
    public Long getId() {
