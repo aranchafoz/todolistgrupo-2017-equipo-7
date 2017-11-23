@@ -16,6 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Columna`
+--
+
+DROP TABLE IF EXISTS `Columna`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Columna` (
+  `id` bigint(20) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `tableroId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK5t3s9tmlcxo05co7xxalympgg` (`tableroId`),
+  CONSTRAINT `FK5t3s9tmlcxo05co7xxalympgg` FOREIGN KEY (`tableroId`) REFERENCES `Tablero` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `Persona_Tablero`
 --
 
@@ -58,6 +75,9 @@ DROP TABLE IF EXISTS `Tarea`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tarea` (
   `id` bigint(20) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `fechaCreacion` date DEFAULT NULL,
+  `fechaLimite` date DEFAULT NULL,
   `terminada` bit(1) NOT NULL,
   `titulo` varchar(255) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
@@ -107,4 +127,4 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-21 18:17:57
+-- Dump completed on 2017-11-23 16:31:56
