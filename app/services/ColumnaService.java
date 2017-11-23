@@ -25,11 +25,20 @@ public class ColumnaService {
   public List<Columna> allColumnasTablero(Long idTablero) {
     Tablero tablero = tableroRepository.findById(idTablero);
     if (tablero == null) {
-      throw new ColumnaServiceException("tablero no existente");
+      throw new ColumnaServiceException("Tablero no existente");
     }
     List<Columna> columnas = new ArrayList<Columna>();
     columnas.addAll(tablero.getColumnas());
     Collections.sort(columnas, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
     return columnas;
+  }
+
+  public Columna nuevaColumna(Long idTablero, String nombre) {
+    Tablero tablero = tableroRepository.findById(idTablero);
+    if (tablero == null) {
+      throw new ColumnaServiceException("Tablero no existente");
+    }
+    Columna columna = new Columna(tablero, nombre);
+    return columnaRepository.add(columna);
   }
 }

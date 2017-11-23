@@ -53,4 +53,13 @@ public class ServicioColumnaTest {
      assertEquals("Columna test 1", columnas.get(0).getNombre());
      assertEquals("Columna test 2", columnas.get(1).getNombre());
   }
+
+  // Test 3: nuevaColumnaService
+  @Test
+  public void nuevaColumnaService() {
+    ColumnaService columnaService = newColumnaService();
+    long idTablero = 2000L;
+    columnaService.nuevaColumna(idTablero, "Nueva columna test 1");
+    assertEquals(3, columnaService.allColumnasTablero(2000L).size());
+  }
 }
