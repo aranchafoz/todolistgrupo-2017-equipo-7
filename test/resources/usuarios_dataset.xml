@@ -18,4 +18,5 @@
     <Tablero id="2002" nombre="Tablero test propio 3" administradorId="2000"/>
     <Persona_Tablero tableros_id="2000" participantes_id="2000"/>
     <Persona_Tablero tableros_id="2001" participantes_id="2000"/>
+    <Columna />
  </dataset>
