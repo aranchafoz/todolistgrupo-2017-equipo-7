@@ -68,8 +68,11 @@ public class ModeloTareaFechasTest {
     @Test
     public void testTareaFechaLimite() {
         Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+        Tarea t1 = new Tarea(usuario,"tarea1");
+
         Date auxFecha = new Date();
-        Tarea t1 = new Tarea(usuario,"tarea1", auxFecha);
+
+        t1.setFechaLimite(auxFecha);
 
         assertNotNull(t1.getFechaLimite());
     }

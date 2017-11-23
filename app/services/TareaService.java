@@ -55,12 +55,12 @@ public class TareaService {
       return definitivas;
    }
 
-   public Tarea nuevaTarea(Long idUsuario, String titulo, Date fechaLimite, String descripcion) {
+   public Tarea nuevaTarea(Long idUsuario, String titulo) {
       Usuario usuario = usuarioRepository.findById(idUsuario);
       if (usuario == null) {
          throw new TareaServiceException("Usuario no existente");
       }
-      Tarea tarea = new Tarea(usuario, titulo, fechaLimite, descripcion);
+      Tarea tarea = new Tarea(usuario, titulo);
       return tareaRepository.add(tarea);
    }
 

@@ -1,20 +1,8 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
-import play.inject.guice.GuiceApplicationBuilder;
-import play.inject.Injector;
-import play.inject.guice.GuiceInjectorBuilder;
-import play.Environment;
-
-import play.db.jpa.*;
-
 import play.db.Database;
 import play.db.Databases;
-
-import java.sql.*;
-
-import java.util.Set;
-import java.util.List;
 
 import play.db.jpa.*;
 
@@ -24,9 +12,25 @@ import org.dbunit.dataset.xml.*;
 import org.dbunit.operation.*;
 import java.io.FileInputStream;
 
-import models.Tarea;
+import java.util.List;
+
 import models.Usuario;
+import models.UsuarioRepository;
+import models.JPAUsuarioRepository;
+
+import models.Tarea;
 import models.TareaRepository;
+import models.JPATareaRepository;
+
+import play.inject.guice.GuiceApplicationBuilder;
+import play.inject.Injector;
+import play.inject.guice.GuiceInjectorBuilder;
+import play.Environment;
+
+import services.UsuarioService;
+import services.UsuarioServiceException;
+import services.TareaService;
+import services.TareaServiceException;
 
 import java.util.Date;
 
@@ -62,9 +66,9 @@ public class ServicioTareaDescripcionTest {
     public void tareaSinDescripcionServiceTest() {
         TareaService tareaService = newTareaService();
         long idUsuario = 1000L;
-        Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", null);
+        Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler");
 
-        assertEquals("", t.getDescripcion());
+        assertEquals("", tarea.getDescripcion());
     }
 
     /*
