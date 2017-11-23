@@ -18,7 +18,9 @@ import play.inject.Injector;
 import play.inject.guice.GuiceInjectorBuilder;
 import play.Environment;
 
+
 import services.ColumnaService;
+import services.ColumnaServiceException;
 
 public class ServicioColumnaTest {
   static private Injector injector;
@@ -61,5 +63,12 @@ public class ServicioColumnaTest {
     long idTablero = 2000L;
     columnaService.nuevaColumna(idTablero, "Nueva columna test 1");
     assertEquals(3, columnaService.allColumnasTablero(2000L).size());
+  }
+
+  // Test 4: exceptionSiTableroNoExisteRecuperandoSusColumnas
+  @Test(expected = ColumnaServiceException.class)
+  public void crearNuevoTableroNoExistenteLanzaExcepcion(){
+    ColumnaService columnaService = newColumnaService();
+     List<Columna> columnas = columnaService.allColumnasTablero(1011L);
   }
 }
