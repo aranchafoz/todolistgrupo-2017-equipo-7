@@ -53,6 +53,10 @@ public class ModeloTableroCerradoTest {
       databaseTester.onSetup();
    }
 
+   private TableroRepository newTableroRepository() {
+      return injector.instanceOf(TableroRepository.class);
+   }
+
    @Test
    public void TableroCerradoTest() {
      Usuario user = new Usuario("juangutierrez", "juangutierrez@gmail.com");
@@ -60,6 +64,18 @@ public class ModeloTableroCerradoTest {
 
      assertFalse(tablero.getCerrado());
      tablero.setCerrado(true);
+     assertTrue(tablero.getCerrado());
+   }
+
+   @Test
+   public void TableroCerradoDBTest() {
+     TableroRepository tableroRepository = newTableroRepository();
+     Tablero tablero = tableroRepository.findById(1000L);
+
+     assertFalse(tablero.getCerrado());
+     tablero.setCerrado(true);
+     tablero = tableroRepository.update(tablero);
+
      assertTrue(tablero.getCerrado());
    }
 }
