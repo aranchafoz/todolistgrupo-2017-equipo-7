@@ -29,16 +29,16 @@ public class ColumnaService {
     }
     List<Columna> columnas = new ArrayList<Columna>();
     columnas.addAll(tablero.getColumnas());
-    Collections.sort(columnas, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+    Collections.sort(columnas, (a, b) -> a.getPosicion() < b.getPosicion() ? -1 : a.getPosicion() == b.getPosicion() ? 0 : 1);
     return columnas;
   }
 
-  public Columna nuevaColumna(Long idTablero, String nombre) {
+  public Columna nuevaColumna(Long idTablero, String nombre, Integer posicion) {
     Tablero tablero = tableroRepository.findById(idTablero);
     if (tablero == null) {
       throw new ColumnaServiceException("Tablero no existente");
     }
-    Columna columna = new Columna(tablero, nombre);
+    Columna columna = new Columna(tablero, nombre, posicion);
     return columnaRepository.add(columna);
   }
 }

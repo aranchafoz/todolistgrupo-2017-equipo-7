@@ -7,4 +7,5 @@ import com.google.inject.ImplementedBy;
 public interface ColumnaRepository {
    public Columna add(Columna columna);
    public Columna findById(Long idColumna);
+   public Columna update(Columna columna);
 }
