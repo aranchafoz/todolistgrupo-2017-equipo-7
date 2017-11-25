@@ -12,6 +12,7 @@ public class Tablero {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
   private String nombre;
+  private boolean cerrado;
 
   @ManyToOne
   @JoinColumn(name="administradorId")
@@ -28,6 +29,7 @@ public class Tablero {
   public Tablero(Usuario administrador, String nombre) {
     this.administrador = administrador;
     this.nombre = nombre;
+    this.cerrado = false;
   }
 
   public Long getId() {
@@ -68,6 +70,14 @@ public class Tablero {
 
    public void setColumnas(Set<Columna> columnas) {
      this.columnas = columnas;
+   }
+
+   public boolean getCerrado() {
+     return this.cerrado;
+   }
+
+   public void setCerrado(boolean cerrado) {
+     this.cerrado = cerrado;
    }
 
    @Override
