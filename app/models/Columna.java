@@ -8,15 +8,17 @@ public class Columna {
      @GeneratedValue(strategy=GenerationType.AUTO)
      private Long id;
      private String nombre;
+     private Integer posicion;
      @ManyToOne
      @JoinColumn(name="tableroId")
      public Tablero tablero;
 
      public Columna() {}
 
-     public Columna(Tablero tablero, String nombre) {
+     public Columna(Tablero tablero, String nombre, Integer posicion) {
        this.tablero = tablero;
        this.nombre = nombre;
+       this.posicion = posicion;
      }
 
      public Long getId() {
@@ -33,6 +35,14 @@ public class Columna {
 
      public void setNombre(String nombre) {
        this.nombre = nombre;
+     }
+
+     public Integer getPosicion() {
+       return this.posicion;
+     }
+
+     public void setPosicion(Integer posicion) {
+       this.posicion = posicion;
      }
 
      public Tablero getTablero() {

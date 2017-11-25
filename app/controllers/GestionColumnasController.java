@@ -39,8 +39,10 @@ public class GestionColumnasController extends Controller {
          if (columnaForm.hasErrors()) {
             return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
          }
+         Tablero tablero = tableroService.obtenerTablero(idTablero);
+         int posicion = tablero.getColumnas().size();
          Columna columna = columnaForm.get();
-         columnaService.nuevaColumna(idTablero, columna.getNombre());
+         columnaService.nuevaColumna(idTablero, columna.getNombre(), posicion);
          flash("aviso", "La columna se ha grabado correctamente");
          return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
       }

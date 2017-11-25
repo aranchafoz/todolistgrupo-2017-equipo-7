@@ -61,7 +61,7 @@ public class ServicioColumnaTest {
   public void nuevaColumnaService() {
     ColumnaService columnaService = newColumnaService();
     long idTablero = 2000L;
-    columnaService.nuevaColumna(idTablero, "Nueva columna test 1");
+    columnaService.nuevaColumna(idTablero, "Nueva columna test 1", 1);
     assertEquals(3, columnaService.allColumnasTablero(2000L).size());
   }
 
