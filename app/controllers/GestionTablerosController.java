@@ -16,6 +16,7 @@ import services.UsuarioService;
 import services.TableroService;
 import models.Usuario;
 import models.Tablero;
+import models.Columna;
 import security.ActionAuthenticator;
 
 public class GestionTablerosController extends Controller {
@@ -101,8 +102,10 @@ public class GestionTablerosController extends Controller {
       } else {
         List<Usuario> participantes = new ArrayList<Usuario>();
         participantes.addAll(tablero.getParticipantes());
+        List<Columna> columnas = new ArrayList<Columna>();
+        columnas.addAll(tablero.getColumnas());
         Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
-        return ok(detalleTablero.render(tablero, participantes, usuario));
+        return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario));
       }
     }
   }

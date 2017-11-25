@@ -1,24 +1,83 @@
-@(tablero: Tablero, participantes: List[Usuario], usuario: Usuario)
+@(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario)
 
 @main("Detalle de tablero", usuario) {
-   <h1>
-     Detalle del tablero @tablero.getNombre()
-     </h1>
-   <ul>
-      <li><strong>Nombre: </strong> @tablero.getNombre()</li>
-      <li><strong>Administrador: </strong> @tablero.getAdministrador().getLogin()</li>
-      <h4> Participantes </h4>
-      <table class="table table-striped">
-            <tr>
-                <th>Login</th>
-                <th>Email</th>
-            </tr>
-        @for(participante <- participantes) {
-            <tr>
-                <td>@participante.getLogin()</td>
-                <td>@participante.getEmail()</td>
-            </tr>
-          }
-      </table>
-   </ul>
+    <script type="text/javascript">
+       function hideAddColumnaButton() {
+         $("#addColumna").hide();
+         $("#newColumnaForm").fadeIn();
+       }
+       function showAddColumnaButton() {
+         $("#newColumnaForm").hide();
+         $("#addColumna").fadeIn();
+         console.log("a pastar")
+       }
+    </script>
+
+   <h2>
+     Tablero @tablero.getNombre()
+   </h2>
+   <hr>
+   <div>
+      <h5><strong>Nombre: </strong> @tablero.getNombre() </h5>
+      <h5><strong>Administrador: </strong> @tablero.getAdministrador().getLogin() </h5>
+      </br>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong> Participantes </strong>
+        </div>
+        <table class="table table-striped">
+              <tr>
+                  <th>Login</th>
+                  <th>Email</th>
+              </tr>
+          @for(participante <- participantes) {
+              <tr>
+                  <td>@participante.getLogin()</td>
+                  <td>@participante.getEmail()</td>
+              </tr>
+            }
+        </table>
+      </div>
+
+      <h5><strong>Columnas</strong></h5>
+      <div style="overflow-x: show">
+        @for(columna <- columnas) {
+          <div class="col-lg-3 col-md-3">
+            <div class="panel panel-info">
+              <div class="panel-heading"> @columna.getNombre() </div>
+              <div class="panel-body">
+                <p>Tarea 1</p>
+                <p>Tarea 2</p>
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="col-lg-3 col-md-3" id="addColumna">
+          <input type="button" class="btn btn-primary btn-block" onclick="hideAddColumnaButton()"
+
+           value="Añadir una columna...">
+        </div>
+
+        <div class="col-lg-3 col-md-3" id="newColumnaForm" style="display: none;">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              @helper.form(action = routes.GestionColumnasController.creaNuevaColumna(usuario.getId(), tablero.getId())) {
+                  <fieldset>
+                      @helper.inputText(columnaForm("Nombre"), 'placeholder -> "Introduce el nombre", 'size -> 30, 'type -> "text", 'class -> "form-control")
+                      <div class="col-lg-6 col-md-6">
+                        <input type="submit" class="btn btn-primary" value="Guardar">
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-">
+                        <input type="button" class="btn btn-danger" value="Cancel" onclick="showAddColumnaButton()">
+                      </div>
+                  </fieldset>
+              }
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+   </div>
 }
