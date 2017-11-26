@@ -80,4 +80,13 @@ public class ServicioColumnaTest {
     Columna columna = columnaService.obtenerColumna(idColumna);
     assertEquals("Pendiente", columna.getNombre());
   }
+
+  @Test
+  public void moverColumna() {
+    ColumnaService columnaService = newColumnaService();
+    long idColumna = 1000L;
+    columnaService.moverColumna(idColumna, 3);
+    Columna columna = columnaService.obtenerColumna(idColumna);
+    assertEquals((Integer) 3, columna.getPosicion());
+  }
 }

@@ -51,6 +51,15 @@ public class ColumnaService {
      return columna;
   }
 
+  public Columna moverColumna(Long idColumna, Integer nuevaPosicion) {
+     Columna columna = columnaRepository.findById(idColumna);
+     if (columna == null)
+          throw new ColumnaServiceException("No existe columna");
+     columna.setPosicion(nuevaPosicion);
+     columna = columnaRepository.update(columna);
+     return columna;
+  }
+  
   public Columna obtenerColumna(Long idColumna) {
      return columnaRepository.findById(idColumna);
   }
