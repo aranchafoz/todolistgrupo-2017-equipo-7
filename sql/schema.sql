@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `Columna`;
 CREATE TABLE `Columna` (
   `id` bigint(20) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
+  `posicion` int(11) DEFAULT NULL,
   `tableroId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK5t3s9tmlcxo05co7xxalympgg` (`tableroId`),
@@ -58,6 +59,7 @@ DROP TABLE IF EXISTS `Tablero`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tablero` (
   `id` bigint(20) NOT NULL,
+  `cerrado` bit(1) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `administradorId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -126,5 +128,3 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2017-11-23 16:31:56
