@@ -97,4 +97,14 @@ public class TableroService {
     tablero = tableroRepository.update(tablero);
     return tablero;
   }
+
+  public Tablero editarTablero(Long idTablero, String newTitulo) {
+    Tablero tablero = tableroRepository.findById(idTablero);
+    if (tablero == null) {
+      throw new TableroServiceException("Tablero no existente");
+    }
+    tablero.setNombre(newTitulo);
+    tablero = tableroRepository.update(tablero);
+    return tablero;
+  }
 }

@@ -69,4 +69,15 @@ public class ServicioTableroCerradoTest {
     assertTrue(tablero.getCerrado());
   }
 
+  @Test
+  public void editaTableroTest() {
+    TableroService tableroService = newTableroService();
+    Tablero tablero = tableroService.nuevoTablero(1000L, "Test 2");
+
+    assertEquals(tablero.getNombre(), "Test 2");
+    tablero = tableroService.editarTablero(tablero.getId(), "Me abruma el tablero");
+
+    assertEquals(tablero.getNombre(), "Me abruma el tablero");
+  }
+
  }
