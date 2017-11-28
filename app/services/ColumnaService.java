@@ -59,7 +59,7 @@ public class ColumnaService {
      columna = columnaRepository.update(columna);
      return columna;
   }
-  
+
   public Columna obtenerColumna(Long idColumna) {
      return columnaRepository.findById(idColumna);
   }

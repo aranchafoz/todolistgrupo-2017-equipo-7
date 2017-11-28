@@ -47,4 +47,26 @@ public class GestionColumnasController extends Controller {
          return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
       }
    }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result grabaNuevaPosicionColumna(Long idUsuario, Long idTablero) throws java.text.ParseException {
+     String connectedUserStr = session("connected");
+     Long connectedUser =  Long.valueOf(connectedUserStr);
+     if (connectedUser != idUsuario) {
+        return unauthorized("Lo siento, no estás autorizado");
+     } else {
+
+       DynamicForm requestData = formFactory.form().bindFromRequest();
+
+       List<Columna> columnas = columnaService.allColumnasTablero(idTablero);
+
+       for(int i = 0; i < columnas.size(); i++) {
+         String name = "columna" + columnas.get(i).getId();
+         Integer nuevaPosicion = Integer.parseInt(requestData.get(name));
+         columnaService.moverColumna(columnas.get(i).getId(), nuevaPosicion);
+       }
+
+       return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
+     }
+   }
  }

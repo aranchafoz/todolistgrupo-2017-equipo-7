@@ -30,8 +30,23 @@
         </table>
       </div>
 
-      <h5><strong>Columnas</strong></h5>
-      <div id="grid" style="overflow-x: show">
+
+
+
+      <div style="overflow-x: show">
+          @helper.form(action = routes.GestionColumnasController.grabaNuevaPosicionColumna(usuario.getId(), tablero.getId())) {
+          </br>
+            <div class="col-md-6 col-lg-6">
+              <h5><strong>Columnas</strong></h5>
+            </div>
+            <div class="col-md-6 col-lg-6" align="right">
+              @if(columnas.size() > 1) {
+                <input type="submit" class="btn btn-success" align="right" value="Guardar">
+              }
+            </div>
+          </br>
+          </br>
+          <div id="grid">
           @for(columna <- columnas) {
               <div class="col-lg-3 col-md-3" data-id=@columna.getId() data-userId=@usuario.getId() data-tableroId=@tablero.getId()>
                 <div class="panel panel-info">
@@ -40,10 +55,12 @@
                     <p>Tarea 1</p>
                     <p>Tarea 2</p>
                   </div>
+                  <input id="columna@columna.getId()" name="columna@columna.getId()" value= "@columna.getPosicion()" type="hidden">
                 </div>
               </div>
           }
-
+          </div>
+          }
           <div class="col-lg-3 col-md-3" id="addColumna">
             <input type="button" class="btn btn-primary btn-block" onclick="hideAddColumnaButton()"
 
@@ -82,7 +99,6 @@
          console.log("a pastar")
        }
       $(document).ready(function () {
-
         $("#grid").sortable({
           tolerance: 'pointer',
           revert: 'invalid',
@@ -98,7 +114,8 @@
             tableroId = ui.item.attr('data-id');
           },
           stop: function(event, ui) {
-            alert("New position: " + ui.item.index() + ", element: " + prevIndex);
+            $(`#columna${columnaId}`).val(ui.item.index())
+            alert("New position: " + ui.item.index() + ", element: " + columnaId);
           }
         });
       });
