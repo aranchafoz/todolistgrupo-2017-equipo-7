@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import services.UsuarioService;
 import services.TableroService;
+import services.ColumnaService;
 import models.Usuario;
 import models.Tablero;
 import models.Columna;
@@ -24,6 +25,7 @@ public class GestionTablerosController extends Controller {
    @Inject FormFactory formFactory;
    @Inject UsuarioService usuarioService;
    @Inject TableroService tableroService;
+   @Inject ColumnaService columnaService;
 
 
   // Comprobamos si hay alguien logeado con @Security.Authenticated(ActionAuthenticator.class)
@@ -102,8 +104,7 @@ public class GestionTablerosController extends Controller {
       } else {
         List<Usuario> participantes = new ArrayList<Usuario>();
         participantes.addAll(tablero.getParticipantes());
-        List<Columna> columnas = new ArrayList<Columna>();
-        columnas.addAll(tablero.getColumnas());
+        List<Columna> columnas = columnaService.allColumnasTablero(idTablero);
         Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
         return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario));
       }

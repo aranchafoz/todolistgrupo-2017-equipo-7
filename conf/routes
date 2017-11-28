@@ -41,7 +41,9 @@ GET     /usuarios/:id/tableros                controllers.GestionTablerosControl
 GET     /usuarios/:id/tableros/:idTablero                controllers.GestionTablerosController.detalleTablero(id: Long, idTablero: Long)
 GET     /usuarios/:id/tableros/:idTablero/apuntarse      controllers.GestionTablerosController.apuntarse(id: Long, idTablero: Long)
 
-POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/nueva   controllers.GestionColumnasController.creaNuevaColumna(idUsuario: Long, idTablero: Long)
+POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/nueva               controllers.GestionColumnasController.creaNuevaColumna(idUsuario: Long, idTablero: Long)
+POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/actualizar          controllers.GestionColumnasController.grabaNuevaPosicionColumna(idUsuario: Long, idTablero: Long)
+POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/:idColumna/editar              controllers.GestionColumnasController.grabaNombreColumnaModificado(idUsuario: Long, idTablero: Long, idColumna: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
