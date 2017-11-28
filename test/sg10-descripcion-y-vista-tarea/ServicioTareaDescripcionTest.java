@@ -66,7 +66,7 @@ public class ServicioTareaDescripcionTest {
     public void tareaSinDescripcionServiceTest() {
         TareaService tareaService = newTareaService();
         long idUsuario = 1000L;
-        Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "Descripcion", null);
+        Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
 
         assertEquals("", tarea.getDescripcion());
     }
