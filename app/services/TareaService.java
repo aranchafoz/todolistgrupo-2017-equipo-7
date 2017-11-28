@@ -55,12 +55,14 @@ public class TareaService {
       return definitivas;
    }
 
-   public Tarea nuevaTarea(Long idUsuario, String titulo) {
+   public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion, Date fechaLimite) {
       Usuario usuario = usuarioRepository.findById(idUsuario);
       if (usuario == null) {
          throw new TareaServiceException("Usuario no existente");
       }
       Tarea tarea = new Tarea(usuario, titulo);
+      tarea.setDescripcion(descripcion);
+      tarea.setFechaLimite(fechaLimite);
       return tareaRepository.add(tarea);
    }
 
@@ -68,7 +70,7 @@ public class TareaService {
       return tareaRepository.findById(idTarea);
    }
 
-   public Tarea modificaTarea(Long idTarea, String nuevoTitulo, Date fechaLimite, String descripcion) {
+   public Tarea modificaTarea(Long idTarea, String nuevoTitulo, String descripcion, Date fechaLimite) {
       Tarea tarea = tareaRepository.findById(idTarea);
       if (tarea == null)
            throw new TareaServiceException("No existe tarea");

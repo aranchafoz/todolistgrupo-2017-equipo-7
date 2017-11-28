@@ -12,10 +12,10 @@ public class Tarea {
    @GeneratedValue(strategy=GenerationType.AUTO)
    private Long id;
    private String titulo;
-   @Formats.DateTime(pattern="dd-MM-yyyy")
+   @Formats.DateTime(pattern="yyyy-MM-dd")
    @Temporal(TemporalType.DATE)
    private Date fechaCreacion;
-   @Formats.DateTime(pattern="dd-MM-yyyy")
+   @Formats.DateTime(pattern="yyyy-MM-dd")
    @Temporal(TemporalType.DATE)
    private Date fechaLimite;
    private boolean terminada;
