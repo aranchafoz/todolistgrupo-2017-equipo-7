@@ -52,7 +52,7 @@ public class GestionTareasController extends Controller {
             return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class), "Hay errores en el formulario"));
          }
          Tarea tarea = tareaForm.get();
-         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(), tarea.getFechaLimite());
+         tareaService.nuevaTarea(idUsuario, tarea.getTitulo());
          flash("aviso", "La tarea se ha grabado correctamente");
          return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
       }
@@ -125,10 +125,10 @@ public class GestionTareasController extends Controller {
       }
       else if(!requestData.get("fechaLimite").equals("") && requestData.get("fechaLimite").matches("\\d{2}-\\d{2}-\\d{4}")){
          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-         nuevaFechaLimite = sdf.parse(requestData.get("fechaLimite"));
+         //nuevaFechaLimite = sdf.parse(requestData.get("fechaLimite"));
       }
 
-      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo, nuevaFechaLimite);
+      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo);
       return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
    }
 
