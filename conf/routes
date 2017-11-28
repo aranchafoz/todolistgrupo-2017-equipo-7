@@ -35,9 +35,13 @@ POST    /tareas/:id/terminar        controllers.GestionTareasController.terminaT
 
 GET     /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.creaNuevoTablero(id: Long)
+POST     /usuarios/:id/tableros/:idTablero/editar     controllers.GestionTablerosController.editarTablero(id: Long, idTablero: Long)
+POST    /usuarios/:id/tableros/:idTablero/cerrar         controllers.GestionTablerosController.cerrarTablero(id: Long, idTablero: Long)
 GET     /usuarios/:id/tableros                controllers.GestionTablerosController.listaTableros(id: Long)
 GET     /usuarios/:id/tableros/:idTablero                controllers.GestionTablerosController.detalleTablero(id: Long, idTablero: Long)
 GET     /usuarios/:id/tableros/:idTablero/apuntarse      controllers.GestionTablerosController.apuntarse(id: Long, idTablero: Long)
+
+POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/nueva   controllers.GestionColumnasController.creaNuevaColumna(idUsuario: Long, idTablero: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

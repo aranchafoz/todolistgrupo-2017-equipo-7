@@ -61,14 +61,32 @@ public class ServicioColumnaTest {
   public void nuevaColumnaService() {
     ColumnaService columnaService = newColumnaService();
     long idTablero = 2000L;
-    columnaService.nuevaColumna(idTablero, "Nueva columna test 1");
+    columnaService.nuevaColumna(idTablero, "Nueva columna test 1", 1);
     assertEquals(3, columnaService.allColumnasTablero(2000L).size());
   }
 
   // Test 4: exceptionSiTableroNoExisteRecuperandoSusColumnas
   @Test(expected = ColumnaServiceException.class)
-  public void crearNuevoTableroNoExistenteLanzaExcepcion(){
+  public void crearNuevaColumnaNoExistenteLanzaExcepcion(){
     ColumnaService columnaService = newColumnaService();
      List<Columna> columnas = columnaService.allColumnasTablero(1011L);
+  }
+
+  @Test
+  public void modificarColumna() {
+    ColumnaService columnaService = newColumnaService();
+    long idColumna = 1000L;
+    columnaService.modificaColumna(idColumna, "Pendiente");
+    Columna columna = columnaService.obtenerColumna(idColumna);
+    assertEquals("Pendiente", columna.getNombre());
+  }
+
+  @Test
+  public void moverColumna() {
+    ColumnaService columnaService = newColumnaService();
+    long idColumna = 1000L;
+    columnaService.moverColumna(idColumna, 3);
+    Columna columna = columnaService.obtenerColumna(idColumna);
+    assertEquals((Integer) 3, columna.getPosicion());
   }
 }

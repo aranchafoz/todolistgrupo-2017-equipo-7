@@ -16,6 +16,7 @@ import services.UsuarioService;
 import services.TableroService;
 import models.Usuario;
 import models.Tablero;
+import models.Columna;
 import security.ActionAuthenticator;
 
 public class GestionTablerosController extends Controller {
@@ -101,9 +102,46 @@ public class GestionTablerosController extends Controller {
       } else {
         List<Usuario> participantes = new ArrayList<Usuario>();
         participantes.addAll(tablero.getParticipantes());
+        List<Columna> columnas = new ArrayList<Columna>();
+        columnas.addAll(tablero.getColumnas());
         Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
-        return ok(detalleTablero.render(tablero, participantes, usuario));
+        return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario));
       }
+    }
+  }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result cerrarTablero(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      Tablero tablero = tableroService.obtenerTablero(idTablero);
+      if (tablero == null) {
+         return notFound("Tablero no encontrado");
+      } else {
+        tableroService.cerrarTablero(idTablero);
+        flash("aviso", "El tablero se ha cerrado correctamente");
+        return redirect(controllers.routes.GestionTablerosController.listaTableros(idUsuario));
+      }
+    }
+  }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result editarTablero(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      DynamicForm requestData = formFactory.form().bindFromRequest();
+      String nuevoNombre = requestData.get("nombre");
+
+      Tablero tablero = tableroService.obtenerTablero(idTablero);
+      tablero = tableroService.editarTablero(tablero.getId(), nuevoNombre);
+
+      return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
     }
   }
  }

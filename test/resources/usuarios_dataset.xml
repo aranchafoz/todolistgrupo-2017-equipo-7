@@ -11,15 +11,15 @@
     <Usuario id="2000" login="pepemartinez" nombre="Pepe" apellidos="Martinez"
         password="qwerty" eMail="pepe.martinez@gmail.com" fechaNacimiento="1996-12-10"/>
     <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000" terminada="false"/>
-    <Tablero id="1000" nombre="Tablero test 1" administradorId="1000"/>
-    <Tablero id="1001" nombre="Tablero test 2" administradorId="1000"/>
-    <Tablero id="2000" nombre="Tablero test propio 1" administradorId="2000"/>
-    <Tablero id="2001" nombre="Tablero test propio 2" administradorId="2000"/>
-    <Tablero id="2002" nombre="Tablero test propio 3" administradorId="2000"/>
+    <Tablero id="1000" nombre="Tablero test 1" administradorId="1000" cerrado="false"/>
+    <Tablero id="1001" nombre="Tablero test 2" administradorId="1000" cerrado="false"/>
+    <Tablero id="2000" nombre="Tablero test propio 1" administradorId="2000" cerrado="false"/>
+    <Tablero id="2001" nombre="Tablero test propio 2" administradorId="2000" cerrado="false"/>
+    <Tablero id="2002" nombre="Tablero test propio 3" administradorId="2000" cerrado="false"/>
     <Persona_Tablero tableros_id="2000" participantes_id="2000"/>
     <Persona_Tablero tableros_id="2001" participantes_id="2000"/>
-    <Columna id="1000" nombre="Columna test 1" tableroId="1001"/>
-    <Columna id="1001" nombre="Columna test 2" tableroId="1001"/>
-    <Columna id="2000" nombre="Columna test crear 1" tableroId="2000"/>
-    <Columna id="2001" nombre="Columna test crear 2" tableroId="2000"/>
+    <Columna id="1000" nombre="Columna test 1" posicion="1" tableroId="1001"/>
+    <Columna id="1001" nombre="Columna test 2" posicion="2" tableroId="1001"/>
+    <Columna id="2000" nombre="Columna test crear 1" posicion="1" tableroId="2000"/>
+    <Columna id="2001" nombre="Columna test crear 2" posicion="2" tableroId="2000"/>
  </dataset>

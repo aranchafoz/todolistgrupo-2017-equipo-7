@@ -59,7 +59,7 @@ public class ModeloColumnaTest {
   public void testCrearColumna() {
      Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
      Tablero tablero = new Tablero(usuario, "Tablero 1");
-     Columna columna = new Columna(tablero, "Columna 1");
+     Columna columna = new Columna(tablero, "Columna 1", 1);
 
      assertEquals(tablero.getId(), columna.getTablero().getId());
      assertEquals("Tablero 1", columna.getTablero().getNombre());
@@ -78,7 +78,7 @@ public class ModeloColumnaTest {
       ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
       TableroRepository tableroRepository = injector.instanceOf(TableroRepository.class);
       Tablero tablero = tableroRepository.findById(1000L);
-      Columna columna = new Columna(tablero, "Columna 1");
+      Columna columna = new Columna(tablero, "Columna 1", 1);
       columna = columnaRepository.add(columna);
       assertNotNull(columna.getId());
       assertEquals("Columna 1", getNombreFromColumnaDB(columna.getId()));
@@ -102,14 +102,29 @@ public class ModeloColumnaTest {
       ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
       TableroRepository tableroRepository = injector.instanceOf(TableroRepository.class);
       Tablero tablero = tableroRepository.findById(1000L);
-      Columna columna1 = new Columna(tablero, "Columna 1");
+      Columna columna1 = new Columna(tablero, "Columna 1", 1);
       columna1 = columnaRepository.add(columna1);
-      Columna columna2 = new Columna(tablero, "Columna 2");
+      Columna columna2 = new Columna(tablero, "Columna 2", 2);
       columna2 = columnaRepository.add(columna2);
       // Recuperamos el tablero del repository
       tablero = tableroRepository.findById(tablero.getId());
       // Y comprobamos si tiene las columnas
       assertEquals(2, tablero.getColumnas().size());
+   }
+
+   @Test
+   public void testModificarPosicionColumna() {
+     ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
+     Columna c = columnaRepository.findById(1000L);
+     assertNotNull(c);
+     assertEquals(c.getPosicion(), (Integer) 1);
+
+     c.setPosicion(3);
+
+     assertEquals(c.getPosicion(), (Integer) 3);
+     Columna updated = columnaRepository.update(c);
+
+     assertEquals(updated.getPosicion(), (Integer) 3);
    }
 
 }
