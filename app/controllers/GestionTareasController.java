@@ -117,7 +117,7 @@ public class GestionTareasController extends Controller {
    }
 
    @Security.Authenticated(ActionAuthenticator.class)
-   public Result grabaTareaModificada(Long idTarea, Long idUsuario) throws java.text.ParseException{
+   public Result grabaTareaModificada(Long idTarea) throws java.text.ParseException{
       Tarea tarea = tareaService.obtenerTarea(idTarea);
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
@@ -127,8 +127,7 @@ public class GestionTareasController extends Controller {
       } else {
          Form<Tarea> tareaForm = formFactory.form(Tarea.class).bindFromRequest();
          if (tareaForm.hasErrors()) {
-            Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-            return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class), "Hay errores en el formulario"));
+            return badRequest(formNuevaTarea.render(tarea.getUsuario(), formFactory.form(Tarea.class), "Hay errores en el formulario"));
          }
          Tarea tareaInput = tareaForm.get();
 
