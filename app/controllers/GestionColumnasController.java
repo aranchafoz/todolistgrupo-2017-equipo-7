@@ -69,4 +69,20 @@ public class GestionColumnasController extends Controller {
        return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
      }
    }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result grabaNombreColumnaModificado(Long idUsuario, Long idTablero, Long idColumna) throws java.text.ParseException {
+     String connectedUserStr = session("connected");
+     Long connectedUser =  Long.valueOf(connectedUserStr);
+     if (connectedUser != idUsuario) {
+        return unauthorized("Lo siento, no estás autorizado");
+     } else {
+       DynamicForm requestData = formFactory.form().bindFromRequest();
+       String nuevoNombre = requestData.get("nombre");
+       
+       columnaService.modificaColumna(idColumna, nuevoNombre);
+
+       return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
+     }
+   }
  }

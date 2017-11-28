@@ -41,6 +41,7 @@ GET     /usuarios/:id/tableros/:idTablero/apuntarse      controllers.GestionTabl
 
 POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/nueva               controllers.GestionColumnasController.creaNuevaColumna(idUsuario: Long, idTablero: Long)
 POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/actualizar          controllers.GestionColumnasController.grabaNuevaPosicionColumna(idUsuario: Long, idTablero: Long)
+POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/:idColumna/editar              controllers.GestionColumnasController.grabaNombreColumnaModificado(idUsuario: Long, idTablero: Long, idColumna: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

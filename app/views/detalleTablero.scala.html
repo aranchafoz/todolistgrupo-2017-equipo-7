@@ -49,8 +49,40 @@
           <div id="grid">
           @for(columna <- columnas) {
               <div class="col-lg-3 col-md-3" data-id=@columna.getId() data-userId=@usuario.getId() data-tableroId=@tablero.getId()>
+
+              <div id="modalActualizarColumna@columna.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
+                     role="dialog" aria-hidden="true">
+                 <div class='modal-dialog modal-xs'>
+                   @helper.form(action = routes.GestionColumnasController.grabaNombreColumnaModificado(usuario.getId(), tablero.getId(), columna.getId())) {
+                   <div class='modal-content'>
+                     <div class='modal-header'>
+                       <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span>
+                      </button>
+                      <h4 class='modal-title'>Actualizar columna @columna.getNombre()</h4>
+                     </div>
+                     <div class='modal-body'>
+                         <div class="form-group">
+                           <label class="control-label col-md-2">Nuevo nombre: </label>
+                           <div class="col-md-6">
+                             <input type="text" placeholder="Nuevo nombre" name="nombre" class="form-control">
+                           </div>
+                         </div>
+                     </div>
+                     <div class="modal-footer" style="margin-top: 45px">
+                       <input type="submit" value="Aceptar" class="btn btn-info">
+                       <button type='button' class='btn btn-default pull-right' data-dismiss='modal'>Cancelar</button>
+                     </div>
+                   }
+                   </div>
+                 </div>
+               </div>
+
+
                 <div class="panel panel-info">
-                  <div class="panel-heading"> @columna.getNombre() </div>
+                  <div class="panel-heading">
+                    @columna.getNombre()
+                    <button type='button' data-toggle="modal" data-target="#modalActualizarColumna@columna.getId()"><i class="glyphicon glyphicon-pencil"></i></button>
+                  </div>
                   <div class="panel-body">
                     <p>Tarea 1</p>
                     <p>Tarea 2</p>
