@@ -50,7 +50,7 @@
           @for(columna <- columnas) {
               <div class="col-lg-3 col-md-3" data-id=@columna.getId() data-userId=@usuario.getId() data-tableroId=@tablero.getId()>
 
-              <div id="modalActualizarColumna@columna.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
+              <!-- <div id="modalActualizarColumna@columna.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
                      role="dialog" aria-hidden="true">
                  <div class='modal-dialog modal-xs'>
                    @helper.form(action = routes.GestionColumnasController.grabaNombreColumnaModificado(usuario.getId(), tablero.getId(), columna.getId())) {
@@ -75,13 +75,13 @@
                    }
                    </div>
                  </div>
-               </div>
+               </div> -->
 
 
                 <div class="panel panel-info">
                   <div class="panel-heading">
                     @columna.getNombre()
-                    <button type='button' data-toggle="modal" data-target="#modalActualizarColumna@columna.getId()"><i class="glyphicon glyphicon-pencil"></i></button>
+                    <!-- <button type='button' data-toggle="modal" data-target="#modalActualizarColumna@columna.getId()"><i class="glyphicon glyphicon-pencil"></i></button> -->
                   </div>
                   <div class="panel-body">
                     <p>Tarea 1</p>
@@ -140,14 +140,14 @@
           userId: null,
           tableroId: null,
           beforeStop: function(event, ui) {
-            alert("Prev position: " + ui.item.attr('data-id'));
+            // alert("Prev position: " + ui.item.attr('data-id'));
             columnaId = ui.item.attr('data-id');
             userId = ui.item.attr('data-id');
             tableroId = ui.item.attr('data-id');
           },
           stop: function(event, ui) {
             $(`#columna${columnaId}`).val(ui.item.index())
-            alert("New position: " + ui.item.index() + ", element: " + columnaId);
+            // alert("New position: " + ui.item.index() + ", element: " + columnaId);
           }
         });
       });
