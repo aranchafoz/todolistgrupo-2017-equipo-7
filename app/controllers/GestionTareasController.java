@@ -129,7 +129,7 @@ public class GestionTareasController extends Controller {
          nuevaFechaLimite = sdf.parse(requestData.get("fechaLimite"));
       }
 
-      nuevaDescripcion = requestData.get("descripcion");
+      String nuevaDescripcion = requestData.get("descripcion");
 
       Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo, nuevaFechaLimite, nuevaDescripcion);
       return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
