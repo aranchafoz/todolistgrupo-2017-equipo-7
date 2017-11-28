@@ -101,6 +101,7 @@ public class GestionTareasController extends Controller {
             tarea.getId(),
             tarea.getTitulo(),
             tarea.getFechaLimite(),
+            tarea.getDescripcion(),
             ""));
          }
       }
