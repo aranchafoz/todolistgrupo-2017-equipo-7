@@ -125,10 +125,11 @@ public class GestionTareasController extends Controller {
       }
       else if(!requestData.get("fechaLimite").equals("") && requestData.get("fechaLimite").matches("\\d{2}-\\d{2}-\\d{4}")){
          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-         //nuevaFechaLimite = sdf.parse(requestData.get("fechaLimite"));
+         nuevaFechaLimite = sdf.parse(requestData.get("fechaLimite"));
+         nuevaDescripcion = "Nueva descripcion";
       }
 
-      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo);
+      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo, nuevaFechaLimite, nuevaDescripcion);
       return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
    }
 
