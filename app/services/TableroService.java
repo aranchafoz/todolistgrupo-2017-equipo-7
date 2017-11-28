@@ -82,9 +82,29 @@ public class TableroService {
     tablerosExcluidos.addAll(usuario.getAdministrados());
 
     List<Tablero> tableros = tableroRepository.getAllTableros();
-    
+
     tableros.removeAll(tablerosExcluidos);
     Collections.sort(tableros, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
     return tableros;
+  }
+
+  public Tablero cerrarTablero(Long idTablero) {
+    Tablero tablero = tableroRepository.findById(idTablero);
+    if (tablero == null) {
+      throw new TableroServiceException("Tablero no existente");
+    }
+    tablero.setCerrado(true);
+    tablero = tableroRepository.update(tablero);
+    return tablero;
+  }
+
+  public Tablero editarTablero(Long idTablero, String newTitulo) {
+    Tablero tablero = tableroRepository.findById(idTablero);
+    if (tablero == null) {
+      throw new TableroServiceException("Tablero no existente");
+    }
+    tablero.setNombre(newTitulo);
+    tablero = tableroRepository.update(tablero);
+    return tablero;
   }
 }

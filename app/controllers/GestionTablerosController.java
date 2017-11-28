@@ -110,4 +110,39 @@ public class GestionTablerosController extends Controller {
       }
     }
   }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result cerrarTablero(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      Tablero tablero = tableroService.obtenerTablero(idTablero);
+      if (tablero == null) {
+         return notFound("Tablero no encontrado");
+      } else {
+        tableroService.cerrarTablero(idTablero);
+        flash("aviso", "El tablero se ha cerrado correctamente");
+        return redirect(controllers.routes.GestionTablerosController.listaTableros(idUsuario));
+      }
+    }
+  }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result editarTablero(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      DynamicForm requestData = formFactory.form().bindFromRequest();
+      String nuevoNombre = requestData.get("nombre");
+
+      Tablero tablero = tableroService.obtenerTablero(idTablero);
+      tablero = tableroService.editarTablero(tablero.getId(), nuevoNombre);
+
+      return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
+    }
+  }
  }

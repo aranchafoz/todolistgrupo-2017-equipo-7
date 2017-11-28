@@ -9,7 +9,35 @@
    </h2>
    <hr>
    <div>
-      <h5><strong>Nombre: </strong> @tablero.getNombre() </h5>
+     <div id="modalActualizarTablero@tablero.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
+       role="dialog" aria-hidden="true">
+       <div class='modal-dialog modal-xs'>
+         @helper.form(action = routes.GestionTablerosController.editarTablero(usuario.getId(), tablero.getId())) {
+         <div class='modal-content'>
+           <div class='modal-header'>
+             <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span>
+            </button>
+            <h4 class='modal-title'>Actualizar tablero @tablero.getNombre()</h4>
+           </div>
+           <div class='modal-body'>
+               <div class="form-group">
+                 <label class="control-label col-md-2">Nuevo nombre: </label>
+                 <div class="col-md-6">
+                   <input type="text" placeholder="Nuevo nombre" name="nombre" class="form-control">
+                 </div>
+               </div>
+           </div>
+           <div class="modal-footer" style="margin-top: 45px">
+             <input type="submit" value="Aceptar" class="btn btn-info">
+             <button type='button' class='btn btn-default pull-right' data-dismiss='modal'>Cancelar</button>
+           </div>
+         }
+         </div>
+       </div>
+     </div>
+
+      <h5><strong>Nombre: </strong> @tablero.getNombre()
+        <button data-toggle="modal" data-target="#modalActualizarTablero@tablero.getId()"><i class="fa fa-pencil"></i></button></h5>
       <h5><strong>Administrador: </strong> @tablero.getAdministrador().getLogin() </h5>
       </br>
       <div class="panel panel-default">
