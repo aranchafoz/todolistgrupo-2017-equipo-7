@@ -35,6 +35,7 @@
     <table class="table table-striped">
         <tr>
             <th>Tareas</th>
+            <th>Descripción</th>
             <th>Fecha Límite</th>
             <th>Acción</th>
         </tr>
@@ -42,6 +43,7 @@
       @if(tarea.getTerminada() != true) {
           <tr>
               <td>@tarea.getTitulo()</td>
+              <td>@tarea.getDescripcion()</td>
               <td>@if(tarea.getFechaLimite() != null) {
                       @tarea.getFechaLimite().format("dd-MM-yyyy")
                   }
