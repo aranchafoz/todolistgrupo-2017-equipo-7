@@ -7,10 +7,19 @@
     }
     <h1>Nueva tarea para @usuario.getLogin()</h1>
     @helper.form(action = routes.GestionTareasController.creaNuevaTarea(usuario.getId())) {
+
+        <legend>Nueva tarea</legend>
+
         <fieldset>
-            <legend>Nueva tarea</legend>
             @helper.inputText(tareaForm("titulo"), '_label -> "Titulo", 'size -> 70)
-            @helper.inputText(tareaForm("fechaLimite"), '_label -> "Fecha Límite", 'size -> 70)
+        </fieldset>
+
+        <fieldset>
+            @helper.inputText(tareaForm("descripcion"), '_label -> "Descripción", 'size -> 70)
+        </fieldset>
+
+        <fieldset>
+            @helper.inputDate(tareaForm("fechaLimite"), '_label -> "Fecha Límite", 'size -> 70)
         </fieldset>
         <p>
            <input type="submit" class="btn btn-primary" value="Guardar">

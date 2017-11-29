@@ -1,4 +1,4 @@
-@(usuario: Usuario, idTarea: Long, titulo: String, fechaLimite: Date, mensaje: String)
+@(usuario: Usuario, tareaForm: Form[Tarea], idTarea: Long, titulo: String, descripcion: String, fechaLimite: Date, mensaje: String)
 @main("Modificar Tarea", usuario) {
    @if(mensaje != "") {
       <div class="alert alert-danger">
@@ -9,10 +9,12 @@
    @helper.form(action = routes.GestionTareasController.grabaTareaModificada(idTarea)) {
       <fieldset>
          <legend>Tarea</legend>
-         Título:  <input type="text" size=70 name="titulo" value= "@titulo">
-      </fieldset>
-      <fieldset>
-         Fecha Límite: <input type="date" size=70 name="fechaLimite" value= "@fechaLimite">
+         @helper.inputText(tareaForm("titulo").copy(value=Some(titulo)), '_label -> "Titulo", 'size -> 70)
+
+         @helper.inputText(tareaForm("descripcion").copy(value=Some(descripcion)), '_label -> "Descripción", 'size -> 70)
+
+         @helper.inputDate(tareaForm("fechaLimite").copy(value=Some(fechaLimite.format("yyyy-MM-dd"))), '_label -> "Fecha Límite (opcional)", 'size -> 70)
+
       </fieldset>
       <p/>
       <p>

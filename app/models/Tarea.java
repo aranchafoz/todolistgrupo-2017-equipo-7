@@ -12,10 +12,10 @@ public class Tarea {
    @GeneratedValue(strategy=GenerationType.AUTO)
    private Long id;
    private String titulo;
-   @Formats.DateTime(pattern="dd-MM-yyyy")
+   @Formats.DateTime(pattern="yyyy-MM-dd")
    @Temporal(TemporalType.DATE)
    private Date fechaCreacion;
-   @Formats.DateTime(pattern="dd-MM-yyyy")
+   @Formats.DateTime(pattern="yyyy-MM-dd")
    @Temporal(TemporalType.DATE)
    private Date fechaLimite;
    private boolean terminada;
@@ -36,14 +36,6 @@ public class Tarea {
       this.fechaCreacion = new Date();
       this.fechaLimite = null;
       this.descripcion = "";
-   }
-
-   public Tarea(Usuario usuario, String titulo, Date fechaLimite) {
-      this.usuario = usuario;
-      this.titulo = titulo;
-      this.terminada = false;
-      this.fechaCreacion = new Date();
-      this.fechaLimite = fechaLimite;
    }
 
    // Getters y setters necesarios para JPA
