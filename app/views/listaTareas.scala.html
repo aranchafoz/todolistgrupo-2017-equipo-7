@@ -42,7 +42,11 @@
     @for(tarea <- tareas) {
       @if(tarea.getTerminada() != true) {
           <tr>
-              <td>@tarea.getTitulo()</td>
+              <td>
+                  <a href="@routes.GestionTareasController.detalleTarea(tarea.getId())">
+                      @tarea.getTitulo()
+                  </a>
+              </td>
               <td>@tarea.getDescripcion()</td>
               <td>@if(tarea.getFechaLimite() != null) {
                       @tarea.getFechaLimite().format("dd-MM-yyyy")

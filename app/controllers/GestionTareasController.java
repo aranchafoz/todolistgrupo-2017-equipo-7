@@ -110,6 +110,23 @@ public class GestionTareasController extends Controller {
    }
 
    @Security.Authenticated(ActionAuthenticator.class)
+   public Result detalleTarea(Long idTarea) {
+      Tarea tarea = tareaService.obtenerTarea(idTarea);
+      if (tarea == null) {
+         return notFound("Tarea no encontrada");
+      } else {
+         String connectedUserStr = session("connected");
+         Long connectedUser =  Long.valueOf(connectedUserStr);
+         if (connectedUser != tarea.getUsuario().getId()) {
+            return unauthorized("Lo siento, no estás autorizado");
+         } else {
+            return ok(detalleTarea.render(tarea));
+         }
+      }
+   }
+
+
+   @Security.Authenticated(ActionAuthenticator.class)
    public Result terminaTarea(Long idTarea) {
      tareaService.marcarTerminada(idTarea);
      flash("aviso", "Tarea añadida a terminadas");
