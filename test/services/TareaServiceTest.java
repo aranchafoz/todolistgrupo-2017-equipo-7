@@ -32,6 +32,8 @@ import services.UsuarioServiceException;
 import services.TareaService;
 import services.TareaServiceException;
 
+import java.util.Date;
+
 public class TareaServiceTest {
    static Database db;
    static private Injector injector;
@@ -103,4 +105,26 @@ public class TareaServiceTest {
      tareaService.borraTarea(idTarea);
      assertNull(tareaService.obtenerTarea(idTarea));
   }
+
+   @Test
+   public void tareaSinDescripcionServiceTest() {
+      TareaService tareaService = newTareaService();
+      long idUsuario = 1000L;
+      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+
+      assertEquals("", tarea.getDescripcion());
+   }
+
+   @Test
+   public void tareasTerminadasTest() {
+      TareaService tareaService = newTareaService();
+      long idUsuario = 1000L;
+      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+      List<Tarea> tareas = tareaService.allTareasTerminadasUsuario(idUsuario);
+
+      assertEquals(0, tareas.size());
+      Tarea t = tareaService.marcarTerminada(tarea.getId());
+      tareas = tareaService.allTareasTerminadasUsuario(idUsuario);
+      assertEquals(1, tareas.size());
+   }
 }
