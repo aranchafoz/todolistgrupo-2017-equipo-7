@@ -1,0 +1,24 @@
+@(tarea: Tarea)
+
+@main("Detalle de tarea", tarea.getUsuario()) {
+<h1>
+    Detalle de la tarea @tarea.getTitulo() &nbsp;
+
+</h1>
+<ul>
+    <li><strong>Descripción: </strong> @tarea.getDescripcion()</li>
+    <li><strong>Fecha Creación: </strong> @tarea.getFechaCreacion()</li>
+    <li><strong>Fecha Límite: </strong> @tarea.getFechaLimite()</li>
+    <li><strong>Terminada: </strong>
+        @if(tarea.getTerminada()){
+            Si
+        } else {
+            No
+        }
+    </li>
+</ul>
+
+<p>
+    <a class="btn btn-info" href="@routes.GestionTareasController.listaTareas(tarea.getUsuario().getId())">Atrás</a>
+</p>
+}
