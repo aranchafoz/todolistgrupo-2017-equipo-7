@@ -11,11 +11,11 @@
         <legend>Nueva tarea</legend>
 
         <fieldset>
-            @helper.inputText(tareaForm("titulo"), '_label -> "Titulo", 'size -> 70)
+            @helper.inputText(tareaForm("titulo"), '_label -> "Titulo", 'size -> 70, 'type -> "text", 'class -> "form-control")
         </fieldset>
 
         <fieldset>
-            @helper.inputText(tareaForm("descripcion"), '_label -> "Descripción", 'size -> 70)
+            @helper.inputText(tareaForm("descripcion"), '_label -> "Descripción", 'size -> 70, 'type -> "text", 'class -> "form-control")
         </fieldset>
 
         <fieldset>

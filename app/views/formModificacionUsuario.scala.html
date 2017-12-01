@@ -9,9 +9,9 @@
    @helper.form(action = routes.UsuarioController.grabaUsuarioModificado(usuario.getId())) {
       <fieldset>
          <legend>Usuario</legend>
-         Nombre:  <input type="text" size=70 name="nombre" value= "@usuario.getNombre()">
+         Nombre:  <input type="text" class="form-control" size=70 name="nombre" value= "@usuario.getNombre()">
         </br>
-         Apellidos:  <input type="text" size=70 name="apellidos" value= "@usuario.getApellidos()">
+         Apellidos:  <input type="text" class="form-control" size=70 name="apellidos" value= "@usuario.getApellidos()">
         </br>
          Fecha de nacimiento:  <input type="date" name="fechaNacimiento" value="@usuario.getFechaNacimiento()">
       </fieldset>

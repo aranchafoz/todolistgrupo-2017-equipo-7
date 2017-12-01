@@ -8,10 +8,10 @@
    <h1>Registrar nuevo usuario</h1>
    @helper.form(action = routes.UsuarioController.registroUsuario()) {
       <fieldset>
-         @helper.inputText(registroForm("login"), '_label -> "Login")
-         @helper.inputText(registroForm("email"), '_label -> "Email")
-         @helper.inputPassword(registroForm("password"), '_label -> "Contraseña")
-         @helper.inputPassword(registroForm("confirmacion"), '_label -> "Repite contraseña")
+         @helper.inputText(registroForm("login"), '_label -> "Login", 'type -> "text", 'class -> "form-control")
+         @helper.inputText(registroForm("email"), '_label -> "Email", 'type -> "text", 'class -> "form-control")
+         @helper.inputPassword(registroForm("password"), '_label -> "Contraseña", 'type -> "text", 'class -> "form-control")
+         @helper.inputPassword(registroForm("confirmacion"), '_label -> "Repite contraseña", 'type -> "text", 'class -> "form-control")
       </fieldset>
       <p>
          <button type="submit" class="btn btn-primary">Registro</button>

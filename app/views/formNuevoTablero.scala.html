@@ -9,7 +9,7 @@
     @helper.form(action = routes.GestionTablerosController.creaNuevoTablero(usuario.getId())) {
         <fieldset>
             <legend>Nuevo tablero</legend>
-            @helper.inputText(tableroForm("nombre"), '_label -> "Nombre", 'size -> 70)
+            @helper.inputText(tableroForm("nombre"), '_label -> "Nombre", 'size -> 70, 'type -> "text", 'class -> "form-control")
         </fieldset>
         <p>
            <input type="submit" class="btn btn-primary" value="Guardar">
