@@ -79,12 +79,11 @@ public class GestionColumnasController extends Controller {
      } else {
        DynamicForm requestData = formFactory.form().bindFromRequest();
        String nuevoNombre = requestData.get("nombre");
-          return unauthorized("Lo siento " + nuevoNombre);
 
-       //Columna columna = columnaService.obtenerColumna(idColumna);
-       //columnaService.modificaColumna(columna.getId(), nuevoNombre);
+       Columna columna = columnaService.obtenerColumna(idColumna);
+       columnaService.modificaColumna(columna.getId(), nuevoNombre);
 
-       //return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
+       return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
      }
    }
  }

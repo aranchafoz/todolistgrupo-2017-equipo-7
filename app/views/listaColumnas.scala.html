@@ -1,0 +1,62 @@
+@(usuario: Usuario, tablero: Tablero, columnas: List[Columna], columnaForm: Form[Columna])
+<div style="overflow-x: show">
+    </br>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <h5>
+          <strong>Columnas</strong>
+          &nbsp;
+          <button class="btn btn-info btn-xs"><i class="glyphicon glyphicon-transfer"></i>&nbsp; Editar posición</button>
+        </h5>
+      </div>
+    </div>
+    </br>
+    <div id="grid">
+    @for(columna <- columnas) {
+        <div class="col-lg-3 col-md-3" data-id=@columna.getId() data-userId=@usuario.getId() data-tableroId=@tablero.getId()>
+
+          @modalActualizarColumna(usuario, tablero, columna)
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                  @columna.getNombre()
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6" align="right">
+                  <a data-toggle="modal" data-target="#modalActualizarColumna@columna.getId()"><i class="glyphicon glyphicon-pencil"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <p>Tarea 1</p>
+              <p>Tarea 2</p>
+            </div>
+            <input id="columna@columna.getId()" name="columna@columna.getId()" value= "@columna.getPosicion()" type="hidden">
+          </div>
+
+        </div>
+    }
+    </div>
+
+    <div class="col-lg-3 col-md-3" id="addColumna">
+      <input type="button" class="btn btn-primary btn-block" onclick="hideAddColumnaButton()"
+
+       value="Añadir una columna...">
+    </div>
+
+    @formNuevaColumna(usuario, tablero, columnaForm)
+
+</div>
+
+<script type="text/javascript">
+    function hideAddColumnaButton() {
+      $("#addColumna").hide();
+      $("#newColumnaForm").fadeIn();
+    }
+    function showAddColumnaButton() {
+      $("#newColumnaForm").hide();
+      $("#addColumna").fadeIn();
+      console.log("a pastar")
+    }
+</script>

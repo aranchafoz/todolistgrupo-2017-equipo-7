@@ -1,183 +1,47 @@
 @(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario)
 
 @main("Detalle de tablero", usuario) {
-
-
-
    <h2>
      Tablero @tablero.getNombre()
    </h2>
    <hr>
-   <div>
-     <div id="modalActualizarTablero@tablero.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
-       role="dialog" aria-hidden="true">
-       <div class='modal-dialog modal-xs'>
-         @helper.form(action = routes.GestionTablerosController.editarTablero(usuario.getId(), tablero.getId())) {
-         <div class='modal-content'>
-           <div class='modal-header'>
-             <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span>
-            </button>
-            <h4 class='modal-title'>Actualizar tablero @tablero.getNombre()</h4>
-           </div>
-           <div class='modal-body'>
-               <div class="form-group">
-                 <label class="control-label col-md-2">Nuevo nombre: </label>
-                 <div class="col-md-6">
-                   <input type="text" placeholder="Nuevo nombre" name="nombre" class="form-control">
-                 </div>
-               </div>
-           </div>
-           <div class="modal-footer" style="margin-top: 45px">
-             <input type="submit" value="Aceptar" class="btn btn-info">
-             <button type='button' class='btn btn-default pull-right' data-dismiss='modal'>Cancelar</button>
-           </div>
-         }
-         </div>
-       </div>
-     </div>
 
-      <h5><strong>Nombre: </strong> @tablero.getNombre()
-        <button data-toggle="modal" data-target="#modalActualizarTablero@tablero.getId()"><i class="fa fa-pencil"></i></button></h5>
-      <h5><strong>Administrador: </strong> @tablero.getAdministrador().getLogin() </h5>
-      </br>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <strong> Participantes </strong>
-        </div>
-        <table class="table table-striped">
+    @modalActualizarTablero(usuario, tablero)
+
+    <h5>
+      <strong>Nombre: </strong> @tablero.getNombre()
+      &nbsp;
+      <a data-toggle="modal" data-target="#modalActualizarTablero@tablero.getId()"><i class="glyphicon glyphicon-pencil"></i></a>
+    </h5>
+    <h5><strong>Administrador: </strong> @tablero.getAdministrador().getLogin() </h5>
+    </br>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong> Participantes </strong>
+      </div>
+      <table class="table table-striped">
+            @if(participantes.size() > 0) {
               <tr>
                   <th>Login</th>
                   <th>Email</th>
               </tr>
-          @for(participante <- participantes) {
+              @for(participante <- participantes) {
+                  <tr>
+                      <td>@participante.getLogin()</td>
+                      <td>@participante.getEmail()</td>
+                  </tr>
+                }
+            } else {
               <tr>
-                  <td>@participante.getLogin()</td>
-                  <td>@participante.getEmail()</td>
+                  <td align="center">No se ha apuntado ningún usuario</td>
               </tr>
             }
-        </table>
-      </div>
+      </table>
+    </div>
+
+    @listaColumnas(usuario, tablero, columnas, columnaForm)
+
+ </div>
 
 
-
-
-      <div style="overflow-x: show">
-          @helper.form(action = routes.GestionColumnasController.grabaNuevaPosicionColumna(usuario.getId(), tablero.getId())) {
-          </br>
-            <div class="col-md-6 col-lg-6">
-              <h5><strong>Columnas</strong></h5>
-            </div>
-            <div class="col-md-6 col-lg-6" align="right">
-              @if(columnas.size() > 1) {
-                <input type="submit" class="btn btn-success" align="right" value="Guardar">
-              }
-            </div>
-          </br>
-          </br>
-          <div id="grid">
-          @for(columna <- columnas) {
-              <div class="col-lg-3 col-md-3" data-id=@columna.getId() data-userId=@usuario.getId() data-tableroId=@tablero.getId()>
-
-              <!-- <div id="modalActualizarColumna@columna.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
-                     role="dialog" aria-hidden="true">
-                 <div class='modal-dialog modal-xs'>
-                   @helper.form(action = routes.GestionColumnasController.grabaNombreColumnaModificado(usuario.getId(), tablero.getId(), columna.getId())) {
-                   <div class='modal-content'>
-                     <div class='modal-header'>
-                       <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span>
-                      </button>
-                      <h4 class='modal-title'>Actualizar columna @columna.getNombre()</h4>
-                     </div>
-                     <div class='modal-body'>
-                         <div class="form-group">
-                           <label class="control-label col-md-2">Nuevo nombre: </label>
-                           <div class="col-md-6">
-                             <input type="text" placeholder="Nuevo nombre" name="nombre" class="form-control">
-                           </div>
-                         </div>
-                     </div>
-                     <div class="modal-footer" style="margin-top: 45px">
-                       <input type="submit" value="Aceptar" class="btn btn-info">
-                       <button type='button' class='btn btn-default pull-right' data-dismiss='modal'>Cancelar</button>
-                     </div>
-                   }
-                   </div>
-                 </div>
-               </div> -->
-
-
-                <div class="panel panel-info">
-                  <div class="panel-heading">
-                    @columna.getNombre()
-                    <!-- <button type='button' data-toggle="modal" data-target="#modalActualizarColumna@columna.getId()"><i class="glyphicon glyphicon-pencil"></i></button> -->
-                  </div>
-                  <div class="panel-body">
-                    <p>Tarea 1</p>
-                    <p>Tarea 2</p>
-                  </div>
-                  <input id="columna@columna.getId()" name="columna@columna.getId()" value= "@columna.getPosicion()" type="hidden">
-                </div>
-              </div>
-          }
-          </div>
-          }
-          <div class="col-lg-3 col-md-3" id="addColumna">
-            <input type="button" class="btn btn-primary btn-block" onclick="hideAddColumnaButton()"
-
-             value="Añadir una columna...">
-          </div>
-
-          <div class="col-lg-3 col-md-3" id="newColumnaForm" style="display: none;">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                @helper.form(action = routes.GestionColumnasController.creaNuevaColumna(usuario.getId(), tablero.getId())) {
-                    <fieldset>
-                        @helper.inputText(columnaForm("Nombre"), 'placeholder -> "Introduce el nombre", 'size -> 30, 'type -> "text", 'class -> "form-control")
-                        <div class="col-lg-6 col-md-6">
-                          <input type="submit" class="btn btn-primary" value="Guardar">
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-">
-                          <input type="button" class="btn btn-danger" value="Cancel" onclick="showAddColumnaButton()">
-                        </div>
-                    </fieldset>
-                }
-              </div>
-            </div>
-          </div>
-      </div>
-
-   </div>
-
-   <script type="text/javascript">
-       function hideAddColumnaButton() {
-         $("#addColumna").hide();
-         $("#newColumnaForm").fadeIn();
-       }
-       function showAddColumnaButton() {
-         $("#newColumnaForm").hide();
-         $("#addColumna").fadeIn();
-         console.log("a pastar")
-       }
-      $(document).ready(function () {
-        $("#grid").sortable({
-          tolerance: 'pointer',
-          revert: 'invalid',
-          placeholder: 'col-md-3 col-lg-3 placeholder',
-          forceHelperSize: true,
-          columnaId: null,
-          userId: null,
-          tableroId: null,
-          beforeStop: function(event, ui) {
-            // alert("Prev position: " + ui.item.attr('data-id'));
-            columnaId = ui.item.attr('data-id');
-            userId = ui.item.attr('data-id');
-            tableroId = ui.item.attr('data-id');
-          },
-          stop: function(event, ui) {
-            $(`#columna${columnaId}`).val(ui.item.index())
-            // alert("New position: " + ui.item.index() + ", element: " + columnaId);
-          }
-        });
-      });
-   </script>
 }

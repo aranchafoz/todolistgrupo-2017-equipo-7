@@ -1,0 +1,18 @@
+@(usuario: Usuario, tablero: Tablero, columnaForm: Form[Columna])
+<div class="col-lg-3 col-md-3" id="newColumnaForm" style="display: none;">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      @helper.form(action = routes.GestionColumnasController.creaNuevaColumna(usuario.getId(), tablero.getId())) {
+          <fieldset>
+              @helper.inputText(columnaForm("Nombre"), 'placeholder -> "Introduce el nombre", 'size -> 30, 'type -> "text", 'class -> "form-control")
+              <div class="col-lg-6 col-md-6">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+              </div>
+              <div class="col-lg-6 col-md-6 col-">
+                <input type="button" class="btn btn-danger" value="Cancel" onclick="showAddColumnaButton()">
+              </div>
+          </fieldset>
+      }
+    </div>
+  </div>
+</div>
