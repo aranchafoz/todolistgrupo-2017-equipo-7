@@ -86,4 +86,26 @@ public class GestionColumnasController extends Controller {
        return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
      }
    }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result listaColumnasDesplazables(Long idUsuario, Long idTablero) throws java.text.ParseException {
+     String connectedUserStr = session("connected");
+     Long connectedUser =  Long.valueOf(connectedUserStr);
+     if (connectedUser != idUsuario) {
+        return unauthorized("Lo siento, no estás autorizado");
+     } else {
+       Tablero tablero = tableroService.obtenerTablero(idTablero);
+       if (tablero == null) {
+          return notFound("Tablero no encontrado");
+       } else {
+         List<Usuario> participantes = new ArrayList<Usuario>();
+         participantes.addAll(tablero.getParticipantes());
+         List<Columna> columnas = columnaService.allColumnasTablero(idTablero);
+         Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
+         boolean editable = true;
+         return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, editable));
+       }
+     }
+   }
+
  }

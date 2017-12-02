@@ -1,4 +1,4 @@
-@(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario)
+@(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario, editable: Boolean)
 
 @main("Detalle de tablero", usuario) {
    <h2>
@@ -39,7 +39,11 @@
       </table>
     </div>
 
-    @listaColumnas(usuario, tablero, columnas, columnaForm)
+    @if(!editable) {
+      @listaColumnas(usuario, tablero, columnas, columnaForm)
+    } else {
+      @listaEditarColumnas(usuario, tablero, columnas, columnaForm)
+    }
 
  </div>
 
