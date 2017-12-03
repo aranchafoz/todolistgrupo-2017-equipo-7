@@ -9,9 +9,9 @@
    @helper.form(action = routes.GestionTareasController.grabaTareaModificada(idTarea)) {
       <fieldset>
          <legend>Tarea</legend>
-         @helper.inputText(tareaForm("titulo").copy(value=Some(titulo)), '_label -> "Titulo", 'size -> 70)
+         @helper.inputText(tareaForm("titulo").copy(value=Some(titulo)), '_label -> "Titulo", 'size -> 70, 'type -> "text", 'class -> "form-control")
 
-         @helper.inputText(tareaForm("descripcion").copy(value=Some(descripcion)), '_label -> "Descripción", 'size -> 70)
+         @helper.inputText(tareaForm("descripcion").copy(value=Some(descripcion)), '_label -> "Descripción", 'size -> 70, 'type -> "text", 'class -> "form-control")
 
          @helper.inputDate(tareaForm("fechaLimite").copy(value=Some(fechaLimite.format("yyyy-MM-dd"))), '_label -> "Fecha Límite (opcional)", 'size -> 70)
 

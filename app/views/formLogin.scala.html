@@ -9,8 +9,8 @@
    <h1>Login</h1>
    @helper.form(action = routes.UsuarioController.loginUsuario()) {
       <fieldset>
-         @helper.inputText(loginForm("username"), '_label -> "Usuario")
-         @helper.inputPassword(loginForm("password"), '_label -> "Contraseña")
+         @helper.inputText(loginForm("username"), '_label -> "Usuario", 'type -> "text", 'class -> "form-control")
+         @helper.inputPassword(loginForm("password"), '_label -> "Contraseña", 'type -> "text", 'class -> "form-control")
       </fieldset>
       <p>
          <button type="submit" class="btn btn-primary">Login</button>

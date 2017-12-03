@@ -24,7 +24,7 @@
     </script>
 }
 @main("Tareas del usuario @usuario.getLogin()", usuario, scripts) {
-  
+
     <h2> Listado de tareas de @usuario.getLogin()</h2>
 
     <ul class="nav nav-tabs">
@@ -58,9 +58,10 @@
                   <span class="glyphicon glyphicon-pencil"></span>&nbsp;
                   <a style="cursor: pointer"
                   onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
-                  <span class="glyphicon glyphicon-off"></span></a>
+                  <i class="fa fa-archive"
+                  data-placement='top' title='Cerrar tarea'></i></a>
                 }
-                  <a onmouseover="" style="cursor: pointer;"
+                  <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs" 
                   onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
           </tr>
