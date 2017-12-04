@@ -89,4 +89,13 @@ public class ServicioColumnaTest {
     Columna columna = columnaService.obtenerColumna(idColumna);
     assertEquals((Integer) 3, columna.getPosicion());
   }
+
+  // Test #23: borrado columna
+  @Test
+  public void borradoColumna() {
+    ColumnaService columnaService = newColumnaService();
+     long idColumna = 1000L;
+     columnaService.borraColumna(idColumna);
+     assertNull(columnaService.obtenerColumna(idColumna));
+  }
 }

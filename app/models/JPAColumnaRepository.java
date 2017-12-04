@@ -2,6 +2,7 @@ package models;
 
 import javax.inject.Inject;
 import play.db.jpa.JPAApi;
+import javax.persistence.EntityManager;
 
 public class JPAColumnaRepository implements ColumnaRepository {
    JPAApi jpaApi;
@@ -32,4 +33,12 @@ public class JPAColumnaRepository implements ColumnaRepository {
          return actualizado;
       });
    }
+
+  public void delete(Long idColumna) {
+    jpaApi.withTransaction(() -> {
+      EntityManager entityManager = jpaApi.em();
+      Columna columnaBD = entityManager.getReference(Columna.class, idColumna);
+      entityManager.remove(columnaBD);
+    });
+  }
 }

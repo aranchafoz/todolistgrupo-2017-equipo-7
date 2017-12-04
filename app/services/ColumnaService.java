@@ -63,4 +63,11 @@ public class ColumnaService {
   public Columna obtenerColumna(Long idColumna) {
      return columnaRepository.findById(idColumna);
   }
+
+  public void borraColumna(Long idColumna) {
+    Columna columna = columnaRepository.findById(idColumna);
+    if (columna == null)
+      throw new ColumnaServiceException("No existe columna");
+    columnaRepository.delete(idColumna);
+  }
 }
