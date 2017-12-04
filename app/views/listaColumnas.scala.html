@@ -1,4 +1,18 @@
 @(usuario: Usuario, tablero: Tablero, columnas: List[Columna], columnaForm: Form[Columna])
+
+<script type="text/javascript">
+    function del(urlBorrar) {
+        $.ajax({
+            url: urlBorrar,
+            type: 'DELETE',
+            success: function(results) {
+                //refresh the page
+                location.reload();
+            }
+        });
+    }
+</script>
+
 <div style="overflow-x: show">
     </br>
     <div class="row">
@@ -27,6 +41,9 @@
                 </div>
                 <div class="col-sm-6 col-md-6 col-lg-6" align="right">
                   <a data-toggle="modal" data-target="#modalActualizarColumna@columna.getId()"><i class="glyphicon glyphicon-pencil"></i></a>
+                  <a onmouseover="" style="cursor: pointer;" class="btn btn-xs"
+                  onclick="del('@routes.GestionColumnasController.borraColumna(usuario.getId(), tablero.getId(), columna.getId())')">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:red"></span></a>
                 </div>
               </div>
             </div>
