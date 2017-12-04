@@ -108,4 +108,21 @@ public class GestionColumnasController extends Controller {
      }
    }
 
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result borraColumna(Long idUsuario, Long idTablero, Long idColumna) {
+     String connectedUserStr = session("connected");
+     Long connectedUser =  Long.valueOf(connectedUserStr);
+     if (connectedUser != idUsuario) {
+        return unauthorized("Lo siento, no estás autorizado");
+     } else {
+       Tablero tablero = tableroService.obtenerTablero(idTablero);
+       if (tablero == null) {
+          return notFound("Tablero no encontrado");
+       } else {
+          columnaService.borraColumna(idColumna);
+          flash("aviso", "Columna borrada correctamente");
+          return ok();
+       }
+     }
+   }
  }
