@@ -18,6 +18,9 @@ public class Tarea {
    @Formats.DateTime(pattern="yyyy-MM-dd")
    @Temporal(TemporalType.DATE)
    private Date fechaLimite;
+   @Formats.DateTime(pattern="yyyy-MM-dd")
+   @Temporal(TemporalType.DATE)
+   private Date deleted_at;
    private boolean terminada;
    private String descripcion;
    // Relación muchos-a-uno entre tareas y usuario
@@ -35,6 +38,7 @@ public class Tarea {
       this.terminada = false;
       this.fechaCreacion = new Date();
       this.fechaLimite = null;
+      this.deleted_at = null;
       this.descripcion = "";
    }
 
@@ -69,6 +73,14 @@ public class Tarea {
    public Date getFechaLimite() { return fechaLimite; }
 
    public void setFechaLimite(Date fechaLimite) { this.fechaLimite = fechaLimite; }
+
+   public Date getDeletedAt() {
+     return this.deleted_at;
+   }
+
+   public void setDeletedAt(Date deleted_at) {
+     this.deleted_at = deleted_at;
+   }
 
    public boolean getTerminada() { return this.terminada; }
 
