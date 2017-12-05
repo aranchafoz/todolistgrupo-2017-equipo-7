@@ -15,6 +15,7 @@ import org.dbunit.dataset.xml.*;
 import org.dbunit.operation.*;
 import java.io.FileInputStream;
 
+import java.util.Set;
 import java.util.List;
 
 import play.inject.guice.GuiceApplicationBuilder;
@@ -161,5 +162,74 @@ public class TareaTest {
 
      assertNotNull(tarea.getDeletedAt());
      assertEquals(tarea.getDeletedAt(), new Date());
+   }
+
+   // SGT-6: Fecha de Creación y Fecha Límite
+   @Test
+   public void testTareaFechaCreacion() {
+       Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+       Tarea t1 = new Tarea(usuario,"tarea1");
+
+       assertNotNull(t1.getFechaCreacion());
+   }
+
+   @Test
+   public void testTareaFechaLimite() {
+       Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+       Tarea t1 = new Tarea(usuario,"tarea1");
+
+       Date auxFecha = new Date();
+
+       t1.setFechaLimite(auxFecha);
+
+       assertNotNull(t1.getFechaLimite());
+   }
+
+   @Test
+   public void testTareaFechaCreacionBD() {
+       TareaRepository tareaRepository = newTareaRepository();
+       Tarea t = tareaRepository.findById(1000L);
+
+       assertNotNull(t.getFechaCreacion());
+   }
+
+   @Test
+   public void testTareaFechaLimiteBD() {
+       TareaRepository tareaRepository = newTareaRepository();
+       Tarea t = tareaRepository.findById(1000L);
+
+       assertNotNull(t.getFechaLimite());
+   }
+
+   // SGT-7: Propiedad terminado en Tarea
+   @Test
+   public void testTareaNoTerminada() {
+     Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+     Tarea t1 = new Tarea(usuario,"tarea1");
+
+     assertFalse(t1.getTerminada());
+   }
+
+   @Test
+   public void testTareaNoTerminadaBD() {
+     TareaRepository tareaRepository = newTareaRepository();
+     Tarea t = tareaRepository.findById(1000L);
+     assertNotNull(t);
+     assertFalse(t.getTerminada());
+   }
+
+   @Test
+   public void testTareaTerminada() {
+     TareaRepository tareaRepository = newTareaRepository();
+     Tarea t = tareaRepository.findById(1000L);
+     assertNotNull(t);
+     assertFalse(t.getTerminada());
+
+     t.setTerminada(true);
+
+     assertTrue(t.getTerminada());
+     Tarea updated = tareaRepository.update(t);
+
+     assertTrue(updated.getTerminada());
    }
 }

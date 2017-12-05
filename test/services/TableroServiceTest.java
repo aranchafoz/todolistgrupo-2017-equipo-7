@@ -1,8 +1,20 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
+import play.db.Database;
+import play.db.Databases;
+import play.db.jpa.*;
+
+import play.Logger;
+
+import java.sql.*;
 
 import play.db.jpa.*;
 
+import org.junit.*;
 import org.dbunit.*;
 import org.dbunit.dataset.*;
 import org.dbunit.dataset.xml.*;
@@ -12,6 +24,9 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import models.Tablero;
+import models.TableroRepository;
+import models.JPATableroRepository;
+import models.Usuario;
 
 import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.Injector;
@@ -27,7 +42,7 @@ import services.TableroServiceException;
 //    - tableros en los que participa el usuario.
 //    - resto de tableros (en los que el usuario ni participa ni es administrador).
 // - apuntarse a un tablero (como participante)
-public class ServicioTableroTest {
+public class TableroServiceTest {
   static private Injector injector;
 
   @BeforeClass
@@ -141,5 +156,28 @@ public class ServicioTableroTest {
     List<Tablero> tableros = tableroService.obtenerRestoTableros(2000L);
     assertEquals("Tablero test 1", tableros.get(0).getNombre());
     assertEquals("Tablero test 2", tableros.get(1).getNombre());
+  }
+
+  // SGT-9: Modificar y cerrar tablero
+  @Test
+  public void cierraTableroServiceTest() {
+    TableroService tableroService = newTableroService();
+    Tablero tablero = tableroService.nuevoTablero(1000L, "Test 1");
+
+    assertFalse(tablero.getCerrado());
+    tablero = tableroService.cerrarTablero(tablero.getId());
+
+    assertTrue(tablero.getCerrado());
+  }
+
+  @Test
+  public void editaTableroTest() {
+    TableroService tableroService = newTableroService();
+    Tablero tablero = tableroService.nuevoTablero(1000L, "Test 2");
+
+    assertEquals(tablero.getNombre(), "Test 2");
+    tablero = tableroService.editarTablero(tablero.getId(), "Me abruma el tablero");
+
+    assertEquals(tablero.getNombre(), "Me abruma el tablero");
   }
 }
