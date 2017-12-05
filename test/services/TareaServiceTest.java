@@ -115,6 +115,18 @@ public class TareaServiceTest {
       assertEquals("", tarea.getDescripcion());
    }
 
+   // SGT-7: Propiedad terminado en Tarea
+   @Test
+   public void tareaTerminadaServiceTest() {
+     TareaService tareaService = newTareaService();
+     long idUsuario = 1000L;
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+     assertEquals(3, tareaService.allTareasUsuario(1000L).size());
+
+     Tarea t = tareaService.marcarTerminada(tarea.getId());
+     assertTrue(t.getTerminada());
+   }
+
    @Test
    public void tareasTerminadasTest() {
       TareaService tareaService = newTareaService();

@@ -18,6 +18,7 @@ import java.util.List;
 
 import play.db.jpa.*;
 
+import org.junit.*;
 import org.dbunit.*;
 import org.dbunit.dataset.*;
 import org.dbunit.dataset.xml.*;
@@ -28,8 +29,15 @@ import models.Usuario;
 import models.UsuarioRepository;
 import models.Tablero;
 import models.TableroRepository;
+import models.JPATableroRepository;
 
-public class ModeloRepositorioTableroTest {
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
+import play.Logger;
+
+public class TableroTest {
   static Database db;
   static private Injector injector;
 
@@ -42,6 +50,20 @@ public class ModeloRepositorioTableroTest {
       // Necesario para inicializar JPA
       injector.instanceOf(JPAApi.class);
    }
+
+   @Before
+    public void initData() throws Exception {
+       JndiDatabaseTester databaseTester = new JndiDatabaseTester("DBTest");
+       IDataSet initialDataSet = new FlatXmlDataSetBuilder().build(new FileInputStream("test/resources/usuarios_dataset.xml"));
+       databaseTester.setDataSet(initialDataSet);
+       databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
+       databaseTester.onSetup();
+    }
+
+    private TableroRepository newTableroRepository() {
+       return injector.instanceOf(TableroRepository.class);
+    }
+
    // Crear un tablero.
    @Test
    public void testCrearTablero() {
@@ -180,5 +202,28 @@ public class ModeloRepositorioTableroTest {
       List<Tablero> tableros = tableroRepository.getAllTableros();
       assertNotNull(tableros);
       assertEquals(5, tableros.size());
+   }
+
+   // SGT-9: Modificar y cerrar tablero
+   @Test
+   public void TableroCerradoTest() {
+     Usuario user = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+     Tablero tablero = new Tablero(user, "Cosas Fary");
+
+     assertFalse(tablero.getCerrado());
+     tablero.setCerrado(true);
+     assertTrue(tablero.getCerrado());
+   }
+
+   @Test
+   public void TableroCerradoDBTest() {
+     TableroRepository tableroRepository = newTableroRepository();
+     Tablero tablero = tableroRepository.findById(1000L);
+
+     assertFalse(tablero.getCerrado());
+     tablero.setCerrado(true);
+     tablero = tableroRepository.update(tablero);
+
+     assertTrue(tablero.getCerrado());
    }
 }
