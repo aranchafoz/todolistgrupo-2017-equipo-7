@@ -157,9 +157,10 @@ public class TareaTest {
      Tarea tarea = new Tarea(usuario, "Me abruma la colaboración de este test");
 
      assertNull(tarea.getDeletedAt());
-     tarea.setDeletedAt(new Date());
+     Date now = new Date();
+     tarea.setDeletedAt(now);
 
      assertNotNull(tarea.getDeletedAt());
-     assertEquals(tarea.getDeletedAt(), new Date());
+     assertEquals(tarea.getDeletedAt(), now);
    }
 }
