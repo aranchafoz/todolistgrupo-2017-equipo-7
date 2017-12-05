@@ -29,6 +29,10 @@ import models.JPAUsuarioRepository;
 import models.TareaRepository;
 import models.JPATareaRepository;
 
+import java.util.Date;
+import java.text.DateFormat;
+import play.data.format.*;
+
 public class TareaTest {
    static Database db;
    static private Injector injector;
@@ -137,5 +141,25 @@ public class TareaTest {
       UsuarioRepository repository = newUsuarioRepository();
       Usuario usuario = repository.findById(1000L);
       assertEquals(2, usuario.getTareas().size());
+   }
+
+   @Test
+   public void testCrearTareaSinBorrado() {
+     Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+     Tarea tarea = new Tarea(usuario, "Me abruma la colaboración de este test");
+
+     assertNull(tarea.getDeletedAt());
+   }
+
+   @Test
+   public void testBorrarTarea() {
+     Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+     Tarea tarea = new Tarea(usuario, "Me abruma la colaboración de este test");
+
+     assertNull(tarea.getDeletedAt());
+     tarea.setDeletedAt(new Date());
+
+     assertNotNull(tarea.getDeletedAt());
+     assertEquals(tarea.getDeletedAt(), new Date());
    }
 }
