@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import java.util.Date;
+import java.text.DateFormat;
+import play.data.format.*;
+
 import models.Usuario;
 import models.UsuarioRepository;
 import models.Tarea;
@@ -92,6 +96,14 @@ public class TareaService {
     Tarea tarea = tareaRepository.findById(idTarea);
     if (tarea == null) throw new TareaServiceException("No existe tarea");
     tarea.setTerminada(true);
+    tarea = tareaRepository.update(tarea);
+    return tarea;
+  }
+
+  public Tarea enviarPapelera(Long idTarea) {
+    Tarea tarea = tareaRepository.findById(idTarea);
+    if (tarea == null) throw new TareaServiceException("No existe tarea");
+    tarea.setDeletedAt(new Date());
     tarea = tareaRepository.update(tarea);
     return tarea;
   }

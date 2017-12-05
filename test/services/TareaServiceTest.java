@@ -139,4 +139,14 @@ public class TareaServiceTest {
       tareas = tareaService.allTareasTerminadasUsuario(idUsuario);
       assertEquals(1, tareas.size());
    }
+
+   @Test
+   public void testTareaEnviarPapelera() {
+     TareaService tareaService = newTareaService();
+     long idUsuario = 1000L;
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+     tarea = tareaService.enviarPapelera(tarea.getId());
+
+     assertNotNull(tarea.getDeletedAt());
+   }
 }
