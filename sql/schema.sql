@@ -77,14 +77,18 @@ DROP TABLE IF EXISTS `Tarea`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tarea` (
   `id` bigint(20) NOT NULL,
+  `deleted_at` date DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
   `fechaCreacion` date DEFAULT NULL,
   `fechaLimite` date DEFAULT NULL,
   `terminada` bit(1) NOT NULL,
   `titulo` varchar(255) DEFAULT NULL,
+  `columnaId` bigint(20) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `FK30n0ojdgfxnkm0768tnqddi91` (`columnaId`),
   KEY `FKepne2t52y8dmn8l9da0dd7l51` (`usuarioId`),
+  CONSTRAINT `FK30n0ojdgfxnkm0768tnqddi91` FOREIGN KEY (`columnaId`) REFERENCES `Columna` (`id`),
   CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

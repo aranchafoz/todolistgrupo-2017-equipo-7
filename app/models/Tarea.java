@@ -30,9 +30,16 @@ public class Tarea {
    @JoinColumn(name="usuarioId")
    public Usuario usuario;
 
+   // Relación muchos-a-uno entre tareas y columna
+   @ManyToOne
+   // Nombre de la columna en la BD que guarda físicamente
+   // el ID del usuario con el que está asociado una tarea
+   @JoinColumn(name="columnaId")
+   public Columna columna;
+
    public Tarea() {}
 
-   public Tarea(Usuario usuario, String titulo) {
+   public Tarea(Usuario usuario, String titulo, Columna columna) {
       this.usuario = usuario;
       this.titulo = titulo;
       this.terminada = false;
@@ -40,6 +47,7 @@ public class Tarea {
       this.fechaLimite = null;
       this.deleted_at = null;
       this.descripcion = "";
+      this.columna = columna;
    }
 
    // Getters y setters necesarios para JPA
@@ -66,6 +74,14 @@ public class Tarea {
 
    public void setUsuario(Usuario usuario) {
       this.usuario = usuario;
+   }
+
+   public Columna getColumna() {
+      return columna;
+   }
+
+   public void setColumna(Columna columna) {
+      this.columna = columna;
    }
 
    public Date getFechaCreacion() { return fechaCreacion; }

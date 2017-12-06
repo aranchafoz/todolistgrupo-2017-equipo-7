@@ -2,6 +2,9 @@ package models;
 
 import javax.persistence.*;
 
+import java.util.Set;
+import java.util.HashSet;
+
 @Entity
 public class Columna {
      @Id
@@ -12,6 +15,9 @@ public class Columna {
      @ManyToOne
      @JoinColumn(name="tableroId")
      public Tablero tablero;
+     // Relación uno-a-muchos entre usuario y tarea
+     @OneToMany(mappedBy="columna", fetch=FetchType.EAGER)
+     public Set<Tarea> tareas = new HashSet<Tarea>();
 
      public Columna() {}
 
@@ -51,6 +57,14 @@ public class Columna {
 
      public void setTablero(Tablero tablero) {
        this.tablero = tablero;
+     }
+
+     public Set<Tarea> getTareas() {
+        return tareas;
+     }
+
+     public void setTareas(Set<Tarea> tareas) {
+        this.tareas = tareas;
      }
 
      public String toString() {

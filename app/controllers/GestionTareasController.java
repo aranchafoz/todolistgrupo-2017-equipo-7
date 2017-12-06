@@ -54,7 +54,7 @@ public class GestionTareasController extends Controller {
 
          Tarea tarea = tareaForm.get();
 
-         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(), tarea.getDescripcion(), tarea.getFechaLimite());
+         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(), tarea.getDescripcion(), tarea.getFechaLimite(), tarea.getColumna().getId());
 
          flash("aviso", "La tarea se ha grabado correctamente");
          return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
@@ -104,7 +104,8 @@ public class GestionTareasController extends Controller {
             tarea.getId(),
             tarea.getTitulo(),
             tarea.getDescripcion(),
-            tarea.getFechaLimite(), ""));
+            tarea.getFechaLimite(),
+            tarea.getColumna(), ""));
          }
       }
    }
@@ -151,8 +152,9 @@ public class GestionTareasController extends Controller {
          String nuevoTitulo = tareaInput.getTitulo();
          Date nuevaFechaLimite = tareaInput.getFechaLimite();
          String nuevaDescripcion = tareaInput.getDescripcion();
+         Long nuevaColumna = tareaInput.getColumna().getId();
 
-         tareaService.modificaTarea(idTarea, nuevoTitulo, nuevaDescripcion, nuevaFechaLimite);
+         tareaService.modificaTarea(idTarea, nuevoTitulo, nuevaDescripcion, nuevaFechaLimite, nuevaColumna);
          return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
       }
    }

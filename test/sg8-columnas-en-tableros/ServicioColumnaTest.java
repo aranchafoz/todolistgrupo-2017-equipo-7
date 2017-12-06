@@ -62,7 +62,7 @@ public class ServicioColumnaTest {
     ColumnaService columnaService = newColumnaService();
     long idTablero = 2000L;
     columnaService.nuevaColumna(idTablero, "Nueva columna test 1", 1);
-    assertEquals(3, columnaService.allColumnasTablero(2000L).size());
+    assertEquals(5, columnaService.allColumnasTablero(2000L).size());
   }
 
   // Test 4: exceptionSiTableroNoExisteRecuperandoSusColumnas
@@ -94,7 +94,7 @@ public class ServicioColumnaTest {
   @Test
   public void borradoColumna() {
     ColumnaService columnaService = newColumnaService();
-     long idColumna = 1000L;
+     long idColumna = 3000L;
      columnaService.borraColumna(idColumna);
      assertNull(columnaService.obtenerColumna(idColumna));
   }

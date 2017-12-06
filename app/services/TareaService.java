@@ -14,17 +14,21 @@ import models.Usuario;
 import models.UsuarioRepository;
 import models.Tarea;
 import models.TareaRepository;
+import models.Columna;
+import models.ColumnaRepository;
 import java.util.Date;
 
 
 public class TareaService {
    UsuarioRepository usuarioRepository;
    TareaRepository tareaRepository;
+   ColumnaRepository columnaRepository;
 
    @Inject
-   public TareaService(UsuarioRepository usuarioRepository, TareaRepository tareaRepository) {
+   public TareaService(UsuarioRepository usuarioRepository, TareaRepository tareaRepository, ColumnaRepository columnaRepository) {
       this.usuarioRepository = usuarioRepository;
       this.tareaRepository = tareaRepository;
+      this.columnaRepository = columnaRepository;
    }
 
    // Devuelve la lista de tareas de un usuario, ordenadas por su id
@@ -59,12 +63,16 @@ public class TareaService {
       return definitivas;
    }
 
-   public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion, Date fechaLimite) {
+   public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion, Date fechaLimite, Long idColumna) {
       Usuario usuario = usuarioRepository.findById(idUsuario);
       if (usuario == null) {
          throw new TareaServiceException("Usuario no existente");
       }
-      Tarea tarea = new Tarea(usuario, titulo);
+      Columna columna = columnaRepository.findById(idColumna);
+      if (columna == null) {
+         throw new TareaServiceException("Columna no existente");
+      }
+      Tarea tarea = new Tarea(usuario, titulo, columna);
       tarea.setDescripcion(descripcion);
       tarea.setFechaLimite(fechaLimite);
       return tareaRepository.add(tarea);
@@ -74,13 +82,18 @@ public class TareaService {
       return tareaRepository.findById(idTarea);
    }
 
-   public Tarea modificaTarea(Long idTarea, String nuevoTitulo, String descripcion, Date fechaLimite) {
+   public Tarea modificaTarea(Long idTarea, String nuevoTitulo, String descripcion, Date fechaLimite, Long idColumna) {
       Tarea tarea = tareaRepository.findById(idTarea);
       if (tarea == null)
            throw new TareaServiceException("No existe tarea");
+      Columna columna = columnaRepository.findById(idColumna);
+      if (columna == null) {
+         throw new TareaServiceException("No existe columna");
+      }
       tarea.setTitulo(nuevoTitulo);
       tarea.setFechaLimite(fechaLimite);
       tarea.setDescripcion(descripcion);
+      tarea.setColumna(columna);
       tarea = tareaRepository.update(tarea);
       return tarea;
    }
