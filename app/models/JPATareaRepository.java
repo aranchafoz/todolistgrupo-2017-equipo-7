@@ -31,6 +31,7 @@ public class JPATareaRepository implements TareaRepository {
          tareaBD.setFechaLimite(tarea.getFechaLimite());
          tareaBD.setTerminada(tarea.getTerminada());
          tareaBD.setDeletedAt(tarea.getDeletedAt());
+         tareaBD.setColumna(tarea.getColumna());
          return tareaBD;
       });
    }

@@ -1,4 +1,4 @@
-@(usuario: Usuario, tareaForm: Form[Tarea], idTarea: Long, titulo: String, descripcion: String, fechaLimite: Date, mensaje: String)
+@(usuario: Usuario, tareaForm: Form[Tarea], idTarea: Long, titulo: String, descripcion: String, fechaLimite: Date, columna: Columna, mensaje: String)
 @main("Modificar Tarea", usuario) {
    @if(mensaje != "") {
       <div class="alert alert-danger">

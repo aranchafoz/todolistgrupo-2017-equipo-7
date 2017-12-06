@@ -29,6 +29,12 @@ import models.UsuarioRepository;
 import models.JPAUsuarioRepository;
 import models.TareaRepository;
 import models.JPATareaRepository;
+import models.Columna;
+import models.Tablero;
+import models.ColumnaRepository;
+import models.JPAColumnaRepository;
+import models.TableroRepository;
+import models.JPATableroRepository;
 
 import java.util.Date;
 import java.text.DateFormat;
@@ -66,24 +72,38 @@ public class TareaTest {
       return injector.instanceOf(UsuarioRepository.class);
    }
 
+   private TableroRepository newTableroRepository() {
+      return injector.instanceOf(TableroRepository.class);
+   }
+
+   private ColumnaRepository newColumnaRepository() {
+      return injector.instanceOf(ColumnaRepository.class);
+   }
+
    // Test #11: testCrearTarea
    @Test
    public void testCrearTarea() {
       Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
-      Tarea tarea = new Tarea(usuario, "Práctica 1 de MADS");
+      Tablero tablero = new Tablero(usuario, "Tablero 1");
+      Columna columna = new Columna(tablero, "Columna 1", 1);
+      Tarea tarea = new Tarea(usuario, "Práctica 1 de MADS", columna);
 
       assertEquals("juangutierrez", tarea.getUsuario().getLogin());
       assertEquals("juangutierrez@gmail.com", tarea.getUsuario().getEmail());
       assertEquals("Práctica 1 de MADS", tarea.getTitulo());
+      assertEquals("Columna 1", tarea.getColumna().getNombre());
+      assertEquals("Tablero 1", tarea.getColumna().getTablero().getNombre());
    }
 
    // Test #14: testEqualsTareasConId
    @Test
    public void testEqualsTareasConId() {
       Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
-      Tarea tarea1 = new Tarea(usuario, "Práctica 1 de MADS");
-      Tarea tarea2 = new Tarea(usuario, "Renovar DNI");
-      Tarea tarea3 = new Tarea(usuario, "Pagar el alquiler");
+      Tablero tablero = new Tablero(usuario, "Tablero 1");
+      Columna columna = new Columna(tablero, "Columna 1", 1);
+      Tarea tarea1 = new Tarea(usuario, "Práctica 1 de MADS", columna);
+      Tarea tarea2 = new Tarea(usuario, "Renovar DNI", columna);
+      Tarea tarea3 = new Tarea(usuario, "Pagar el alquiler", columna);
       tarea1.setId(1000L);
       tarea2.setId(1000L);
       tarea3.setId(2L);
@@ -95,9 +115,11 @@ public class TareaTest {
    @Test
    public void testEqualsTareasSinId() {
       Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
-      Tarea tarea1 = new Tarea(usuario, "Renovar DNI");
-      Tarea tarea2 = new Tarea(usuario, "Renovar DNI");
-      Tarea tarea3 = new Tarea(usuario, "Pagar el alquiler");
+      Tablero tablero = new Tablero(usuario, "Tablero 1");
+      Columna columna = new Columna(tablero, "Columna 1", 1);
+      Tarea tarea1 = new Tarea(usuario, "Renovar DNI", columna);
+      Tarea tarea2 = new Tarea(usuario, "Renovar DNI", columna);
+      Tarea tarea3 = new Tarea(usuario, "Pagar el alquiler", columna);
       assertEquals(tarea1, tarea2);
       assertNotEquals(tarea1, tarea3);
    }
@@ -107,9 +129,15 @@ public class TareaTest {
    public void testAddTareaJPARepositoryInsertsTareaDatabase() {
       UsuarioRepository usuarioRepository = newUsuarioRepository();
       TareaRepository tareaRepository = newTareaRepository();
+      TableroRepository tableroRepository = newTableroRepository();
+      ColumnaRepository columnaRepository = newColumnaRepository();
       Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
       usuario = usuarioRepository.add(usuario);
-      Tarea tarea = new Tarea(usuario, "Renovar DNI");
+      Tablero tablero = new Tablero(usuario, "Tablero 1");
+      tablero = tableroRepository.add(tablero);
+      Columna columna = new Columna(tablero, "Columna 1", 1);
+      columna = columnaRepository.add(columna);
+      Tarea tarea = new Tarea(usuario, "Renovar DNI", columna);
       tarea = tareaRepository.add(tarea);
       Logger.info("Número de tarea: " + Long.toString(tarea.getId()));
       assertNotNull(tarea.getId());
@@ -147,7 +175,9 @@ public class TareaTest {
    @Test
    public void testCrearTareaSinBorrado() {
      Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
-     Tarea tarea = new Tarea(usuario, "Me abruma la colaboración de este test");
+     Tablero tablero = new Tablero(usuario, "Tablero 1");
+     Columna columna = new Columna(tablero, "Columna 1", 1);
+     Tarea tarea = new Tarea(usuario, "Me abruma la colaboración de este test", columna);
 
      assertNull(tarea.getDeletedAt());
    }
@@ -155,7 +185,9 @@ public class TareaTest {
    @Test
    public void testBorrarTarea() {
      Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
-     Tarea tarea = new Tarea(usuario, "Me abruma la colaboración de este test");
+     Tablero tablero = new Tablero(usuario, "Tablero 1");
+     Columna columna = new Columna(tablero, "Columna 1", 1);
+     Tarea tarea = new Tarea(usuario, "Me abruma la colaboración de este test", columna);
 
      assertNull(tarea.getDeletedAt());
      Date now = new Date();
@@ -169,7 +201,9 @@ public class TareaTest {
    @Test
    public void testTareaFechaCreacion() {
        Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
-       Tarea t1 = new Tarea(usuario,"tarea1");
+       Tablero tablero = new Tablero(usuario, "Tablero 1");
+       Columna columna = new Columna(tablero, "Columna 1", 1);
+       Tarea t1 = new Tarea(usuario, "tarea1", columna);
 
        assertNotNull(t1.getFechaCreacion());
    }
@@ -177,7 +211,9 @@ public class TareaTest {
    @Test
    public void testTareaFechaLimite() {
        Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
-       Tarea t1 = new Tarea(usuario,"tarea1");
+       Tablero tablero = new Tablero(usuario, "Tablero 1");
+       Columna columna = new Columna(tablero, "Columna 1", 1);
+       Tarea t1 = new Tarea(usuario, "tarea1", columna);
 
        Date auxFecha = new Date();
 
@@ -206,7 +242,9 @@ public class TareaTest {
    @Test
    public void testTareaNoTerminada() {
      Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
-     Tarea t1 = new Tarea(usuario,"tarea1");
+     Tablero tablero = new Tablero(usuario, "Tablero 1");
+     Columna columna = new Columna(tablero, "Columna 1", 1);
+     Tarea t1 = new Tarea(usuario, "tarea1", columna);
 
      assertFalse(t1.getTerminada());
    }

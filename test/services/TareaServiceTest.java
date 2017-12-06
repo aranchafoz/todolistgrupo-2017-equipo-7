@@ -83,7 +83,8 @@ public class TareaServiceTest {
    public void nuevaTareaUsuario() {
       TareaService tareaService = newTareaService();
       long idUsuario = 1000L;
-      tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+      long idColumna = 1000L;
+      tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
       assertEquals(3, tareaService.allTareasUsuario(1000L).size());
    }
 
@@ -92,9 +93,11 @@ public class TareaServiceTest {
    public void modificacionTarea() {
       TareaService tareaService = newTareaService();
       long idTarea = 1000L;
-      tareaService.modificaTarea(idTarea, "Pagar el alquiler", null, null);
+      long idColumna = 1001L;
+      tareaService.modificaTarea(idTarea, "Pagar el alquiler", null, null, idColumna);
       Tarea tarea = tareaService.obtenerTarea(idTarea);
       assertEquals("Pagar el alquiler", tarea.getTitulo());
+      assertEquals("Columna test 2", tarea.getColumna().getNombre());
    }
 
    // Test #23: borrado tarea
@@ -110,7 +113,8 @@ public class TareaServiceTest {
    public void tareaSinDescripcionServiceTest() {
       TareaService tareaService = newTareaService();
       long idUsuario = 1000L;
-      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+      long idColumna = 1000L;
+      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
 
       assertEquals("", tarea.getDescripcion());
    }
@@ -120,7 +124,8 @@ public class TareaServiceTest {
    public void tareaTerminadaServiceTest() {
      TareaService tareaService = newTareaService();
      long idUsuario = 1000L;
-     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+     long idColumna = 1000L;
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
      assertEquals(3, tareaService.allTareasUsuario(1000L).size());
 
      Tarea t = tareaService.marcarTerminada(tarea.getId());
@@ -131,7 +136,8 @@ public class TareaServiceTest {
    public void tareasTerminadasTest() {
       TareaService tareaService = newTareaService();
       long idUsuario = 1000L;
-      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+      long idColumna = 1000L;
+      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
       List<Tarea> tareas = tareaService.allTareasTerminadasUsuario(idUsuario);
 
       assertEquals(0, tareas.size());
@@ -144,7 +150,8 @@ public class TareaServiceTest {
    public void testTareaEnviarPapelera() {
      TareaService tareaService = newTareaService();
      long idUsuario = 1000L;
-     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+     long idColumna = 1000L;
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
      tarea = tareaService.enviarPapelera(tarea.getId());
 
      assertNotNull(tarea.getDeletedAt());

@@ -79,7 +79,7 @@ public class Practica2Test {
    public void nuevaTareaUsuarioNoExistente() {
       TareaService tareaService = newTareaService();
       long idUsuario = 1500L;
-      tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null);
+      tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, null);
    }
 
    // Test 3: modificar tarea que no existe
@@ -87,7 +87,7 @@ public class Practica2Test {
    public void modificarTareaNoExistente() {
       TareaService tareaService = newTareaService();
       long idTarea = 1500L;
-      tareaService.modificaTarea(idTarea, "nuevoTitulo", null, null);
+      tareaService.modificaTarea(idTarea, "nuevoTitulo", null, null, null);
    }
 
    // Test 4: borrado tarea que no existe
