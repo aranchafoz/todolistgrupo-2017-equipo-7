@@ -63,6 +63,25 @@ public class TareaService {
       return definitivas;
    }
 
+   public List<Tarea> allTareasPapeleraUsuario(Long idUsuario) {
+     Usuario usuario = usuarioRepository.findById(idUsuario);
+     if (usuario == null) {
+         throw new TareaServiceException("Usuario no existente");
+      }
+
+      List <Tarea> tareas = new ArrayList<Tarea>();
+      tareas.addAll(usuario.getTareas());
+      List <Tarea> definitivas = new ArrayList<Tarea>();
+
+      for(Tarea t: tareas) {
+        if (t.getDeletedAt() != null) {
+          definitivas.add(t);
+        }
+      }
+      Collections.sort(definitivas, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+      return definitivas;
+   }
+
    public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion, Date fechaLimite, Long idColumna) {
       Usuario usuario = usuarioRepository.findById(idUsuario);
       if (usuario == null) {
@@ -118,6 +137,17 @@ public class TareaService {
     if (tarea == null) throw new TareaServiceException("No existe tarea");
     tarea.setDeletedAt(new Date());
     tarea = tareaRepository.update(tarea);
+    return tarea;
+  }
+
+  public Tarea quitarDePapelera(Long idTarea) {
+    Tarea tarea = tareaRepository.findById(idTarea);
+    if (tarea == null) throw new TareaServiceException("No existe tarea");
+    if (tarea.getDeletedAt() != null) {
+        tarea.setDeletedAt(null);
+        tarea = tareaRepository.update(tarea);
+    }
+
     return tarea;
   }
 }
