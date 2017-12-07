@@ -102,6 +102,40 @@ public class GestionTareasController extends Controller {
    }
 
    @Security.Authenticated(ActionAuthenticator.class)
+   public Result creaNuevaTareaEnColumna(Long idUsuario, Long idTablero, Long idColumna) throws java.text.ParseException{
+      String connectedUserStr = session("connected");
+      Long connectedUser =  Long.valueOf(connectedUserStr);
+      if (connectedUser != idUsuario) {
+         return unauthorized("Lo siento, no estás autorizado");
+      } else {
+        DynamicForm form = Form.form().bindFromRequest();
+
+         if (form.get("titulo").equals("")) {
+            Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+
+            List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(idUsuario);
+            List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(idUsuario);
+
+            List<Tablero> tableros = new ArrayList<Tablero>();
+            tableros.addAll(tablerosAdministrados);
+            tableros.addAll(tablerosParticipados);
+
+             List<Columna> columnas = new ArrayList<Columna>();
+             for(Tablero t : tableros) {
+               columnas.addAll(t.getColumnas());
+             }
+
+            return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class), columnas, "Hay errores en el formulario"));
+         }
+
+         tareaService.nuevaTarea(idUsuario, form.get("titulo"), null, null, idColumna);
+
+         flash("aviso", "La tarea se ha grabado correctamente");
+         return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
+      }
+   }
+
+   @Security.Authenticated(ActionAuthenticator.class)
    public Result listaTareas(Long idUsuario) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);

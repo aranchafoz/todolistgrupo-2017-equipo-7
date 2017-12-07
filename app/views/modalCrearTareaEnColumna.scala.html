@@ -1,0 +1,28 @@
+@(usuario: Usuario, tablero: Tablero, columna: Columna)
+<div>
+ <div id="modalCrearTareaEnColumna@columna.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
+   role="dialog" aria-hidden="true">
+   <div class='modal-dialog modal-xs'>
+     @helper.form(action = routes.GestionTareasController.creaNuevaTareaEnColumna(usuario.getId(), tablero.getId(), columna.getId())) {
+     <div class='modal-content'>
+       <div class='modal-header'>
+         <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span>
+        </button>
+        <h4 class='modal-title'>Crear tarea en la columna @columna.getNombre() de @tablero.getNombre()</h4>
+       </div>
+       <div class='modal-body'>
+           <div class="form-group">
+             <label class="control-label col-md-2">Título: </label>
+             <div class="col-md-6">
+               <input type="text" placeholder="Título de la tarea" name="titulo" class="form-control">
+             </div>
+           </div>
+       </div>
+       <div class="modal-footer" style="margin-top: 45px">
+         <input type="submit" value="Aceptar" class="btn btn-primary">
+         <button type='button' class='btn btn-default pull-right' data-dismiss='modal'>Cancelar</button>
+       </div>
+     }
+     </div>
+   </div>
+ </div>
