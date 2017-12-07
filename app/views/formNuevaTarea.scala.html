@@ -1,11 +1,10 @@
-@(usuario: Usuario, tareaForm: Form[Tarea], mensaje: String)
+@(usuario: Usuario, tareaForm: Form[Tarea], columnas: List[Columna], mensaje: String)
 @main("Nueva tarea", usuario) {
     @if(mensaje != "") {
         <div class="alert alert-danger">
             @mensaje
         </div>
     }
-    <h1>Nueva tarea para @usuario.getLogin()</h1>
     @helper.form(action = routes.GestionTareasController.creaNuevaTarea(usuario.getId())) {
 
         <legend>Nueva tarea</legend>
@@ -21,8 +20,22 @@
         <fieldset>
             @helper.inputDate(tareaForm("fechaLimite"), '_label -> "Fecha Límite", 'size -> 70)
         </fieldset>
+
+        <fieldset>
+          @helper.select(
+            field = tareaForm("columna"),
+            options = columnas.map(columna => columna.getId().toString() -> ( columna.getNombre() + " - Tablero: " + columna.getTablero().getNombre() )),
+            '_default -> "-- Elige una columna --",
+            '_label -> "Columna - Tablero",
+            'name -> "columna",
+            'id -> "columna",
+            'class -> "form-control"
+          )
+        </fieldset>
+
         <p>
            <input type="submit" class="btn btn-primary" value="Guardar">
         </p>
     }
+
 }

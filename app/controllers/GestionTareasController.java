@@ -10,11 +10,16 @@ import play.data.DynamicForm;
 import play.Logger;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import services.UsuarioService;
 import services.TareaService;
+import services.TableroService;
+import services.ColumnaService;
 import models.Usuario;
 import models.Tarea;
+import models.Tablero;
+import models.Columna;
 import security.ActionAuthenticator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -24,6 +29,8 @@ public class GestionTareasController extends Controller {
    @Inject FormFactory formFactory;
    @Inject UsuarioService usuarioService;
    @Inject TareaService tareaService;
+   @Inject TableroService tableroService;
+   @Inject ColumnaService columnaService;
 
    // Comprobamos si hay alguien logeado con @Security.Authenticated(ActionAuthenticator.class)
    // https://alexgaribay.com/2014/06/15/authentication-in-play-framework-using-java/
@@ -35,7 +42,20 @@ public class GestionTareasController extends Controller {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-         return ok(formNuevaTarea.render(usuario, formFactory.form(Tarea.class),""));
+
+         List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(idUsuario);
+         List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(idUsuario);
+
+         List<Tablero> tableros = new ArrayList<Tablero>();
+         tableros.addAll(tablerosAdministrados);
+         tableros.addAll(tablerosParticipados);
+
+         List<Columna> columnas = new ArrayList<Columna>();
+         for(Tablero t : tableros) {
+           columnas.addAll(t.getColumnas());
+         }
+
+         return ok(formNuevaTarea.render(usuario, formFactory.form(Tarea.class), columnas, ""));
       }
    }
 
@@ -46,15 +66,35 @@ public class GestionTareasController extends Controller {
       if (connectedUser != idUsuario) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
-         Form<Tarea> tareaForm = formFactory.form(Tarea.class).bindFromRequest();
-         if (tareaForm.hasErrors()) {
+        DynamicForm form = Form.form().bindFromRequest();
+
+         if (form.get("titulo").equals("") || form.get("columna").equals("") || form.get("fechaLimite").equals("")) {
             Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-            return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class), "Hay errores en el formulario"));
+
+            List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(idUsuario);
+            List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(idUsuario);
+
+            List<Tablero> tableros = new ArrayList<Tablero>();
+            tableros.addAll(tablerosAdministrados);
+            tableros.addAll(tablerosParticipados);
+
+             List<Columna> columnas = new ArrayList<Columna>();
+             for(Tablero t : tableros) {
+               columnas.addAll(t.getColumnas());
+             }
+
+            return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class), columnas, "Hay errores en el formulario"));
          }
+         String titulo = form.get("titulo");
 
-         Tarea tarea = tareaForm.get();
+         String descripcion = form.get("descripcion");
 
-         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(), tarea.getDescripcion(), tarea.getFechaLimite(), tarea.getColumna().getId());
+         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+         Date fechaLimite = format.parse( form.get("fechaLimite") );
+
+         Long columnaId = Long.parseLong( form.get("columna"), 10 );
+
+         tareaService.nuevaTarea(idUsuario, titulo, descripcion, fechaLimite, columnaId);
 
          flash("aviso", "La tarea se ha grabado correctamente");
          return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
@@ -100,12 +140,27 @@ public class GestionTareasController extends Controller {
          if (connectedUser != tarea.getUsuario().getId()) {
             return unauthorized("Lo siento, no estás autorizado");
          } else {
+
+            List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(tarea.getUsuario().getId());
+            List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(tarea.getUsuario().getId());
+
+            List<Tablero> tableros = new ArrayList<Tablero>();
+            tableros.addAll(tablerosAdministrados);
+            tableros.addAll(tablerosParticipados);
+
+
+             List<Columna> columnas = new ArrayList<Columna>();
+             for(Tablero t : tableros) {
+               columnas.addAll(t.getColumnas());
+             }
+
             return ok(formModificacionTarea.render(tarea.getUsuario(), formFactory.form(Tarea.class),
             tarea.getId(),
             tarea.getTitulo(),
             tarea.getDescripcion(),
             tarea.getFechaLimite(),
-            tarea.getColumna(), ""));
+            tarea.getColumna(),
+            columnas, ""));
          }
       }
    }
@@ -143,19 +198,37 @@ public class GestionTareasController extends Controller {
       if (connectedUser != tarea.getUsuario().getId()) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
-         Form<Tarea> tareaForm = formFactory.form(Tarea.class).bindFromRequest();
-         if (tareaForm.hasErrors()) {
-            return badRequest(formNuevaTarea.render(tarea.getUsuario(), formFactory.form(Tarea.class), "Hay errores en el formulario"));
+        DynamicForm form = Form.form().bindFromRequest();
+
+         if (form.get("titulo").equals("") || form.get("columna").equals("") || form.get("fechaLimite").equals("")) {
+
+            List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(tarea.getUsuario().getId());
+            List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(tarea.getUsuario().getId());
+
+            List<Tablero> tableros = new ArrayList<Tablero>();
+            tableros.addAll(tablerosAdministrados);
+            tableros.addAll(tablerosParticipados);
+
+             List<Columna> columnas = new ArrayList<Columna>();
+             for(Tablero t : tableros) {
+               columnas.addAll(t.getColumnas());
+             }
+
+            return badRequest(formNuevaTarea.render(tarea.getUsuario(), formFactory.form(Tarea.class), columnas, "Hay errores en el formulario"));
          }
-         Tarea tareaInput = tareaForm.get();
 
-         String nuevoTitulo = tareaInput.getTitulo();
-         Date nuevaFechaLimite = tareaInput.getFechaLimite();
-         String nuevaDescripcion = tareaInput.getDescripcion();
-         Long nuevaColumna = tareaInput.getColumna().getId();
+         String nuevoTitulo = form.get("titulo");
 
-         tareaService.modificaTarea(idTarea, nuevoTitulo, nuevaDescripcion, nuevaFechaLimite, nuevaColumna);
+         String nuevaDescripcion = form.get("descripcion");
+
+         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+         Date nuevaFechaLimite = format.parse( form.get("fechaLimite") );
+
+         Long nuevaColumnaId = Long.parseLong( form.get("columna"), 10 );
+
+         tareaService.modificaTarea(idTarea, nuevoTitulo, nuevaDescripcion, nuevaFechaLimite, nuevaColumnaId);
          return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
+
       }
    }
 
