@@ -174,11 +174,11 @@ public class TareaServiceTest {
 
    @Test
    public void testRecuperarTarea() {
-     TareaService tareaService = newTareaService();
-     tarea = tareaService.enviarPapelera(tarea.getId());
      long idUsuario = 1000L;
      long idColumna = 1000L;
+     TareaService tareaService = newTareaService();
      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
+     tarea = tareaService.enviarPapelera(tarea.getId());
 
      assertNotNull(tarea.getDeletedAt());
      tarea = tareaService.quitarDePapelera(tarea.getId());
@@ -201,10 +201,10 @@ public class TareaServiceTest {
      long idUsuario = 1000L;
      long idColumna = 1000L;
      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
-     
+
      assertEquals("Columna test 1", tarea.getColumna().getNombre());
    }
-  
+
    @Test(expected = TareaServiceException.class)
    public void testActualizarTareaAColumnaNoExistente() {
      TareaService tareaService = newTareaService();
