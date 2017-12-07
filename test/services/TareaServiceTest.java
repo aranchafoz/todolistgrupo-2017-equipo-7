@@ -157,6 +157,34 @@ public class TareaServiceTest {
      assertNotNull(tarea.getDeletedAt());
    }
 
+   @Test
+   public void testListarTareasPapelera() {
+     TareaService tareaService = newTareaService();
+     long idUsuario = 1000L;
+     long idColumna = 1000L;
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
+     Tarea tarea2 = tareaService.nuevaTarea(idUsuario, "Pagar la luz", "", null, idColumna);
+     Tarea tarea3 = tareaService.nuevaTarea(idUsuario, "Pagar el agua", "", null, idColumna);
+
+     tarea = tareaService.enviarPapelera(tarea.getId());
+
+     List<Tarea> tareasBorradas = tareaService.allTareasPapeleraUsuario(idUsuario);
+     assertEquals(1, tareasBorradas.size());
+   }
+
+   @Test
+   public void testRecuperarTarea() {
+     long idUsuario = 1000L;
+     long idColumna = 1000L;
+     TareaService tareaService = newTareaService();
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
+     tarea = tareaService.enviarPapelera(tarea.getId());
+
+     assertNotNull(tarea.getDeletedAt());
+     tarea = tareaService.quitarDePapelera(tarea.getId());
+     assertNull(tarea.getDeletedAt());
+   }
+
    // SGT-11: Tareas en tableros
    @Test(expected = TareaServiceException.class)
    public void testCrearTareaEnColumnaNoExistente() {
@@ -168,10 +196,12 @@ public class TareaServiceTest {
 
    @Test
    public void testCrearTareaEnColumna() {
+
      TareaService tareaService = newTareaService();
      long idUsuario = 1000L;
      long idColumna = 1000L;
      Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
+
      assertEquals("Columna test 1", tarea.getColumna().getNombre());
    }
 
@@ -190,5 +220,6 @@ public class TareaServiceTest {
      long idColumna = 1001L;
      tarea = tareaService.modificaTarea(1000L, "Pagar el alquiler", "", null, idColumna);
      assertEquals("Columna test 2", tarea.getColumna().getNombre());
+
    }
 }
