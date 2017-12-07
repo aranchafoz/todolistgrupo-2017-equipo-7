@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import models.Columna;
+import models.Tarea;
 
 import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.Injector;
@@ -21,8 +22,10 @@ import play.Environment;
 
 import services.ColumnaService;
 import services.ColumnaServiceException;
+import services.TareaService;
 
-public class ServicioColumnaTest {
+
+public class ColumnaServiceTest {
   static private Injector injector;
 
   @BeforeClass
@@ -45,6 +48,10 @@ public class ServicioColumnaTest {
 
   private ColumnaService newColumnaService() {
     return injector.instanceOf(ColumnaService.class);
+  }
+
+  private TareaService newTareaService() {
+     return injector.instanceOf(TareaService.class);
   }
 
   // Test 1: allColumnasTableroEstanOrdenadas
@@ -97,5 +104,51 @@ public class ServicioColumnaTest {
      long idColumna = 3000L;
      columnaService.borraColumna(idColumna);
      assertNull(columnaService.obtenerColumna(idColumna));
+  }
+
+  // SGT-11: Tareas en tableros
+  @Test(expected = ColumnaServiceException.class)
+  public void testBorradoColumnaConTareas() {
+    ColumnaService columnaService = newColumnaService();
+     long idColumna = 3001L;
+     columnaService.borraColumna(idColumna);
+  }
+
+  @Test
+  public void testCrearTareasEnColumna() {
+    TareaService tareaService = newTareaService();
+    ColumnaService columnaService = newColumnaService();
+    long idUsuario = 1000L;
+    long idColumna = 2000L;
+    Tarea tarea1 = tareaService.nuevaTarea(idUsuario, "Tarea test crear varias 1", "", null, idColumna);
+    Tarea tarea2 = tareaService.nuevaTarea(idUsuario, "Tarea test crear varias 2", "", null, idColumna);
+    Tarea tarea3 = tareaService.nuevaTarea(idUsuario, "Tarea test crear varias 3", "", null, idColumna);
+    Tarea tarea4 = tareaService.nuevaTarea(idUsuario, "Tarea test crear varias 4", "", null, idColumna);
+    Columna columna = columnaService.obtenerColumna(idColumna);
+    assertEquals("Columna test crear 1", tarea1.getColumna().getNombre());
+    assertEquals("Columna test crear 1", tarea2.getColumna().getNombre());
+    assertEquals("Columna test crear 1", tarea3.getColumna().getNombre());
+    assertEquals("Columna test crear 1", tarea4.getColumna().getNombre());
+    assertEquals(4, columna.getTareas().size());
+  }
+
+  @Test
+  public void testBorradoColumnaConTareasBorradas() {
+    TareaService tareaService = newTareaService();
+    ColumnaService columnaService = newColumnaService();
+    long idUsuario = 1000L;
+    long idColumna = 2000L;
+    Tarea tarea1 = tareaService.nuevaTarea(idUsuario, "Tarea test crear varias 1", "", null, idColumna);
+    Tarea tarea2 = tareaService.nuevaTarea(idUsuario, "Tarea test crear varias 2", "", null, idColumna);
+    Tarea tarea3 = tareaService.nuevaTarea(idUsuario, "Tarea test crear varias 3", "", null, idColumna);
+    Tarea tarea4 = tareaService.nuevaTarea(idUsuario, "Tarea test crear varias 4", "", null, idColumna);
+
+    tareaService.borraTarea(tarea1.getId());
+    tareaService.borraTarea(tarea2.getId());
+    tareaService.borraTarea(tarea3.getId());
+    tareaService.borraTarea(tarea4.getId());
+    columnaService.borraColumna(idColumna);
+    
+    assertNull(columnaService.obtenerColumna(idColumna));
   }
 }

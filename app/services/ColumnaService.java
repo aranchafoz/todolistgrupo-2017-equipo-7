@@ -68,6 +68,8 @@ public class ColumnaService {
     Columna columna = columnaRepository.findById(idColumna);
     if (columna == null)
       throw new ColumnaServiceException("No existe columna");
+    if (columna.getTareas().size() > 0)
+      throw new ColumnaServiceException("No se puede borrar una columna con tareas");
     columnaRepository.delete(idColumna);
   }
 }
