@@ -27,11 +27,14 @@ import java.io.FileInputStream;
 import models.Columna;
 import models.Tablero;
 import models.Usuario;
+import models.Tarea;
 import models.TableroRepository;
 import models.ColumnaRepository;
+import models.UsuarioRepository;
+import models.TareaRepository;
 import models.JPAColumnaRepository;
 
-public class ModeloColumnaTest {
+public class ColumnaTest {
   static Database db;
   static private Injector injector;
 
@@ -54,6 +57,22 @@ public class ModeloColumnaTest {
      databaseTester.onSetup();
   }
 
+  private TareaRepository newTareaRepository() {
+     return injector.instanceOf(TareaRepository.class);
+  }
+
+  private UsuarioRepository newUsuarioRepository() {
+     return injector.instanceOf(UsuarioRepository.class);
+  }
+
+  private TableroRepository newTableroRepository() {
+     return injector.instanceOf(TableroRepository.class);
+  }
+
+  private ColumnaRepository newColumnaRepository() {
+     return injector.instanceOf(ColumnaRepository.class);
+  }
+
   // Crear una columna.
   @Test
   public void testCrearColumna() {
@@ -68,15 +87,15 @@ public class ModeloColumnaTest {
 
   @Test
   public void testObtenerColumnaRepository() {
-    ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
+    ColumnaRepository columnaRepository = newColumnaRepository();
     assertNotNull(columnaRepository);
   }
 
   // Crear funcion add() en el TableroRepository.
    @Test
    public void testAddColumnaInsertsDatabase() {
-      ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
-      TableroRepository tableroRepository = injector.instanceOf(TableroRepository.class);
+      ColumnaRepository columnaRepository = newColumnaRepository();
+      TableroRepository tableroRepository = newTableroRepository();
       Tablero tablero = tableroRepository.findById(1000L);
       Columna columna = new Columna(tablero, "Columna 1", 1);
       columna = columnaRepository.add(columna);
@@ -99,8 +118,8 @@ public class ModeloColumnaTest {
    // Un tablero pueda tener varias columnas
    @Test
    public void testTableroTieneVariasColumnas() {
-      ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
-      TableroRepository tableroRepository = injector.instanceOf(TableroRepository.class);
+      ColumnaRepository columnaRepository = newColumnaRepository();
+      TableroRepository tableroRepository = newTableroRepository();
       Tablero tablero = tableroRepository.findById(1000L);
       Columna columna1 = new Columna(tablero, "Columna 1", 1);
       columna1 = columnaRepository.add(columna1);
@@ -114,17 +133,42 @@ public class ModeloColumnaTest {
 
    @Test
    public void testModificarPosicionColumna() {
-     ColumnaRepository columnaRepository = injector.instanceOf(ColumnaRepository.class);
-     Columna c = columnaRepository.findById(1000L);
-     assertNotNull(c);
-     assertEquals(c.getPosicion(), (Integer) 1);
+      ColumnaRepository columnaRepository = newColumnaRepository();
+      Columna c = columnaRepository.findById(1000L);
+      assertNotNull(c);
+      assertEquals(c.getPosicion(), (Integer) 1);
 
-     c.setPosicion(3);
+      c.setPosicion(3);
 
-     assertEquals(c.getPosicion(), (Integer) 3);
-     Columna updated = columnaRepository.update(c);
+      assertEquals(c.getPosicion(), (Integer) 3);
+      Columna updated = columnaRepository.update(c);
 
-     assertEquals(updated.getPosicion(), (Integer) 3);
+      assertEquals(updated.getPosicion(), (Integer) 3);
    }
 
+   // SGT-11: Tareas en tableros
+   // Una columna pueda tener varias tareas
+   @Test
+   public void testColumnaTieneVariasTareas() {
+      ColumnaRepository columnaRepository = newColumnaRepository();
+      TableroRepository tableroRepository = newTableroRepository();
+      TareaRepository tareaRepository = newTareaRepository();
+      UsuarioRepository usuarioRepository = newUsuarioRepository();
+
+      Tablero tablero = tableroRepository.findById(1000L);
+      Columna columna = new Columna(tablero, "Columna Test Varias Tareas", 1);
+      columna = columnaRepository.add(columna);
+      // Añadimos varias tareas
+      Usuario usuario = usuarioRepository.findById(1000L);
+      Tarea tarea1 = new Tarea(usuario, "Tarea 1", columna);
+      tarea1 = tareaRepository.add(tarea1);
+      Tarea tarea2 = new Tarea(usuario, "Tarea 2", columna);
+      tarea2 = tareaRepository.add(tarea2);
+      Tarea tarea3 = new Tarea(usuario, "Tarea 3", columna);
+      tarea3 = tareaRepository.add(tarea3);
+      // Recuperamos la columna del repository
+      columna = columnaRepository.findById(columna.getId());
+      // Y comprobamos si tiene las tareas
+      assertEquals(3, columna.getTareas().size());
+   }
 }
