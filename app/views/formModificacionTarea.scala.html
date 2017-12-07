@@ -1,19 +1,31 @@
-@(usuario: Usuario, tareaForm: Form[Tarea], idTarea: Long, titulo: String, descripcion: String, fechaLimite: Date, columna: Columna, mensaje: String)
+@(usuario: Usuario, tareaForm: Form[Tarea], idTarea: Long, titulo: String, descripcion: String, fechaLimite: Date, columna: Columna, columnas: List[Columna], mensaje: String)
 @main("Modificar Tarea", usuario) {
    @if(mensaje != "") {
       <div class="alert alert-danger">
          @mensaje
       </div>
    }
-   <h1>Modificar tarea</h1>
    @helper.form(action = routes.GestionTareasController.grabaTareaModificada(idTarea)) {
       <fieldset>
-         <legend>Tarea</legend>
+         <legend>Modificar tarea</legend>
          @helper.inputText(tareaForm("titulo").copy(value=Some(titulo)), '_label -> "Titulo", 'size -> 70, 'type -> "text", 'class -> "form-control")
 
          @helper.inputText(tareaForm("descripcion").copy(value=Some(descripcion)), '_label -> "Descripción", 'size -> 70, 'type -> "text", 'class -> "form-control")
 
          @helper.inputDate(tareaForm("fechaLimite").copy(value=Some(fechaLimite.format("yyyy-MM-dd"))), '_label -> "Fecha Límite (opcional)", 'size -> 70)
+
+         <fieldset>
+           @helper.select(
+             field = tareaForm("columna"),
+             options = columnas.map(columna => columna.getId().toString() -> ( columna.getNombre() + " - Tablero: " + columna.getTablero().getNombre() )),
+             '_default -> ("-- Elige una columna --"),
+             '_selected -> columna.getId(),
+             '_label -> "Columna - Tablero",
+             'name -> "columna",
+             'id -> "columna",
+             'class -> "form-control"
+           )
+         </fieldset>
 
       </fieldset>
       <p/>

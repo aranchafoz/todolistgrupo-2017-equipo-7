@@ -20,9 +20,12 @@
         <h5>
           <strong>Columnas</strong>
           &nbsp;
-          <a class="btn btn-info btn-xs" href="@routes.GestionColumnasController.listaColumnasDesplazables(usuario.getId(), tablero.getId())">
-            <i class="glyphicon glyphicon-transfer"></i>&nbsp; Editar posición
-          </a>
+
+          @if(columnas.size() > 1) {
+            <a class="btn btn-info btn-xs" href="@routes.GestionColumnasController.listaColumnasDesplazables(usuario.getId(), tablero.getId())">
+              <i class="glyphicon glyphicon-transfer"></i>&nbsp; Editar posición
+            </a>
+          }
         </h5>
       </div>
     </div>
@@ -48,8 +51,32 @@
               </div>
             </div>
             <div class="panel-body">
-              <p>Tarea 1</p>
-              <p>Tarea 2</p>
+              <table class="table table-striped">
+                @for(tarea <- columna.getTareas()) {
+                  @if(tarea.getTerminada() != true) {
+                      <tr>
+                          <td>
+                              <a href="@routes.GestionTareasController.detalleTarea(tarea.getId())">
+                                  @tarea.getTitulo()
+                              </a>
+                          </td>
+                      </tr>
+                    }
+                  }
+
+                  @modalCrearTareaEnColumna(usuario, tablero, columna)
+
+                  <tr>
+                      <td>
+                        <a data-toggle="modal" data-target="#modalCrearTareaEnColumna@columna.getId()">
+                          <span class="glyphicon glyphicon-plus"></span>
+                          &nbsp;
+                          Añadir tarea
+                        </a>
+                      </td>
+                  </tr>
+
+              </table>
             </div>
             <input id="columna@columna.getId()" name="columna@columna.getId()" value= "@columna.getPosicion()" type="hidden">
           </div>
