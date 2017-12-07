@@ -156,4 +156,19 @@ public class TareaServiceTest {
 
      assertNotNull(tarea.getDeletedAt());
    }
+
+   @Test
+   public void testListarTareasPapelera() {
+     TareaService tareaService = newTareaService();
+     long idUsuario = 1000L;
+     long idColumna = 1000L;
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
+     Tarea tarea2 = tareaService.nuevaTarea(idUsuario, "Pagar la luz", "", null, idColumna);
+     Tarea tarea3 = tareaService.nuevaTarea(idUsuario, "Pagar el agua", "", null, idColumna);
+
+     tarea = tareaService.enviarPapelera(tarea.getId());
+
+     List<Tarea> tareasBorradas = tareaService.allTareasPapeleraUsuario(idUsuario);
+     assertEquals(1, tareasBorradas.size());
+   }
 }
