@@ -171,4 +171,17 @@ public class TareaServiceTest {
      List<Tarea> tareasBorradas = tareaService.allTareasPapeleraUsuario(idUsuario);
      assertEquals(1, tareasBorradas.size());
    }
+
+   @Test
+   public void testRecuperarTarea() {
+     TareaService tareaService = newTareaService();
+     long idUsuario = 1000L;
+     long idColumna = 1000L;
+     Tarea tarea = tareaService.nuevaTarea(idUsuario, "Pagar el alquiler", "", null, idColumna);
+     tarea = tareaService.enviarPapelera(tarea.getId());
+
+     assertNotNull(tarea.getDeletedAt());
+     tarea = tareaService.quitarDePapelera(tarea.getId());
+     assertNull(tarea.getDeletedAt());
+   }
 }

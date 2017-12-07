@@ -139,4 +139,15 @@ public class TareaService {
     tarea = tareaRepository.update(tarea);
     return tarea;
   }
+
+  public Tarea quitarDePapelera(Long idTarea) {
+    Tarea tarea = tareaRepository.findById(idTarea);
+    if (tarea == null) throw new TareaServiceException("No existe tarea");
+    if (tarea.getDeletedAt() != null) {
+        tarea.setDeletedAt(null);
+        tarea = tareaRepository.update(tarea);
+    }
+
+    return tarea;
+  }
 }
