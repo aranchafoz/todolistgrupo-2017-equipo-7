@@ -39,18 +39,17 @@
         </tr>
     @for(tarea <- tareas) {
         <tr>
-            <td>@tarea.getTitulo()</td>
             <td>
-              @if(tarea.getTerminada() != true) {
-              <a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-                <a style="cursor: pointer"
-                onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
-                <span class="glyphicon glyphicon-off"></span></a>
-              }
-                <a onmouseover="" style="cursor: pointer;"
-                onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+              <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
+                  @tarea.getTitulo()
+              </a>
+            </td>
+            <td>
+                <a class="btn btn-danger btn-xs" onmouseover="" style="cursor: pointer;"
+                  onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </a>
+            </td>
         </tr>
       }
 

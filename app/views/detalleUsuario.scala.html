@@ -1,20 +1,59 @@
 @(usuario: Usuario)
 
 @main("Detalle de usuario", usuario) {
-   <h1>
-     Detalle del usuario @usuario.getId() &nbsp;
-     <a href="@routes.UsuarioController.formularioEditaUsuario(usuario.getId())">
-       <span class="glyphicon glyphicon-pencil"></span>
-     </a>
-     </h1>
-   <ul>
-      <li><strong>Login: </strong> @usuario.getLogin()</li>
-      <li><strong>Email: </strong> @usuario.getEmail()</li>
-      <li><strong>Nombre: </strong> @usuario.getNombre()</li>
-      <li><strong>Apellidos: </strong> @usuario.getApellidos()</li>
-      <li><strong>Fecha de nacimiento: </strong>
-            @if(usuario.getFechaNacimiento() != null) {
-                @usuario.getFechaNacimiento().format("dd-MM-yyyy")
-            }</li>
-   </ul>
+  <h2>
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        Perfil de @usuario.getLogin()
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6" align="right">
+        <a class="btn btn-info" href="@routes.UsuarioController.formularioEditaUsuario(usuario.getId())">
+          <span class="glyphicon glyphicon-pencil"></span>
+          &nbsp;
+          Editar
+        </a>
+      </div>
+    </div>
+  </h2>
+  <hr>
+  <div class="container-fluid">
+    <h5>
+      <i class="fa fa-id-card-o"></i>
+      &nbsp;
+      <strong>ID: </strong>
+       @usuario.getId()
+    </h5>
+    <h5>
+      <i class="fa fa-user-circle-o"></i>
+      &nbsp;
+      <strong>Login: </strong>
+       @usuario.getLogin()
+    </h5>
+    <h5>
+      <i class="fa fa-envelope-o"></i>
+      &nbsp;
+      <strong>Email: </strong>
+       @usuario.getEmail()
+    </h5>
+    <h5>
+      <i class="fa fa-address-book-o"></i>
+      &nbsp;
+      <strong>Nombre: </strong>
+       @usuario.getNombre()
+    </h5>
+    <h5>
+      <i class="fa fa-address-book-o"></i>
+      &nbsp;
+      <strong>Apellidos: </strong>
+       @usuario.getApellidos()
+    </h5>
+    <h5>
+      <i class="fa fa-birthday-cake"></i>
+      &nbsp;
+      <strong>Fecha de nacimiento: </strong>
+      @if(usuario.getFechaNacimiento() != null) {
+          @usuario.getFechaNacimiento().format("dd-MM-yyyy")
+      }
+    </h5>
+  </div>
 }
