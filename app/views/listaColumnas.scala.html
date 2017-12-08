@@ -56,7 +56,7 @@
                   @if(tarea.getTerminada() != true) {
                       <tr>
                           <td>
-                              <a href="@routes.GestionTareasController.detalleTarea(tarea.getId())">
+                              <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
                                   @tarea.getTitulo()
                               </a>
                           </td>

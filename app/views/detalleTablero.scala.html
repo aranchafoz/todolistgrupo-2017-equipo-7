@@ -1,6 +1,13 @@
 @(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario, editable: Boolean)
 
 @main("Detalle de tablero", usuario) {
+    <p>
+      <a class="btn btn-default" href="@routes.GestionTablerosController.listaTableros(usuario.getId())">
+        <i class="fa fa-chevron-left"></i>
+        &nbsp;
+        Mis tableros
+      </a>
+    </p>
    <h2>
      Tablero @tablero.getNombre()
    </h2>

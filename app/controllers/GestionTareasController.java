@@ -200,18 +200,19 @@ public class GestionTareasController extends Controller {
    }
 
    @Security.Authenticated(ActionAuthenticator.class)
-   public Result detalleTarea(Long idTarea) {
-      Tarea tarea = tareaService.obtenerTarea(idTarea);
-      if (tarea == null) {
-         return notFound("Tarea no encontrada");
-      } else {
-         String connectedUserStr = session("connected");
-         Long connectedUser =  Long.valueOf(connectedUserStr);
-         if (connectedUser != tarea.getUsuario().getId()) {
-            return unauthorized("Lo siento, no estás autorizado");
-         } else {
-            return ok(detalleTarea.render(tarea));
-         }
+   public Result detalleTarea(Long idUsuario, Long idTarea) {
+     String connectedUserStr = session("connected");
+     Long connectedUser =  Long.valueOf(connectedUserStr);
+     if (connectedUser != idUsuario) {
+        return unauthorized("Lo siento, no estás autorizado");
+     } else {
+        Tarea tarea = tareaService.obtenerTarea(idTarea);
+        if (tarea == null) {
+          return notFound("Tarea no encontrada");
+        } else {
+          Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+          return ok(detalleTarea.render(usuario, tarea));
+        }
       }
    }
 

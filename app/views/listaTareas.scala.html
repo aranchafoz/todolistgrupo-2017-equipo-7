@@ -44,7 +44,7 @@
       @if(tarea.getTerminada() != true && tarea.getDeletedAt() == null) {
           <tr>
               <td>
-                  <a href="@routes.GestionTareasController.detalleTarea(tarea.getId())">
+                  <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
                       @tarea.getTitulo()
                   </a>
               </td>
@@ -54,20 +54,19 @@
                   }
               </td>
               <td>
-                @if(tarea.getTerminada() != true) {
-                <a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
-                  <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-                  <a style="cursor: pointer"
+                <a class="btn btn-xs btn-info" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="btn btn-xs btn-success" style="cursor: pointer"
                   onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
-                  <i class="fa fa-archive"
-                  data-placement='top' title='Cerrar tarea'></i></a>
+                <i class="fa fa-check-square-o"
+                data-placement='top' title='Cerrar tarea'></i>
                 }
                   <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs"
                   onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
           </tr>
         }
-      }
 
       <tr>
           <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">

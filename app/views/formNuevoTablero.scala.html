@@ -5,7 +5,6 @@
             @mensaje
         </div>
     }
-    <h1>Nuevo tablero para @usuario.getLogin()</h1>
     @helper.form(action = routes.GestionTablerosController.creaNuevoTablero(usuario.getId())) {
         <fieldset>
             <legend>Nuevo tablero</legend>

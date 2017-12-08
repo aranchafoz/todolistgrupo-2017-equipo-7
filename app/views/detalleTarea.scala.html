@@ -1,24 +1,110 @@
-@(tarea: Tarea)
-
-@main("Detalle de tarea", tarea.getUsuario()) {
-<h1>
-    Detalle de la tarea @tarea.getTitulo() &nbsp;
-
-</h1>
-<ul>
-    <li><strong>Descripción: </strong> @tarea.getDescripcion()</li>
-    <li><strong>Fecha Creación: </strong> @tarea.getFechaCreacion()</li>
-    <li><strong>Fecha Límite: </strong> @tarea.getFechaLimite()</li>
-    <li><strong>Terminada: </strong>
-        @if(tarea.getTerminada()){
-            Si
-        } else {
-            No
+@(usuario: Usuario, tarea: Tarea)
+@scripts = {
+    <script type="text/javascript">
+        function del(urlBorrar) {
+            $.ajax({
+                url: urlBorrar,
+                type: 'DELETE',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
         }
-    </li>
-</ul>
+
+        function terminar(urlTerminar) {
+          $.ajax({
+            url: urlTerminar,
+            type: 'POST',
+            success: function (results) {
+              location.reload();
+            }
+          })
+        }
+    </script>
+}
+@main("Detalle de tarea", tarea.getUsuario(), scripts) {
 
 <p>
-    <a class="btn btn-info" href="@routes.GestionTareasController.listaTareas(tarea.getUsuario().getId())">Atrás</a>
+    <a class="btn btn-default" href="@routes.GestionTareasController.listaTareas(usuario.getId())">
+      <i class="fa fa-chevron-left"></i>
+      &nbsp;
+      Mis tareas
+    </a>
 </p>
+<h2>
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+      Tarea @tarea.getTitulo()
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6" align="right">
+      @if(tarea.getTerminada() != true) {
+        <a class="btn btn-info" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
+          <span class="glyphicon glyphicon-pencil"></span>
+          &nbsp;
+          Editar
+        </a>
+      }
+        <a class="btn btn-danger" onmouseover="" style="cursor: pointer;"
+          onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          &nbsp;
+          Borrar
+        </a>
+    </div>
+  </div>
+</h2>
+<hr>
+<div class="container-fluid">
+    <h5>
+      <i class="fa fa-align-justify"></i>
+      &nbsp;
+      <strong>Descripción: </strong>
+       @tarea.getDescripcion()
+    </h5>
+    <h5>
+      <i class="fa fa-calendar"></i>
+      &nbsp;
+      <strong>Fecha de creación: </strong>
+       @tarea.getFechaCreacion()
+    </h5>
+    <h5>
+      <i class="fa fa-clock-o"></i>
+      &nbsp;
+      <strong>Fecha límite: </strong>
+       @tarea.getFechaLimite()
+    </h5>
+    <h5><strong>Estado: </strong>
+        @if(tarea.getTerminada()){
+          Terminada
+        } else {
+          En curso
+          &nbsp;
+          <a class="btn btn-xs btn-success" style="cursor: pointer"
+          onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
+            <i class="fa fa-check-square-o"
+            data-placement='top' title='Terminar tarea'></i>
+            &nbsp;
+            Terminar tarea
+          </a>
+        }
+    </h5>
+    <hr>
+    <h5>
+      <strong>Tablero: </strong>
+       @tarea.getColumna().getTablero().getNombre()
+    </h5>
+    <h5>
+      <strong>Columna: </strong>
+       @tarea.getColumna().getNombre()
+    </h5>
+    <p>
+      &nbsp; &nbsp;
+      <a href="@routes.GestionTablerosController.detalleTablero(usuario.getId(), tarea.getColumna().getTablero().getId())" style="font-size: 13px">
+        <i>Ver detalles</i>
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+      </a>
+    </p>
+</div>
 }
