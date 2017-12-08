@@ -293,4 +293,11 @@ public class GestionTareasController extends Controller {
          return ok(listaTareasPapelera.render(tareas, usuario, aviso));
       }
    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result recuperarTarea(Long idTarea) {
+      tareaService.quitarDePapelera(idTarea);
+      flash("aviso", "Tarea recuperada correctamente");
+      return ok();
+    }
 }

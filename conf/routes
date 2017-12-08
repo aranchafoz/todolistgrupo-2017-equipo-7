@@ -36,6 +36,7 @@ DELETE  /tareas/:id                 controllers.GestionTareasController.borraTar
 PUT     /tareas/:id/trash           controllers.GestionTareasController.enviarPapelera(id: Long)
 GET     /usuarios/:id/tareas/papelera controllers.GestionTareasController.listarTareasPapelera(id: Long)
 POST    /tareas/:id/terminar        controllers.GestionTareasController.terminaTarea(id: Long)
+PUT     /tareas/:id/recuperar       controllers.GestionTareasController.recuperarTarea(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.creaNuevoTablero(id: Long)

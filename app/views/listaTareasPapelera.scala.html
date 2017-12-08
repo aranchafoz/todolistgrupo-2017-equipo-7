@@ -12,6 +12,17 @@
             });
         }
 
+        function getBack(urlBack) {
+            $.ajax({
+                url: urlBack,
+                type: 'PUT',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+
         function terminar(urlTerminar) {
           $.ajax({
             url: urlTerminar,
@@ -30,7 +41,7 @@
     <ul class="nav nav-tabs">
       <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
       <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
-      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Borradas</a></li>
+      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
     </ul>
 
     <table class="table table-striped">
@@ -53,7 +64,10 @@
               <td>
                   <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs"
                   onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                  <a onmouseover="" style="cursor: pointer;" class="btn btn-info btn-xs"
+                  onclick="getBack('@routes.GestionTareasController.recuperarTarea(tarea.getId())')">
+                  <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></a></td>
           </tr>
       }
 
