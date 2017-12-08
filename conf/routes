@@ -33,6 +33,8 @@ GET     /tareas/:id/editar          controllers.GestionTareasController.formular
 GET     /tareas/:id/                controllers.GestionTareasController.detalleTarea(id: Long)
 POST    /tareas/:id/editar          controllers.GestionTareasController.grabaTareaModificada(id: Long)
 DELETE  /tareas/:id                 controllers.GestionTareasController.borraTarea(id: Long)
+PUT     /tareas/:id/trash           controllers.GestionTareasController.enviarPapelera(id: Long)
+GET     /usuarios/:id/tareas/papelera controllers.GestionTareasController.listarTareasPapelera(id: Long)
 POST    /tareas/:id/terminar        controllers.GestionTareasController.terminaTarea(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.formularioNuevoTablero(id: Long)

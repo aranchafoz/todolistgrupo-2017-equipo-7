@@ -4,7 +4,7 @@
         function del(urlBorrar) {
             $.ajax({
                 url: urlBorrar,
-                type: 'DELETE',
+                type: 'PUT',
                 success: function(results) {
                     //refresh the page
                     location.reload();
@@ -30,6 +30,7 @@
     <ul class="nav nav-tabs">
       <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
       <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
+      <li role="presentation"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Borradas</a></li>
     </ul>
 
     <table class="table table-striped">
@@ -49,7 +50,7 @@
                 <span class="glyphicon glyphicon-off"></span></a>
               }
                 <a onmouseover="" style="cursor: pointer;"
-                onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
         </tr>
       }

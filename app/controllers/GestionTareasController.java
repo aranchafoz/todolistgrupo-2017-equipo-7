@@ -272,4 +272,25 @@ public class GestionTareasController extends Controller {
       flash("aviso", "Tarea borrada correctamente");
       return ok();
    }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result enviarPapelera(Long idTarea) {
+     tareaService.enviarPapelera(idTarea);
+     flash("aviso", "Tarea enviada a papelera correctamente");
+     return ok();
+   }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result listarTareasPapelera(Long idUsuario) {
+      String connectedUserStr = session("connected");
+      Long connectedUser =  Long.valueOf(connectedUserStr);
+      if (connectedUser != idUsuario) {
+         return unauthorized("Lo siento, no estás autorizado");
+      } else {
+         String aviso = flash("aviso");
+         Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+         List<Tarea> tareas = tareaService.allTareasPapeleraUsuario(idUsuario);
+         return ok(listaTareasPapelera.render(tareas, usuario, aviso));
+      }
+   }
 }
