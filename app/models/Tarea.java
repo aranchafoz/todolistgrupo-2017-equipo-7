@@ -39,8 +39,8 @@ public class Tarea {
    @JoinColumn(name="columnaId")
    public Columna columna;
 
-   @ManyToOne
-   @JoinColumn(name="etiquetaId")
+   @ManyToMany(fetch=FetchType.EAGER)
+   @JoinTable(name="Tarea_Etiqueta")
    public Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
 
    public Tarea() {}

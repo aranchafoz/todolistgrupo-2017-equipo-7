@@ -14,9 +14,11 @@ public class Etiqueta {
      @ManyToOne
      @JoinColumn(name="tableroId")
      public Tablero tablero;
-     // Relación uno-a-muchos entre usuario y tarea
-     @OneToMany(mappedBy="etiqueta", fetch=FetchType.EAGER)
+
+     @ManyToMany(mappedBy="etiquetas", fetch=FetchType.EAGER)
      public Set<Tarea> tareas = new HashSet<Tarea>();
+
+
 
      public Etiqueta() {}
 
