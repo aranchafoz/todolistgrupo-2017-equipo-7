@@ -140,9 +140,9 @@ public class EtiquetaTest {
    }
 
    // SGT-13: Etiquetas en tareas
-   // Una etiqueta puede estar en varias tareas
+   // Una tarea puede tener varias etiquetas
    @Test
-   public void testEtiquetaEstaEnVariasTareas() {
+   public void testTareaTieneVariasEtiquetas() {
       ColumnaRepository columnaRepository = newColumnaRepository();
       EtiquetaRepository etiquetaRepository = newEtiquetaRepository();
       TableroRepository tableroRepository = newTableroRepository();
@@ -152,19 +152,25 @@ public class EtiquetaTest {
       Tablero tablero = tableroRepository.findById(1000L);
       Columna columna = new Columna(tablero, "Columna Test Varias Tareas", 1);
       columna = columnaRepository.add(columna);
-      Etiqueta etiqueta = new Etiqueta(tablero, "Etiqueta Test En Varias Tareas");
-      etiqueta = etiquetaRepository.add(etiqueta);
-      // Añadimos varias tareas
       Usuario usuario = usuarioRepository.findById(1000L);
-      Tarea tarea1 = new Tarea(usuario, "Tarea 1", columna);
-      tarea1 = tareaRepository.add(tarea1);
-      Tarea tarea2 = new Tarea(usuario, "Tarea 2", columna);
-      tarea2 = tareaRepository.add(tarea2);
-      Tarea tarea3 = new Tarea(usuario, "Tarea 3", columna);
-      tarea3 = tareaRepository.add(tarea3);
-      // Recuperamos la etiqueta del repository
-      etiqueta = etiquetaRepository.findById(etiqueta.getId());
-      // Y comprobamos si tiene las tareas
-      assertEquals(3, etiqueta.getTareas().size());
+
+      Tarea tarea = new Tarea(usuario, "Tarea 1", columna);
+      tarea = tareaRepository.add(tarea);
+
+      Etiqueta etiqueta1 = new Etiqueta(tablero, "Etiqueta 1");
+      etiqueta1 = etiquetaRepository.add(etiqueta1);
+      Etiqueta etiqueta2 = new Etiqueta(tablero, "Etiqueta 2");
+      etiqueta2 = etiquetaRepository.add(etiqueta2);
+
+      // Recuperamos la tarea del repository
+      tarea = tareaRepository.findById(tarea.getId());
+      tarea.getEtiquetas().add(etiqueta1);
+      tarea.getEtiquetas().add(etiqueta2);
+
+      //tarea.setEtiquetas(etiqueta);
+
+      // Y comprobamos si tiene la etiqueta
+      assertEquals(2, tarea.getEtiquetas().size()); // FALLA AQUÍ
    }
+
 }
