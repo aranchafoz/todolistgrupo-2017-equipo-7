@@ -8,6 +8,9 @@ import java.lang.String;
 import java.util.Set;
 import java.util.HashSet;
 
+import java.util.Set;
+import java.util.HashSet;
+
 @Entity
 public class Tarea {
    @Id
@@ -31,6 +34,10 @@ public class Tarea {
    // el ID del usuario con el que está asociado una tarea
    @JoinColumn(name="usuarioId")
    public Usuario usuario;
+
+   @ManyToMany(fetch=FetchType.EAGER)
+   @JoinTable(name="Usuario_Tarea")
+   public Set<Usuario> usuariosAsignados = new HashSet<Usuario>();
 
    // Relación muchos-a-uno entre tareas y columna
    @ManyToOne
@@ -111,6 +118,16 @@ public class Tarea {
    public String getDescripcion() { return this.descripcion; }
 
    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+
+   public Set<Usuario> getUsuariosAsignados() {
+     return this.usuariosAsignados;
+   }
+
+   public void setUsuariosAsignados(Set<Usuario> usuariosAsignados) {
+     this.usuariosAsignados = usuariosAsignados;
+     
+   }
 
    public Set<Etiqueta> getEtiquetas() {
       return etiquetas;

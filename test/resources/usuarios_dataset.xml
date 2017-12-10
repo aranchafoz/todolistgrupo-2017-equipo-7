@@ -34,4 +34,5 @@
     <Tarea_Etiqueta tareas_id="1000" etiquetas_id="1000"/>
     <Tarea_Etiqueta tareas_id="1000" etiquetas_id="1001"/>
     <Tarea_Etiqueta tareas_id="1000" etiquetas_id="2000"/>
+    <Usuario_Tarea usuariosAsignados_id="2000" tareasAsignadas_id="1000"/>
  </dataset>
