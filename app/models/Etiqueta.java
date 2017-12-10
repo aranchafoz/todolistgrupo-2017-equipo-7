@@ -18,8 +18,6 @@ public class Etiqueta {
      @ManyToMany(mappedBy="etiquetas", fetch=FetchType.EAGER)
      public Set<Tarea> tareas = new HashSet<Tarea>();
 
-
-
      public Etiqueta() {}
 
      public Etiqueta(Tablero tablero, String nombre) {
