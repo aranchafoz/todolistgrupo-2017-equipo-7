@@ -154,4 +154,13 @@ public class UsuarioTest {
       assertEquals(usuario1, usuario2);
       assertNotEquals(usuario1, usuario3);
    }
+
+   @Test
+   public void testGetTareasUsuario() {
+     UsuarioRepository repository = newUsuarioRepository();
+     Usuario usuario = repository.findById(2000L);
+     assertNotNull(usuario);
+
+     assertEquals(1, usuario.getTareasAsignadas().size());
+   }
 }

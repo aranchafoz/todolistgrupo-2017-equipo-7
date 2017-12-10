@@ -271,4 +271,13 @@ public class TareaTest {
 
      assertTrue(updated.getTerminada());
    }
+
+   @Test
+   public void testUsuariosAsignadosTarea() {
+     TareaRepository tareaRepository = newTareaRepository();
+     Tarea t = tareaRepository.findById(1000L);
+     assertNotNull(t);
+
+     assertEquals(1, t.getUsuariosAsignados().size());
+   }
 }
