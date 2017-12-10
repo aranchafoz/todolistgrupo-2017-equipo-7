@@ -34,7 +34,7 @@ public class Tarea {
    public Usuario usuario;
 
    @ManyToMany(fetch=FetchType.EAGER)
-   @JoinTable(name="Usuarios_Tarea")
+   @JoinTable(name="Usuario_Tarea")
    public Set<Usuario> usuariosAsignados = new HashSet<Usuario>();
 
    // Relación muchos-a-uno entre tareas y columna
@@ -112,6 +112,14 @@ public class Tarea {
    public String getDescripcion() { return this.descripcion; }
 
    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+   public Set<Usuario> getUsuariosAsignados() {
+     return this.usuariosAsignados;
+   }
+
+   public void setUsuariosAsignados(Set<Usuario> usuariosAsignados) {
+     this.usuariosAsignados = usuariosAsignados;
+   }
 
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",

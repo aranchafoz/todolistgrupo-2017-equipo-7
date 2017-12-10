@@ -25,4 +25,5 @@
     <Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000" columnaId="1000" terminada="false"/>
     <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000" columnaId="1000" terminada="false"/>
     <Tarea id="3000" titulo="Renovar DNI para Borrar Columna" usuarioId="2000" columnaId="3001" terminada="false"/>
+    <Usuario_Tarea usuariosAsignados_id="2000" tareasAsignadas_id="1000"/>
  </dataset>
