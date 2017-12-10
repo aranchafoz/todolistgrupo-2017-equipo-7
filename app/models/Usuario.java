@@ -125,6 +125,14 @@ public class Usuario {
       this.tableros = tableros;
    }
 
+   public Set<Tarea> getTareasAsignadas() {
+      return tareasAsignadas;
+   }
+
+   public void setTareasAsignadas(Set<Tarea> tareasAsignadas) {
+      this.tareasAsignadas = tareasAsignadas;
+   }
+
    public String toString() {
       String fechaStr = null;
       if (fechaNacimiento != null) {
