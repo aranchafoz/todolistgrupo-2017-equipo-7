@@ -21,6 +21,12 @@
     <Columna id="2001" nombre="Columna test crear 2" posicion="2" tableroId="2000"/>
     <Columna id="3000" nombre="Columna test borrar 1" posicion="2" tableroId="2000"/>
     <Columna id="3001" nombre="Columna test borrar 2" posicion="2" tableroId="2000"/>
+    <Etiqueta id="1000" nombre="Etiqueta test 1" tableroId="1001"/>
+    <Etiqueta id="1001" nombre="Etiqueta test 2" tableroId="1001"/>
+    <Etiqueta id="2000" nombre="Etiqueta test crear 1" tableroId="2000"/>
+    <Etiqueta id="2001" nombre="Etiqueta test crear 2" tableroId="2000"/>
+    <Etiqueta id="3000" nombre="Etiqueta test borrar 1" tableroId="2000"/>
+    <Etiqueta id="3001" nombre="Etiqueta test borrar 2" tableroId="2000"/>
     <Tarea id="1000" titulo="Renovar DNI" usuarioId="1000" columnaId="1000" terminada="false" fechaCreacion="1996-12-10" fechaLimite="2017-12-10" descripcion="Descripcion para test"/>
     <Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000" columnaId="1000" terminada="false"/>
     <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000" columnaId="1000" terminada="false"/>

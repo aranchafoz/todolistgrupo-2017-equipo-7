@@ -5,6 +5,8 @@ import java.util.Date;
 import java.text.DateFormat;
 import play.data.format.*;
 import java.lang.String;
+import java.util.Set;
+import java.util.HashSet;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -43,6 +45,10 @@ public class Tarea {
    // el ID del usuario con el que está asociado una tarea
    @JoinColumn(name="columnaId")
    public Columna columna;
+
+   @ManyToMany(fetch=FetchType.EAGER)
+   @JoinTable(name="Tarea_Etiqueta")
+   public Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
 
    public Tarea() {}
 
@@ -113,12 +119,22 @@ public class Tarea {
 
    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
+
    public Set<Usuario> getUsuariosAsignados() {
      return this.usuariosAsignados;
    }
 
    public void setUsuariosAsignados(Set<Usuario> usuariosAsignados) {
      this.usuariosAsignados = usuariosAsignados;
+     
+   }
+
+   public Set<Etiqueta> getEtiquetas() {
+      return etiquetas;
+   }
+
+   public void setEtiquetas(Set<Etiqueta> etiquetas) {
+      this.etiquetas = etiquetas;
    }
 
    public String toString() {

@@ -11,3 +11,21 @@
 
 ALTER TABLE `Tarea` ADD
   `deleted_at` date DEFAULT NULL;
+  
+CREATE TABLE `Etiqueta` (
+  `id` bigint(20) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `tableroId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKqhvnrs00mpblhwhp2ondwu2vo` (`tableroId`),
+  CONSTRAINT `FKqhvnrs00mpblhwhp2ondwu2vo` FOREIGN KEY (`tableroId`) REFERENCES `Tablero` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `Tarea_Etiqueta` (
+  `tareas_id` bigint(20) NOT NULL,
+  `etiquetas_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`tareas_id`,`etiquetas_id`),
+  KEY `FKlkb4xdc8vxt63t1ihylcc36s6` (`etiquetas_id`),
+  CONSTRAINT `FKlkb4xdc8vxt63t1ihylcc36s6` FOREIGN KEY (`etiquetas_id`) REFERENCES `Etiqueta` (`id`),
+  CONSTRAINT `FKqjbjoqqylxa92bunkrndg0nx7` FOREIGN KEY (`tareas_id`) REFERENCES `Tarea` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
