@@ -37,6 +37,10 @@ public class Tarea {
    @JoinColumn(name="columnaId")
    public Columna columna;
 
+   @ManyToOne
+   @JoinColumn(name="etiquetaId")
+   public Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
+
    public Tarea() {}
 
    public Tarea(Usuario usuario, String titulo, Columna columna) {
@@ -105,6 +109,14 @@ public class Tarea {
    public String getDescripcion() { return this.descripcion; }
 
    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+   public Set<Etiqueta> getEtiquetas() {
+      return etiquetas;
+   }
+
+   public void setEtiquetas(Set<Etiquetas> etiquetas) {
+      this.etiquetas = etiquetas;
+   }
 
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",
