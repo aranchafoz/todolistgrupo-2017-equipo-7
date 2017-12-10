@@ -4,6 +4,17 @@
         function del(urlBorrar) {
             $.ajax({
                 url: urlBorrar,
+                type: 'DELETE',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+
+        function getBack(urlBack) {
+            $.ajax({
+                url: urlBack,
                 type: 'PUT',
                 success: function(results) {
                     //refresh the page
@@ -28,9 +39,9 @@
     <h2> Listado de tareas de @usuario.getLogin()</h2>
 
     <ul class="nav nav-tabs">
-      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
+      <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
       <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
-      <li role="presentation"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
+      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
     </ul>
 
     <table class="table table-striped">
@@ -41,12 +52,9 @@
             <th>Acción</th>
         </tr>
     @for(tarea <- tareas) {
-      @if(tarea.getTerminada() != true && tarea.getDeletedAt() == null) {
           <tr>
               <td>
-                  <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
-                      @tarea.getTitulo()
-                  </a>
+                  @tarea.getTitulo()
               </td>
               <td>@tarea.getDescripcion()</td>
               <td>@if(tarea.getFechaLimite() != null) {
@@ -54,28 +62,14 @@
                   }
               </td>
               <td>
-                <a class="btn btn-xs btn-info" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
-                  <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-                <a class="btn btn-xs btn-success" style="cursor: pointer"
-                  onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
-
-                <i class="fa fa-check-square-o"
-                data-placement='top' title='Cerrar tarea'></i>
-                }
                   <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs"
-                  onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                  onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                  <a onmouseover="" style="cursor: pointer;" class="btn btn-info btn-xs"
+                  onclick="getBack('@routes.GestionTareasController.recuperarTarea(tarea.getId())')">
+                  <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></a></td>
           </tr>
-        }
-
-      <tr>
-          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
-              <span class="glyphicon glyphicon-plus"/></a></td>
-          <td></td>
-          <td></td>
-          <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
-      </tr>
+      }
 
   </table>
 

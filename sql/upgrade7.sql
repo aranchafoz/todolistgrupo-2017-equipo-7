@@ -9,6 +9,9 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+ALTER TABLE `Tarea` ADD
+  `deleted_at` date DEFAULT NULL;
+  
 CREATE TABLE `Etiqueta` (
   `id` bigint(20) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
