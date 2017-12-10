@@ -31,6 +31,9 @@ public class Usuario {
    private Set<Tablero> administrados = new HashSet<Tablero>();
    @ManyToMany(mappedBy="participantes", fetch=FetchType.EAGER)
    private Set<Tablero> tableros = new HashSet<Tablero>();
+   @ManyToMany(fetch=FetchType.EAGER)
+   @JoinTable(name="Usuarios_Tarea")
+   public Set<Tarea> tareasAsignadas = new HashSet<Tarea>();
 
    // Un constructor vacío necesario para JPA
    public Usuario() {}

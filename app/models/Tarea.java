@@ -6,6 +6,9 @@ import java.text.DateFormat;
 import play.data.format.*;
 import java.lang.String;
 
+import java.util.Set;
+import java.util.HashSet;
+
 @Entity
 public class Tarea {
    @Id
@@ -29,6 +32,10 @@ public class Tarea {
    // el ID del usuario con el que está asociado una tarea
    @JoinColumn(name="usuarioId")
    public Usuario usuario;
+
+   @ManyToMany(fetch=FetchType.EAGER)
+   @JoinTable(name="Usuarios_Tarea")
+   public Set<Usuario> usuariosAsignados = new HashSet<Usuario>();
 
    // Relación muchos-a-uno entre tareas y columna
    @ManyToOne
