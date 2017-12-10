@@ -5,6 +5,8 @@ import java.util.Date;
 import java.text.DateFormat;
 import play.data.format.*;
 import java.lang.String;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 public class Tarea {
@@ -114,7 +116,7 @@ public class Tarea {
       return etiquetas;
    }
 
-   public void setEtiquetas(Set<Etiquetas> etiquetas) {
+   public void setEtiquetas(Set<Etiqueta> etiquetas) {
       this.etiquetas = etiquetas;
    }
 

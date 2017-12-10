@@ -25,11 +25,6 @@ public class Etiqueta {
        this.nombre = nombre;
      }
 
-     public Etiqueta(Tarea tarea, String nombre) {
-       this.tarea = tarea;
-       this.nombre = nombre;
-     }
-
      public Long getId() {
        return id;
      }
@@ -78,7 +73,7 @@ public class Etiqueta {
      public boolean equals(Object obj) {
         if (this == obj) return true;
         if (getClass() != obj.getClass()) return false;
-        Columna other = (Columna) obj;
+        Etiqueta other = (Etiqueta) obj;
         // Si tenemos los ID, comparamos por ID
         if (id != null && other.id != null)
         return ((long) id == (long) other.id);
