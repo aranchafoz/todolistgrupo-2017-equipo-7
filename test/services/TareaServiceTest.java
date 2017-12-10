@@ -222,4 +222,13 @@ public class TareaServiceTest {
      assertEquals("Columna test 2", tarea.getColumna().getNombre());
 
    }
+
+   @Test
+   public void asignarEtiquetasEnTarea() {
+     TareaService tareaService = newTareaService();
+     Tarea tarea = tareaService.obtenerTarea(1000L);
+     long idEtiqueta = 1000L;
+     tarea = tareaService.asignaEtiquetaTarea(tarea.getId(), idEtiqueta);
+     assertEquals(3, tarea.getEtiquetas().size());
+   }
 }

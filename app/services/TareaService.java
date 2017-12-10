@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.text.DateFormat;
 import play.data.format.*;
+import java.util.Set;
+import java.util.HashSet;
 
 import models.Usuario;
 import models.UsuarioRepository;
@@ -17,18 +19,22 @@ import models.TareaRepository;
 import models.Columna;
 import models.ColumnaRepository;
 import java.util.Date;
+import models.Etiqueta;
+import models.EtiquetaRepository;
 
 
 public class TareaService {
    UsuarioRepository usuarioRepository;
    TareaRepository tareaRepository;
    ColumnaRepository columnaRepository;
+   EtiquetaRepository etiquetaRepository;
 
    @Inject
-   public TareaService(UsuarioRepository usuarioRepository, TareaRepository tareaRepository, ColumnaRepository columnaRepository) {
+   public TareaService(UsuarioRepository usuarioRepository, TareaRepository tareaRepository, ColumnaRepository columnaRepository, EtiquetaRepository etiquetaRepository) {
       this.usuarioRepository = usuarioRepository;
       this.tareaRepository = tareaRepository;
       this.columnaRepository = columnaRepository;
+      this.etiquetaRepository = etiquetaRepository;
    }
 
    // Devuelve la lista de tareas de un usuario, ordenadas por su id
@@ -147,6 +153,27 @@ public class TareaService {
         tarea.setDeletedAt(null);
         tarea = tareaRepository.update(tarea);
     }
+
+    return tarea;
+  }
+
+  public Tarea asignaEtiquetaTarea(Long idTarea, Long idEtiqueta)
+  {
+    Tarea tarea = tareaRepository.findById(idTarea);
+    if (tarea == null) {
+      throw new TareaServiceException("Tarea no existente");
+    }
+
+    Etiqueta etiqueta = etiquetaRepository.findById(idTarea);
+    if (etiqueta == null) {
+      throw new TareaServiceException("Etiqueta no existente");
+    }
+    List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+    etiquetas.addAll(tarea.getEtiquetas());
+    etiquetas.add(etiqueta);
+
+    tarea.setEtiquetas(new HashSet<Etiqueta> (etiquetas));
+    tarea = tareaRepository.update(tarea);
 
     return tarea;
   }
