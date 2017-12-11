@@ -38,6 +38,7 @@
             <th>Tareas</th>
             <th>Descripción</th>
             <th>Fecha Límite</th>
+            <th>Etiquetas</th>
             <th>Acción</th>
         </tr>
     @for(tarea <- tareas) {
@@ -53,6 +54,7 @@
                       @tarea.getFechaLimite().format("dd-MM-yyyy")
                   }
               </td>
+              <td>@tarea.getEtiquetas()</td>
               <td>
                 <a class="btn btn-xs btn-info" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
                   <span class="glyphicon glyphicon-pencil"></span>
@@ -72,6 +74,7 @@
       <tr>
           <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
               <span class="glyphicon glyphicon-plus"/></a></td>
+          <td></td>
           <td></td>
           <td></td>
           <td><a href="@routes.UsuarioController.logout()">Salir</a></td>

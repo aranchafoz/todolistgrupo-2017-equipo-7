@@ -1,0 +1,18 @@
+@(usuario: Usuario, tablero: Tablero, etiquetaForm: Form[Etiqueta])
+<div class="col-lg-3 col-md-3" id="newEtiquetaForm" style="display: none;">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      @helper.form(action = routes.GestionEtiquetasController.creaNuevaEtiqueta(usuario.getId(), tablero.getId())) {
+          <fieldset>
+              @helper.inputText(etiquetaForm("Nombre"), 'placeholder -> "Introduce el nombre", 'size -> 30, 'type -> "text", 'class -> "form-control")
+              <div class="col-lg-6 col-md-6">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+              </div>
+              <div class="col-lg-6 col-md-6 col-">
+                <input type="button" class="btn btn-danger" value="Cancel" onclick="showAddEtiquetaButton()">
+              </div>
+          </fieldset>
+      }
+    </div>
+  </div>
+</div>
