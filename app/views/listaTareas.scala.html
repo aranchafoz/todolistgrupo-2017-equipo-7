@@ -62,12 +62,12 @@
 
                 <i class="fa fa-check-square-o"
                 data-placement='top' title='Cerrar tarea'></i>
-                }
                   <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs"
                   onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
           </tr>
         }
+      }
 
       <tr>
           <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
