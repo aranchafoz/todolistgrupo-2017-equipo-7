@@ -12,7 +12,11 @@
 
          @helper.inputText(tareaForm("descripcion").copy(value=Some(descripcion)), '_label -> "Descripción", 'size -> 70, 'type -> "text", 'class -> "form-control")
 
-         @helper.inputDate(tareaForm("fechaLimite").copy(value=Some(fechaLimite.format("yyyy-MM-dd"))), '_label -> "Fecha Límite (opcional)", 'size -> 70)
+         @if(fechaLimite != null) {
+            @helper.inputDate(tareaForm("fechaLimite").copy(value=Some(fechaLimite.format("yyyy-MM-dd"))), '_label -> "Fecha Límite (opcional)", 'size -> 70)
+          } else {
+            @helper.inputDate(tareaForm("fechaLimite"), '_label -> "Fecha Límite", 'size -> 70)
+          }
 
          <fieldset>
            @helper.select(
@@ -26,6 +30,8 @@
              'class -> "form-control"
            )
          </fieldset>
+
+
 
       </fieldset>
       <p/>

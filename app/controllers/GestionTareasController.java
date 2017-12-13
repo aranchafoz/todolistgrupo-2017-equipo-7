@@ -16,10 +16,12 @@ import services.UsuarioService;
 import services.TareaService;
 import services.TableroService;
 import services.ColumnaService;
+import services.EtiquetaService;
 import models.Usuario;
 import models.Tarea;
 import models.Tablero;
 import models.Columna;
+import models.Etiqueta;
 import security.ActionAuthenticator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -31,6 +33,7 @@ public class GestionTareasController extends Controller {
    @Inject TareaService tareaService;
    @Inject TableroService tableroService;
    @Inject ColumnaService columnaService;
+   @Inject EtiquetaService etiquetaService;
 
    // Comprobamos si hay alguien logeado con @Security.Authenticated(ActionAuthenticator.class)
    // https://alexgaribay.com/2014/06/15/authentication-in-play-framework-using-java/
@@ -68,7 +71,7 @@ public class GestionTareasController extends Controller {
       } else {
         DynamicForm form = Form.form().bindFromRequest();
 
-         if (form.get("titulo").equals("") || form.get("columna").equals("") || form.get("fechaLimite").equals("")) {
+         if (form.get("titulo").equals("") || form.get("columna").equals("")) {
             Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
 
             List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(idUsuario);
@@ -90,7 +93,13 @@ public class GestionTareasController extends Controller {
          String descripcion = form.get("descripcion");
 
          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-         Date fechaLimite = format.parse( form.get("fechaLimite") );
+
+         Date fechaLimite = null;
+
+         if (!form.get("fechaLimite").equals("") )
+         {
+          fechaLimite = format.parse( form.get("fechaLimite") );
+         }
 
          Long columnaId = Long.parseLong( form.get("columna"), 10 );
 
@@ -182,8 +191,7 @@ public class GestionTareasController extends Controller {
             tableros.addAll(tablerosAdministrados);
             tableros.addAll(tablerosParticipados);
 
-
-             List<Columna> columnas = new ArrayList<Columna>();
+            List<Columna> columnas = new ArrayList<Columna>();
              for(Tablero t : tableros) {
                columnas.addAll(t.getColumnas());
              }
@@ -235,7 +243,7 @@ public class GestionTareasController extends Controller {
       } else {
         DynamicForm form = Form.form().bindFromRequest();
 
-         if (form.get("titulo").equals("") || form.get("columna").equals("") || form.get("fechaLimite").equals("")) {
+         if (form.get("titulo").equals("") || form.get("columna").equals("")) {
 
             List<Tablero> tablerosAdministrados = tableroService.allTablerosAdministradosUsuario(tarea.getUsuario().getId());
             List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(tarea.getUsuario().getId());
@@ -257,7 +265,13 @@ public class GestionTareasController extends Controller {
          String nuevaDescripcion = form.get("descripcion");
 
          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-         Date nuevaFechaLimite = format.parse( form.get("fechaLimite") );
+
+         Date nuevaFechaLimite = null;
+
+         if (!form.get("fechaLimite").equals("") )
+         {
+          nuevaFechaLimite = format.parse( form.get("fechaLimite") );
+         }
 
          Long nuevaColumnaId = Long.parseLong( form.get("columna"), 10 );
 
