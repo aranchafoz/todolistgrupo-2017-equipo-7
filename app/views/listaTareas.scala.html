@@ -64,7 +64,11 @@
                 data-placement='top' title='Cerrar tarea'></i>
                   <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs"
                   onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                <a class="btn btn-xs btn-primary" style="cursor: pointer"
+                href="@routes.GestionTareasController.formularioAsignaTarea(tarea.getId())">
+                <i class="fa fa-user-plus"></i></a>
+              </td>
           </tr>
         }
       }
