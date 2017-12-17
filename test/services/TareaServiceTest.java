@@ -262,4 +262,23 @@ public class TareaServiceTest {
      tareasUsuario = tareaService.allTareasAsignadasUsuario(usuarioAsignado);
      assertEquals(3, tareasUsuario.size());
    }
+
+   @Test
+   public void usuariosAsignadosTarea() {
+     TareaService tareaService = newTareaService();
+     long idColumna = 1001L;
+     long u1 = 1000L;
+     long u2 = 1001L;
+     long u3 = 1002L;
+     Tarea t1 = tareaService.nuevaTarea(u1, "t1", "", null, idColumna);
+
+     List<Usuario> usuariosTarea = tareaService.allUsuariosAsignadosTarea(t1.getId());
+
+     assertEquals(0, usuariosTarea.size());
+     t1 = tareaService.asignarTareaUsuario(t1.getId(), u2);
+     t1 = tareaService.asignarTareaUsuario(t1.getId(), u3);
+
+     usuariosTarea = tareaService.allUsuariosAsignadosTarea(t1.getId());
+     assertEquals(2, usuariosTarea.size());
+   }
 }

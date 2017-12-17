@@ -100,6 +100,18 @@ public class TareaService {
       return tareas;
    }
 
+   public List<Usuario> allUsuariosAsignadosTarea(Long idTarea) {
+     Tarea tarea = tareaRepository.findById(idTarea);
+     if (tarea == null) {
+         throw new TareaServiceException("Tarea no existente");
+       }
+      List<Usuario> usuarios = new ArrayList<Usuario>();
+      usuarios.addAll(tarea.getUsuariosAsignados());
+      Collections.sort(usuarios, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+
+      return usuarios;
+   }
+
    public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion, Date fechaLimite, Long idColumna) {
       Usuario usuario = usuarioRepository.findById(idUsuario);
       if (usuario == null) {

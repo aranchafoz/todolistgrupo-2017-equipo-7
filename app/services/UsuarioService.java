@@ -7,6 +7,8 @@ import models.UsuarioRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import models.Tarea;
+import models.TareaRepository;
 
 public class UsuarioService {
    UsuarioRepository repository;
