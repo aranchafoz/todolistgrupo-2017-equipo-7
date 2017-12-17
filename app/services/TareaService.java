@@ -157,6 +157,22 @@ public class TareaService {
     return tarea;
   }
 
+  public Tarea asignarTareaUsuario(Long idTarea, Long idUsuario) {
+    Tarea tarea = tareaRepository.findById(idTarea);
+    Usuario usuario = usuarioRepository.findById(idUsuario);
+    if (tarea == null || usuario == null) {
+      throw new TareaServiceException("Tarea o Usuario no existentes");
+    }
+    List<Usuario> usuariosAsignados = new ArrayList<Usuario>();
+    usuariosAsignados.addAll(tarea.getUsuariosAsignados());
+    usuariosAsignados.add(usuario);
+
+    tarea.setUsuariosAsignados(new HashSet<Usuario>(usuariosAsignados));
+    tarea = tareaRepository.update(tarea);
+
+    return tarea;
+  }
+
   public Tarea asignaEtiquetaTarea(Long idTarea, Long idEtiqueta)
   {
     Tarea tarea = tareaRepository.findById(idTarea);

@@ -231,4 +231,14 @@ public class TareaServiceTest {
      tarea = tareaService.asignaEtiquetaTarea(tarea.getId(), idEtiqueta);
      assertEquals(3, tarea.getEtiquetas().size());
    }
+
+   @Test
+   public void asignarUsuariosEnTarea() {
+     TareaService tareaService = newTareaService();
+     Tarea tarea = tareaService.obtenerTarea(3000L);
+     long idUsuario = 1000L;
+     assertEquals(0, tarea.getUsuariosAsignados().size());
+     tarea = tareaService.asignarTareaUsuario(tarea.getId(), idUsuario);
+     assertEquals(1, tarea.getUsuariosAsignados().size());
+   }
 }
