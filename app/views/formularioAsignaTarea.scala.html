@@ -1,0 +1,19 @@
+@(tarea: Tarea, usuarios: List[Usuario], usuario: Usuario)
+@main("Asignar tarea", usuario) {
+  @helper.form(action = routes.GestionTareasController.asignaTareaUsuario(usuario.getId(), tarea.getId())) {
+    <fieldset>
+       <legend>Asignar tarea @tarea.getTitulo()</legend>
+       Usuario asignado
+       <select name="usuario" style="min-width: 100px">
+         @for(usuario_field <- usuarios) {
+           <option value="@usuario_field.getId()">@usuario_field.getEmail()</option>
+         }
+       </select>
+    </fieldset>
+    <p/>
+    <p>
+       <input type="submit" class="btn btn-primary" value="Guardar">
+       <a class="btn btn-warning" href="@routes.GestionTareasController.listaTareas(usuario.getId())">Cancelar</a>
+    </p>
+  }
+}

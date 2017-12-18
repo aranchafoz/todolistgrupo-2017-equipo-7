@@ -99,6 +99,26 @@ public class GestionTareasController extends Controller {
       }
    }
 
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result asignaTareaUsuario(Long idUsuario, Long idTarea) {
+      String connectedUserStr = session("connected");
+      Long connectedUser =  Long.valueOf(connectedUserStr);
+      if (connectedUser != idUsuario) {
+         return unauthorized("Lo siento, no estás autorizado");
+       }
+
+        DynamicForm form = Form.form().bindFromRequest();
+        Long selectedId = Long.parseLong(form.get("usuario"), 10);
+
+        if (idUsuario != null) {
+          Tarea tarea = tareaService.obtenerTarea(idTarea);
+          tareaService.asignarTareaUsuario(tarea.getId(), selectedId);
+        }
+
+        flash("aviso", "La tarea se ha asignado correctamente");
+        return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
+    }
+
    @Security.Authenticated(ActionAuthenticator.class)
    public Result creaNuevaTareaEnColumna(Long idUsuario, Long idTablero, Long idColumna) throws java.text.ParseException{
       String connectedUserStr = session("connected");
@@ -168,6 +188,39 @@ public class GestionTareasController extends Controller {
         tableros.addAll(tablerosParticipados);
 
         return ok(listaTareasTerminadas.render(tareas, usuario, tableros, formFactory.form(Tarea.class), aviso));
+      }
+   }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result listaTareasAsignadas(Long idUsuario) {
+     String connectedUserStr = session("connected");
+     Long connectedUser =  Long.valueOf(connectedUserStr);
+     if (connectedUser != idUsuario) {
+        return unauthorized("Lo siento, no estás autorizado");
+     } else {
+        Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+        List<Tarea> tareas = tareaService.allTareasAsignadasUsuario(idUsuario);
+        return ok(listaTareasAsignadas.render(tareas, usuario));
+      }
+   }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result formularioAsignaTarea(Long idTarea) {
+     Tarea tarea = tareaService.obtenerTarea(idTarea);
+     if (tarea == null) {
+        return notFound("Tarea no encontrada");
+      } else {
+        String connectedUserStr = session("connected");
+        Long connectedUser =  Long.valueOf(connectedUserStr);
+        if (connectedUser != tarea.getUsuario().getId()) {
+           return unauthorized("Lo siento, no estás autorizado");
+        } else {
+          Tablero tablero = tarea.getColumna().getTablero();
+          List<Usuario> usuarios = tableroService.getUsuariosParticipantes(tablero.getId());
+          Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
+
+          return ok(formularioAsignaTarea.render(tarea, usuarios, usuario));
+        }
       }
    }
 

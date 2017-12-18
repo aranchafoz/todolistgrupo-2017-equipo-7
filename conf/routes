@@ -37,6 +37,9 @@ PUT     /tareas/:id/trash           controllers.GestionTareasController.enviarPa
 GET     /usuarios/:id/tareas/papelera controllers.GestionTareasController.listarTareasPapelera(id: Long)
 POST    /tareas/:id/terminar        controllers.GestionTareasController.terminaTarea(id: Long)
 PUT     /tareas/:id/recuperar       controllers.GestionTareasController.recuperarTarea(id: Long)
+GET     /tareas/:id/asignar         controllers.GestionTareasController.formularioAsignaTarea(id: Long)
+POST    /tareas/:id/asignar/:idUser controllers.GestionTareasController.asignaTareaUsuario(idUser: Long, id: Long)
+GET     /usuarios/:id/tareas/asignadas controllers.GestionTareasController.listaTareasAsignadas(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.creaNuevoTablero(id: Long)
