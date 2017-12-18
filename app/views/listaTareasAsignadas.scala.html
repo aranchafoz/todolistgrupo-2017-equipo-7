@@ -1,0 +1,37 @@
+@(tareas: List[Tarea], usuario: Usuario)
+@main("Tareas asignadas @usuario.getLogin()", usuario) {
+  <h2> Listado de tareas de @usuario.getLogin()</h2>
+
+  <ul class="nav nav-tabs">
+    <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
+    <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
+    <li role="presentation"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
+    <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareasAsignadas(usuario.getId())">Asignadas</a></li>
+  </ul>
+
+  <table class="table table-striped">
+      <tr>
+          <th>Tareas</th>
+          <th>Descripción</th>
+          <th>Fecha Límite</th>
+      </tr>
+  @for(tarea <- tareas) {
+    <tr>
+        <td>
+          @if(tarea.getTerminada() == true) {
+            @tarea.getTitulo() <strong>(terminada)</strong>
+          } else {
+            <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
+                @tarea.getTitulo()
+            </a>
+          }
+        </td>
+        <td>@tarea.getDescripcion()</td>
+        <td>@if(tarea.getFechaLimite() != null) {
+                @tarea.getFechaLimite().format("dd-MM-yyyy")
+            }
+        </td>
+    </tr>
+  }
+  </table>
+}
