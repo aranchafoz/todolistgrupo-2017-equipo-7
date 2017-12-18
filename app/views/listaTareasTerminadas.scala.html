@@ -45,14 +45,20 @@
               @tarea.getTitulo()
             </td>
             <td>
+              @if(tarea.getUsuario() != usuario) {
+                <span class="glyphicon glyphicon-trash disabled" aria-hidden="true"></span>
+              } else {
                 <a onmouseover="" style="cursor: pointer;"
                 onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+              }
+            </td>
         </tr>
       }
 
       <tr>
-          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
+          <td>
+            <a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
               <span class="glyphicon glyphicon-plus"/></a></td>
           <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
       </tr>
