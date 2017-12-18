@@ -184,6 +184,19 @@ public class GestionTareasController extends Controller {
    }
 
    @Security.Authenticated(ActionAuthenticator.class)
+   public Result listaTareasAsignadas(Long idUsuario) {
+     String connectedUserStr = session("connected");
+     Long connectedUser =  Long.valueOf(connectedUserStr);
+     if (connectedUser != idUsuario) {
+        return unauthorized("Lo siento, no estás autorizado");
+     } else {
+        Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+        List<Tarea> tareas = tareaService.allTareasAsignadasUsuario(idUsuario);
+        return ok(listaTareasAsignadas.render(tareas, usuario));
+      }
+   }
+
+   @Security.Authenticated(ActionAuthenticator.class)
    public Result formularioAsignaTarea(Long idTarea) {
      Tarea tarea = tareaService.obtenerTarea(idTarea);
      if (tarea == null) {

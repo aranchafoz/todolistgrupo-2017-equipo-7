@@ -90,6 +90,12 @@
         }
     </h5>
     <hr>
+    <h5><strong>Usuarios asignados: </strong>
+    @for(usuario <- tarea.getUsuariosAsignados()) {
+      <i class="fa fa-user"></i> @usuario.getEmail()
+    }
+    </h5>
+    <hr>
     <h5>
       <strong>Tablero: </strong>
        @tarea.getColumna().getTablero().getNombre()
