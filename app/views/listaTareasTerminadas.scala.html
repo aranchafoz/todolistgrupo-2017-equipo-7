@@ -42,6 +42,9 @@
     @for(tarea <- tareas) {
         <tr>
             <td>
+              @tarea.getTitulo()
+            </td>
+            <td>
                 <a onmouseover="" style="cursor: pointer;"
                 onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>

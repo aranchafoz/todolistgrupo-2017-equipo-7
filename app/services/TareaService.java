@@ -61,7 +61,7 @@ public class TareaService {
       List <Tarea> definitivas = new ArrayList<Tarea>();
 
       for(Tarea t: tareas) {
-        if (t.getTerminada()) {
+        if (t.getTerminada() && t.getDeletedAt() == null) {
           definitivas.add(t);
         }
       }

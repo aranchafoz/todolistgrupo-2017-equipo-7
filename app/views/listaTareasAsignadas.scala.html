@@ -1,5 +1,18 @@
 @(tareas: List[Tarea], usuario: Usuario)
-@main("Tareas asignadas @usuario.getLogin()", usuario) {
+@scripts = {
+  <script type="text/javascript">
+        function terminar(urlTerminar) {
+          $.ajax({
+            url: urlTerminar,
+            type: 'POST',
+            success: function (results) {
+              location.reload();
+            }
+          })
+        }
+    </script>
+}
+@main("Tareas asignadas @usuario.getLogin()", usuario, scripts) {
   <h2> Listado de tareas de @usuario.getLogin()</h2>
 
   <ul class="nav nav-tabs">
@@ -14,24 +27,30 @@
           <th>Tareas</th>
           <th>Descripción</th>
           <th>Fecha Límite</th>
+          <th>Acciones</th>
       </tr>
   @for(tarea <- tareas) {
+    @if(tarea.getTerminada() != true && tarea.getDeletedAt() == null) {
     <tr>
         <td>
-          @if(tarea.getTerminada() == true) {
-            @tarea.getTitulo() <strong>(terminada)</strong>
-          } else {
-            <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
-                @tarea.getTitulo()
-            </a>
-          }
+          <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
+              @tarea.getTitulo()
+          </a>
         </td>
         <td>@tarea.getDescripcion()</td>
         <td>@if(tarea.getFechaLimite() != null) {
                 @tarea.getFechaLimite().format("dd-MM-yyyy")
             }
         </td>
+        <td>
+          <a class="btn btn-xs btn-success" style="cursor: pointer"
+            onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
+            <i class="fa fa-check-square-o"
+            data-placement='top' title='Cerrar tarea'></i>
+          </a>
+        </td>
     </tr>
+    }
   }
   </table>
 }
