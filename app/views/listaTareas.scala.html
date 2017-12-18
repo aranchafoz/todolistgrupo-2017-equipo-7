@@ -1,4 +1,4 @@
-@(tareas: List[Tarea], usuario: Usuario, mensaje: String)
+@(tareas: List[Tarea], usuario: Usuario, tableros: List[Tablero], tableroParaTareaForm: Form[Tarea], mensaje: String)
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -75,8 +75,12 @@
       }
 
       <tr>
-          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
-              <span class="glyphicon glyphicon-plus"/></a></td>
+          <td>
+            @modalSeleccionarTableroTarea(usuario, tableros, tableroParaTareaForm)
+            <a data-toggle="modal" data-target="#modalSeleccionarTableroTarea">
+              <i class="glyphicon glyphicon-plus"></i>
+            </a>
+          </td>
           <td></td>
           <td></td>
           <td><a href="@routes.UsuarioController.logout()">Salir</a></td>

@@ -24,8 +24,8 @@ GET     /usuarios/:id           controllers.UsuarioController.detalleUsuario(id:
 GET     /usuarios/:id/editar    controllers.UsuarioController.formularioEditaUsuario(id: Long)
 POST    /usuarios/:id/editar    controllers.UsuarioController.grabaUsuarioModificado(id: Long)
 
-GET     /usuarios/:id/tareas/nueva  controllers.GestionTareasController.formularioNuevaTarea(id: Long)
-POST    /usuarios/:id/tareas/nueva  controllers.GestionTareasController.creaNuevaTarea(id: Long)
+POST    /usuarios/:id/tareas/seleccionaTablero  controllers.GestionTareasController.seleccionaTableroParaNuevaTarea(id: Long)
+POST    /usuarios/:id/tableros/:idTablero/tareas/nueva  controllers.GestionTareasController.creaNuevaTarea(id: Long, idTablero: Long)
 POST    /usuarios/:id/tableros/:idTablero/columnas/:idColumna/tareas/nueva    controllers.GestionTareasController.creaNuevaTareaEnColumna(id: Long, idTablero: Long, idColumna: Long)
 GET     /usuarios/:id/tareas        controllers.GestionTareasController.listaTareas(id: Long)
 GET     /usuarios/:id/tareas/terminadas        controllers.GestionTareasController.listaTareasTerminadas(id: Long)
