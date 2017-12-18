@@ -16,7 +16,7 @@
   <h2> Listado de tareas de @usuario.getLogin()</h2>
 
   <ul class="nav nav-tabs">
-    <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
+    <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Administradas</a></li>
     <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
     <li role="presentation"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
     <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareasAsignadas(usuario.getId())">Asignadas</a></li>
