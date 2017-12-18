@@ -24,7 +24,7 @@
         <fieldset>
           @helper.select(
             field = tareaForm("columna"),
-            options = columnas.map(columna => columna.getId().toString() -> ( columna.getNombre() + " - Tablero: " + columna.getTablero().getNombre() )),
+            options = columnas.map(columna => columna.getId().toString() -> columna.getNombre() ),
             '_default -> "-- Elige una columna --",
             '_label -> "Columna - Tablero",
             'name -> "columna",
