@@ -103,7 +103,7 @@ public class GestionColumnasController extends Controller {
          List<Columna> columnas = columnaService.allColumnasTablero(idTablero);
          Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
          boolean editable = true;
-         return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, editable));
+         return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, editable, ""));
        }
      }
    }

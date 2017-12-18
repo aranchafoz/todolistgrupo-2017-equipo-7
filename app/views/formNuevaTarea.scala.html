@@ -1,11 +1,11 @@
-@(usuario: Usuario, tareaForm: Form[Tarea], columnas: List[Columna], mensaje: String)
+@(usuario: Usuario, tareaForm: Form[Tarea], tablero: Tablero, columnas: List[Columna], mensaje: String)
 @main("Nueva tarea", usuario) {
     @if(mensaje != "") {
         <div class="alert alert-danger">
             @mensaje
         </div>
     }
-    @helper.form(action = routes.GestionTareasController.creaNuevaTarea(usuario.getId())) {
+    @helper.form(action = routes.GestionTareasController.creaNuevaTarea(usuario.getId(), tablero.getId())) {
 
         <legend>Nueva tarea</legend>
 
@@ -26,7 +26,7 @@
             field = tareaForm("columna"),
             options = columnas.map(columna => columna.getId().toString() -> columna.getNombre() ),
             '_default -> "-- Elige una columna --",
-            '_label -> "Columna - Tablero",
+            '_label -> ( "Columna en " + tablero.getNombre() ),
             'name -> "columna",
             'id -> "columna",
             'class -> "form-control"

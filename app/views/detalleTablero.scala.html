@@ -1,6 +1,11 @@
-@(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario, editable: Boolean)
+@(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario, editable: Boolean, mensaje: String)
 
 @main("Detalle de tablero", usuario) {
+    @if(mensaje != "") {
+        <div class="alert alert-danger">
+            @mensaje
+        </div>
+    }
     <p>
       <a class="btn btn-default" href="@routes.GestionTablerosController.listaTableros(usuario.getId())">
         <i class="fa fa-chevron-left"></i>
