@@ -345,4 +345,18 @@ public class GestionTareasController extends Controller {
       flash("aviso", "Tarea recuperada correctamente");
       return ok();
     }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result vistaCalendario(Long idUsuario) {
+      String connectedUserStr = session("connected");
+      Long connectedUser =  Long.valueOf(connectedUserStr);
+      if (connectedUser != idUsuario) {
+         return unauthorized("Lo siento, no estás autorizado");
+      } else {
+         String aviso = flash("aviso");
+         Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+         List<Tarea> tareas = tareaService.allTareasUsuario(idUsuario);
+         return ok(calendario.render(usuario, tareas));
+      }
+    }
 }
