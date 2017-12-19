@@ -1,0 +1,40 @@
+@(usuario: Usuario, tareas: List[Tarea])
+@scripts = {
+
+}
+@main("Calendario de @usuario.getLogin()", usuario, scripts) {
+
+  <div style="text-align: center">
+    <legend> Calendario de @usuario.getLogin()</legend>
+    <br/>
+
+    <div class="container">
+      <div class="col-md-10 col-md-offset-1">
+        <div id="calendar"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      // page is now ready, initialize the calendar...
+
+      $("#calendar").fullCalendar({
+        timezone: 'local',
+        themeSystem: 'bootstrap3',
+        firstDay: 1,
+        header: {
+          left:   'prev,next today',
+          center: 'title',
+          right:  'month,agendaWeek,agendaDay,list '
+        },
+        dayClick: function() {
+            alert('a day has been clicked!');
+        }
+      })
+
+  });
+  </script>
+}
