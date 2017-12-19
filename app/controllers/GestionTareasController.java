@@ -23,6 +23,15 @@ import models.Columna;
 import security.ActionAuthenticator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+// Calendar
+import play.libs.Json;
+import play.libs.Json.*;
+import play.api.libs.json.JsValue;
+
+import static play.libs.Json.toJson;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class GestionTareasController extends Controller {
 
@@ -356,7 +365,14 @@ public class GestionTareasController extends Controller {
          String aviso = flash("aviso");
          Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
          List<Tarea> tareas = tareaService.allTareasUsuario(idUsuario);
-         return ok(calendario.render(usuario, tareas));
+
+         List<String> tareasString = new ArrayList<String>();
+         for(Tarea t: tareas) {
+           String tareaString = t.toJSON();
+           tareasString.add(tareaString);
+         }
+
+         return ok(calendario.render(usuario, tareasString));
       }
     }
 }
