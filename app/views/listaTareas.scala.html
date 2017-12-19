@@ -1,4 +1,4 @@
-@(tareas: List[Tarea], usuario: Usuario, mensaje: String)
+@(tareas: List[Tarea], usuario: Usuario, tableros: List[Tablero], tableroParaTareaForm: Form[Tarea], mensaje: String)
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -28,9 +28,10 @@
     <h2> Listado de tareas de @usuario.getLogin()</h2>
 
     <ul class="nav nav-tabs">
-      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
+      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Administradas</a></li>
       <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
       <li role="presentation"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
+      <li role="presentation"><a href="@routes.GestionTareasController.listaTareasAsignadas(usuario.getId())">Asignadas</a></li>
     </ul>
 
     <table class="table table-striped">
@@ -68,16 +69,24 @@
 
                 <i class="fa fa-check-square-o"
                 data-placement='top' title='Cerrar tarea'></i>
-                }
                   <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs"
                   onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                <a class="btn btn-xs btn-primary" style="cursor: pointer"
+                href="@routes.GestionTareasController.formularioAsignaTarea(tarea.getId())">
+                <i class="fa fa-user-plus"></i></a>
+              </td>
           </tr>
         }
+      }
 
       <tr>
-          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
-              <span class="glyphicon glyphicon-plus"/></a></td>
+          <td>
+            @modalSeleccionarTableroTarea(usuario, tableros, tableroParaTareaForm)
+            <a data-toggle="modal" data-target="#modalSeleccionarTableroTarea">
+              <i class="glyphicon glyphicon-plus"></i>
+            </a>
+          </td>
           <td></td>
           <td></td>
           <td></td>

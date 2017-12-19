@@ -3,6 +3,7 @@ package models;
 import javax.persistence.*;
 import java.util.Date;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import play.data.format.*;
 import java.lang.String;
 import java.util.Set;
@@ -10,6 +11,12 @@ import java.util.HashSet;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.sql.Timestamp;
+
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 @Entity
 public class Tarea {
@@ -126,7 +133,7 @@ public class Tarea {
 
    public void setUsuariosAsignados(Set<Usuario> usuariosAsignados) {
      this.usuariosAsignados = usuariosAsignados;
-     
+
    }
 
    public Set<Etiqueta> getEtiquetas() {
@@ -140,6 +147,32 @@ public class Tarea {
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",
                       id, titulo, usuario.toString());
+   }
+
+   public String toJSON() {
+     String creacion = new SimpleDateFormat("yyyy-MM-dd").format(fechaCreacion);
+     String limite = ((fechaLimite == null) ? "0000-00-00" : new SimpleDateFormat("yyyy-MM-dd").format(fechaLimite));
+
+      ObjectMapper mapper = new ObjectMapper();
+      mapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+      ObjectNode node = mapper.getNodeFactory().objectNode();
+      node.put("id", id);
+      node.put("titulo", titulo);
+      node.put("fechaCreacion", creacion);
+      node.put("fechaLimite", limite);
+      node.put("descripcion", descripcion);
+      node.put("terminada", terminada);
+      try {
+        String tareaString = mapper.writeValueAsString(node);
+        return tareaString;
+      } catch(Exception e) {
+        System.out.println(e);
+      }
+      return "";
+      //String creacion = new SimpleDateFormat("yyyy-MM-dd").format(fechaCreacion);
+      //String limite = ((fechaLimite == null) ? "0000-00-00" : new SimpleDateFormat("yyyy-MM-dd").format(fechaLimite));
+      //return String.format("{\"id\":\"%s\", \"titulo\":\"%s\", \"fechaCreacion\":\"%s\", \"fechaLimite\":\"%s\", \"descripcion\":\"%s\", \"terminada\": %s }",
+      //                id, titulo, creacion, limite, descripcion, terminada);
    }
 
    @Override

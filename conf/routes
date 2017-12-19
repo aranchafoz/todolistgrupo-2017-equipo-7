@@ -24,8 +24,8 @@ GET     /usuarios/:id           controllers.UsuarioController.detalleUsuario(id:
 GET     /usuarios/:id/editar    controllers.UsuarioController.formularioEditaUsuario(id: Long)
 POST    /usuarios/:id/editar    controllers.UsuarioController.grabaUsuarioModificado(id: Long)
 
-GET     /usuarios/:id/tareas/nueva  controllers.GestionTareasController.formularioNuevaTarea(id: Long)
-POST    /usuarios/:id/tareas/nueva  controllers.GestionTareasController.creaNuevaTarea(id: Long)
+POST    /usuarios/:id/tareas/seleccionaTablero  controllers.GestionTareasController.seleccionaTableroParaNuevaTarea(id: Long)
+POST    /usuarios/:id/tableros/:idTablero/tareas/nueva  controllers.GestionTareasController.creaNuevaTarea(id: Long, idTablero: Long)
 POST    /usuarios/:id/tableros/:idTablero/columnas/:idColumna/tareas/nueva    controllers.GestionTareasController.creaNuevaTareaEnColumna(id: Long, idTablero: Long, idColumna: Long)
 GET     /usuarios/:id/tareas        controllers.GestionTareasController.listaTareas(id: Long)
 GET     /usuarios/:id/tareas/terminadas        controllers.GestionTareasController.listaTareasTerminadas(id: Long)
@@ -37,6 +37,9 @@ PUT     /tareas/:id/trash           controllers.GestionTareasController.enviarPa
 GET     /usuarios/:id/tareas/papelera controllers.GestionTareasController.listarTareasPapelera(id: Long)
 POST    /tareas/:id/terminar        controllers.GestionTareasController.terminaTarea(id: Long)
 PUT     /tareas/:id/recuperar       controllers.GestionTareasController.recuperarTarea(id: Long)
+GET     /tareas/:id/asignar         controllers.GestionTareasController.formularioAsignaTarea(id: Long)
+POST    /tareas/:id/asignar/:idUser controllers.GestionTareasController.asignaTareaUsuario(idUser: Long, id: Long)
+GET     /usuarios/:id/tareas/asignadas controllers.GestionTareasController.listaTareasAsignadas(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo          controllers.GestionTablerosController.creaNuevoTablero(id: Long)
@@ -52,9 +55,12 @@ GET     /usuarios/:idUsuario/tableros/:idTablero/columnas/mover               co
 POST    /usuarios/:idUsuario/tableros/:idTablero/columnas/:idColumna/editar   controllers.GestionColumnasController.grabaNombreColumnaModificado(idUsuario: Long, idTablero: Long, idColumna: Long)
 DELETE  /usuarios/:idUsuario/tableros/:idTablero/columnas/:idColumna          controllers.GestionColumnasController.borraColumna(idUsuario: Long, idTablero: Long, idColumna: Long)
 
+
 POST    /usuarios/:idUsuario/tableros/:idTablero/etiquetas/nueva               controllers.GestionEtiquetasController.creaNuevaEtiqueta(idUsuario: Long, idTablero: Long)
 POST    /usuarios/:idUsuario/tableros/:idTablero/etiquetas/:idEtiqueta/editar   controllers.GestionEtiquetasController.grabaNombreEtiquetaModificado(idUsuario: Long, idTablero: Long, idEtiqueta: Long)
 DELETE  /usuarios/:idUsuario/tableros/:idTablero/etiquetas/:idEtiqueta          controllers.GestionEtiquetasController.borraEtiqueta(idUsuario: Long, idTablero: Long, idEtiqueta: Long)
+
+GET     /usuarios/:id/calendario    controllers.GestionTareasController.vistaCalendario(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

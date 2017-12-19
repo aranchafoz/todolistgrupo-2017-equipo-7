@@ -18,6 +18,13 @@
         <ul class="nav navbar-nav">
           <li><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Mis tareas</a></li>
           <li><a href="@routes.GestionTablerosController.listaTableros(usuario.getId())">Mis tableros</a></li>
+          <li>
+            <a href="@routes.GestionTareasController.vistaCalendario(usuario.getId())">
+              <i class="fa fa-calendar"></i>
+              &nbsp;
+              Mi calendario
+            </a>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">

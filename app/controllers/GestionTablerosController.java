@@ -110,6 +110,7 @@ public class GestionTablerosController extends Controller {
         List<Columna> columnas = columnaService.allColumnasTablero(idTablero);
         List<Etiqueta> etiquetas = etiquetaService.allEtiquetasTablero(idTablero);
         Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
+
         return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, false, etiquetas, formFactory.form(Etiqueta.class)));
       }
     }

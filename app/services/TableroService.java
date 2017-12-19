@@ -107,4 +107,16 @@ public class TableroService {
     tablero = tableroRepository.update(tablero);
     return tablero;
   }
+
+  public List<Usuario> getUsuariosParticipantes(Long idTablero) {
+    Tablero tablero = tableroRepository.findById(idTablero);
+    if (tablero == null) {
+      throw new TableroServiceException("Tablero no existente");
+    }
+    List<Usuario> usuariosTablero = new ArrayList<Usuario>();
+    usuariosTablero.addAll(tablero.getParticipantes());
+    Collections.sort(usuariosTablero, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+
+    return usuariosTablero;
+  }
 }

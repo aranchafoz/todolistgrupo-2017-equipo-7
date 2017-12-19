@@ -58,10 +58,11 @@ public class TareaService {
 
       List <Tarea> tareas = new ArrayList<Tarea>();
       tareas.addAll(usuario.getTareas());
+      tareas.addAll(usuario.getTareasAsignadas());
       List <Tarea> definitivas = new ArrayList<Tarea>();
 
       for(Tarea t: tareas) {
-        if (t.getTerminada()) {
+        if (t.getTerminada() && t.getDeletedAt() == null) {
           definitivas.add(t);
         }
       }
@@ -86,6 +87,30 @@ public class TareaService {
       }
       Collections.sort(definitivas, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
       return definitivas;
+   }
+
+   public List<Tarea> allTareasAsignadasUsuario(Long idUsuario) {
+     Usuario usuario = usuarioRepository.findById(idUsuario);
+     if (usuario == null) {
+         throw new TareaServiceException("Usuario no existente");
+      }
+      List <Tarea> tareas = new ArrayList<Tarea>();
+      tareas.addAll(usuario.getTareasAsignadas());
+      Collections.sort(tareas, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+
+      return tareas;
+   }
+
+   public List<Usuario> allUsuariosAsignadosTarea(Long idTarea) {
+     Tarea tarea = tareaRepository.findById(idTarea);
+     if (tarea == null) {
+         throw new TareaServiceException("Tarea no existente");
+       }
+      List<Usuario> usuarios = new ArrayList<Usuario>();
+      usuarios.addAll(tarea.getUsuariosAsignados());
+      Collections.sort(usuarios, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+
+      return usuarios;
    }
 
    public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion, Date fechaLimite, Long idColumna) {
@@ -153,6 +178,22 @@ public class TareaService {
         tarea.setDeletedAt(null);
         tarea = tareaRepository.update(tarea);
     }
+
+    return tarea;
+  }
+
+  public Tarea asignarTareaUsuario(Long idTarea, Long idUsuario) {
+    Tarea tarea = tareaRepository.findById(idTarea);
+    Usuario usuario = usuarioRepository.findById(idUsuario);
+    if (tarea == null || usuario == null) {
+      throw new TareaServiceException("Tarea o Usuario no existentes");
+    }
+    List<Usuario> usuariosAsignados = new ArrayList<Usuario>();
+    usuariosAsignados.addAll(tarea.getUsuariosAsignados());
+    usuariosAsignados.add(usuario);
+
+    tarea.setUsuariosAsignados(new HashSet<Usuario>(usuariosAsignados));
+    tarea = tareaRepository.update(tarea);
 
     return tarea;
   }
