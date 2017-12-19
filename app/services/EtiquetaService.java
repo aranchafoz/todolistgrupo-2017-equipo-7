@@ -33,6 +33,7 @@ public class EtiquetaService {
     }
     List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
     etiquetas.addAll(tablero.getEtiquetas());
+    Collections.sort(etiquetas, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
     return etiquetas;
   }
 

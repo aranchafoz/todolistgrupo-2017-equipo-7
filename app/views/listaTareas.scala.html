@@ -54,7 +54,11 @@
                       @tarea.getFechaLimite().format("dd-MM-yyyy")
                   }
               </td>
-              <td>@tarea.getEtiquetas()</td>
+              <td>@if(tarea.getEtiquetas().size() > 0) {
+                    @tarea.getEtiquetas()
+                  }
+
+              </td>
               <td>
                 <a class="btn btn-xs btn-info" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
                   <span class="glyphicon glyphicon-pencil"></span>
