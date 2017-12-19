@@ -1,4 +1,4 @@
-@(usuario: Usuario, tareas: List[Tarea])
+@(usuario: Usuario, tareas: List[String])
 @scripts = {
 
 }
@@ -17,11 +17,36 @@
   </div>
 
   <script type="text/javascript">
-    $(document).ready(function() {
 
+    function mapTareasToJsonArray() {
+
+      let tareasJava = "@tareas"
+      let textTareas = tareasJava.replace(/&quot;/g, '\"');
+      let textTareasArray1 = textTareas.replace('[', '');
+      let textTareasArray2 = textTareasArray1.replace(']', '');
+      let tareasArray = textTareasArray2.split(", ");
+      //console.log(tareasArray)
+      return tareasArray.map( (tarea) => {
+        return JSON.parse(tarea)
+      })
+    }
+
+    function mapTareasToEvents(tareas) {
+      return tareas.map( (tarea) => {
+        return {
+          title: tarea.titulo,
+          start: tarea.fechaCreacion
+        }
+      })
+    }
+
+    $(document).ready(function() {
       // page is now ready, initialize the calendar...
+      let tareas = mapTareasToJsonArray()
+      let events = mapTareasToEvents(tareas)
 
       $("#calendar").fullCalendar({
+        events: events,
         timezone: 'local',
         themeSystem: 'bootstrap3',
         firstDay: 1,
