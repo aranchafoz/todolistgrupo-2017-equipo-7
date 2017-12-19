@@ -16,12 +16,10 @@ import services.UsuarioService;
 import services.TareaService;
 import services.TableroService;
 import services.ColumnaService;
-import services.EtiquetaService;
 import models.Usuario;
 import models.Tarea;
 import models.Tablero;
 import models.Columna;
-import models.Etiqueta;
 import security.ActionAuthenticator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -42,7 +40,6 @@ public class GestionTareasController extends Controller {
    @Inject TareaService tareaService;
    @Inject TableroService tableroService;
    @Inject ColumnaService columnaService;
-   @Inject EtiquetaService etiquetaService;
 
    @Security.Authenticated(ActionAuthenticator.class)
    public Result seleccionaTableroParaNuevaTarea(Long idUsuario) {
@@ -86,7 +83,7 @@ public class GestionTareasController extends Controller {
       } else {
         DynamicForm form = Form.form().bindFromRequest();
 
-         if (form.get("titulo").equals("") || form.get("columna").equals("")) {
+         if (form.get("titulo").equals("") || form.get("columna").equals("") || form.get("fechaLimite").equals("")) {
             Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
 
             Tablero tablero = tableroService.obtenerTablero(idTablero);
@@ -100,13 +97,7 @@ public class GestionTareasController extends Controller {
          String descripcion = form.get("descripcion");
 
          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-         Date fechaLimite = null;
-
-         if (!form.get("fechaLimite").equals("") )
-         {
-          fechaLimite = format.parse( form.get("fechaLimite") );
-         }
+         Date fechaLimite = format.parse( form.get("fechaLimite") );
 
          Long columnaId = Long.parseLong( form.get("columna"), 10 );
 
@@ -256,7 +247,7 @@ public class GestionTareasController extends Controller {
 
              List<Columna> columnas = new ArrayList<Columna>();
              columnas.addAll(tarea.getColumna().getTablero().getColumnas());
-          
+
 
             return ok(formModificacionTarea.render(tarea.getUsuario(), formFactory.form(Tarea.class),
             tarea.getId(),
@@ -305,10 +296,11 @@ public class GestionTareasController extends Controller {
       } else {
         DynamicForm form = Form.form().bindFromRequest();
 
-         if (form.get("titulo").equals("") || form.get("columna").equals("")) {
+         if (form.get("titulo").equals("") || form.get("columna").equals("") || form.get("fechaLimite").equals("")) {
             Tablero tablero = tarea.getColumna().getTablero();
             List<Columna> columnas = new ArrayList<Columna>();
             columnas.addAll(tablero.getColumnas());
+
 
             return badRequest(formNuevaTarea.render(tarea.getUsuario(), formFactory.form(Tarea.class), tablero, columnas, "Hay errores en el formulario"));
          }
@@ -318,13 +310,7 @@ public class GestionTareasController extends Controller {
          String nuevaDescripcion = form.get("descripcion");
 
          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-         Date nuevaFechaLimite = null;
-
-         if (!form.get("fechaLimite").equals("") )
-         {
-          nuevaFechaLimite = format.parse( form.get("fechaLimite") );
-         }
+         Date nuevaFechaLimite = format.parse( form.get("fechaLimite") );
 
          Long nuevaColumnaId = Long.parseLong( form.get("columna"), 10 );
 

@@ -105,13 +105,14 @@ public class GestionTablerosController extends Controller {
       if (tablero == null) {
          return notFound("Tablero no encontrado");
       } else {
+        String aviso = flash("aviso");
         List<Usuario> participantes = new ArrayList<Usuario>();
         participantes.addAll(tablero.getParticipantes());
         List<Columna> columnas = columnaService.allColumnasTablero(idTablero);
         List<Etiqueta> etiquetas = etiquetaService.allEtiquetasTablero(idTablero);
         Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
 
-        return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, false, etiquetas, formFactory.form(Etiqueta.class)));
+        return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, false, etiquetas, formFactory.form(Etiqueta.class), aviso));
       }
     }
   }
