@@ -20,22 +20,33 @@
 
     function mapTareasToJsonArray() {
 
-      let tareasJava = "@tareas"
-      let textTareas = tareasJava.replace(/&quot;/g, '\"');
-      let textTareasArray1 = textTareas.replace('[', '');
-      let textTareasArray2 = textTareasArray1.replace(']', '');
-      let tareasArray = textTareasArray2.split(", ");
-      //console.log(tareasArray)
-      return tareasArray.map( (tarea) => {
-        return JSON.parse(tarea)
-      })
+      if(@tareas.size() > 0) {
+        let tareasJava = "@tareas"
+        let textTareas = tareasJava.replace(/&quot;/g, '\"');
+        let textTareasArray1 = textTareas.replace('[', '');
+        let textTareasArray2 = textTareasArray1.replace(']', '');
+
+        let tareasArray = textTareasArray2.split(", ");
+        //console.log(tareasArray)
+        return tareasArray.map( (tarea) => {
+          return JSON.parse(tarea)
+        })
+      } else {
+        return []
+      }
     }
 
     function mapTareasToEvents(tareas) {
       return tareas.map( (tarea) => {
-        return {
-          title: tarea.titulo,
-          start: tarea.fechaCreacion
+        if(tarea.fechaLimite !== '0000-00-00'){
+          return {
+            title: tarea.titulo,
+            start: tarea.fechaLimite,
+            backgroundColor: '#E91E63',
+            borderColor: '#C2185B'
+          }
+        } else {
+          return null
         }
       })
     }
