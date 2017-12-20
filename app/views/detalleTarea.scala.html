@@ -113,15 +113,17 @@
         </select>
       </div>
 
-      <div>
-        &nbsp;
-        <a class="btn btn-xs btn-info" style="cursor: pointer"
-        onclick="terminar('@routes.GestionTareasController.asignaTarea(tarea.getId())')">
-          <i data-placement='top' title='Terminar tarea'></i>
-          &nbsp;
-          Añadir etiqueta
-        </a>
-      </div>
+      @helper.form(action = routes.GestionTareasController.asignaEtiquetaTarea(tarea.getId()))
+      {
+        <fieldset>
+          @helper.select(etiquetaForm("etiqueta"),
+            options = etiquetas.map(etiqueta=>etiqueta.getId().toString() -> etiqueta.getNombre())
+            )
+        </fieldset>
+          <div>
+            <input type="submit" class="btn btn-primary" value="Añadir etiqueta">
+          </div>
+      }
 
     </div>
 

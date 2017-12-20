@@ -281,7 +281,9 @@ public class GestionTareasController extends Controller {
           return notFound("Tarea no encontrada");
         } else {
           Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-          return ok(detalleTarea.render(usuario, tarea));
+          List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+
+          return ok(detalleTarea.render(usuario, tarea, etiquetas, formFactory.form(Etiqueta.class)));
         }
       }
    }
@@ -389,5 +391,27 @@ public class GestionTareasController extends Controller {
 
          return ok(calendario.render(usuario, tareasString));
       }
+    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result asignaEtiquetaTarea(Long idTarea) {
+       Tarea tarea = tareaService.obtenerTarea(idTarea);
+       Etiqueta etiquetas = etiquetaService.allEtiquetasTarea(idTarea);
+       if (tarea == null) {
+          return notFound("Tarea no encontrada");
+       } else {
+          String connectedUserStr = session("connected");
+          Long connectedUser =  Long.valueOf(connectedUserStr);
+          if (connectedUser != tarea.getUsuario().getId()) {
+             return unauthorized("Lo siento, no estás autorizado");
+          } else {
+
+            Long etiquetaID = Long.parseLong(form.get("etiqueta"), 10);
+
+            tarea.asignaEtiquetaTarea(idTarea, etiquetaID);
+
+            return ok(detalleTarea.render(usuario, tarea, etiquetas, formFactory.form(Etiqueta.class)));
+          }
+       }
     }
 }
