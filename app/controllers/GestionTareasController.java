@@ -410,7 +410,7 @@ public class GestionTareasController extends Controller {
 
             tarea.asignaEtiquetaTarea(idTarea, etiquetaID);
 
-            return ok(detalleTarea.render(usuario, tarea, etiquetas, formFactory.form(Etiqueta.class)));
+            return ok(detalleTarea.render(usuario, tarea, etiquetas, formFactory.form(Tarea.class)));
           }
        }
     }
