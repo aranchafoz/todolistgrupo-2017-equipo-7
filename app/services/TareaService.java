@@ -205,7 +205,7 @@ public class TareaService {
       throw new TareaServiceException("Tarea no existente");
     }
 
-    Etiqueta etiqueta = etiquetaRepository.findById(idTarea);
+    Etiqueta etiqueta = etiquetaRepository.findById(idEtiqueta);
     if (etiqueta == null) {
       throw new TareaServiceException("Etiqueta no existente");
     }

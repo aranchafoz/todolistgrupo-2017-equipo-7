@@ -297,7 +297,16 @@ public class GestionTareasController extends Controller {
           return notFound("Tarea no encontrada");
         } else {
           Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-          return ok(detalleTarea.render(usuario, tarea));
+          List<Etiqueta> etiquetas = etiquetaService.allEtiquetasTarea(idTarea);
+
+          List<Etiqueta> etiquetasTablero = new ArrayList<Etiqueta>();
+          etiquetasTablero.addAll(tarea.getColumna().getTablero().getEtiquetas());
+
+          //etiquetas.add(etiqueta);
+          //tarea.setEtiquetas(new HashSet<Etiqueta> (etiquetas));
+
+
+          return ok(detalleTarea.render(usuario, tarea, etiquetas, etiquetasTablero, formFactory.form(Tarea.class)));
         }
       }
    }
@@ -405,5 +414,32 @@ public class GestionTareasController extends Controller {
 
          return ok(calendario.render(usuario, tareasString));
       }
+    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result asignaEtiquetaTarea(Long idTarea) {
+       Tarea tarea = tareaService.obtenerTarea(idTarea);
+       if (tarea == null) {
+          return notFound("Tarea no encontrada");
+       } else {
+          String connectedUserStr = session("connected");
+          Long connectedUser =  Long.valueOf(connectedUserStr);
+          Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
+          if (connectedUser != tarea.getUsuario().getId()) {
+             return unauthorized("Lo siento, no estás autorizado");
+          } else {
+            DynamicForm form = Form.form().bindFromRequest();
+
+            Long etiquetaId = Long.parseLong(form.get("etiqueta"), 10);
+            List<Etiqueta> etiquetas = etiquetaService.allEtiquetasTarea(idTarea);
+
+            List<Etiqueta> etiquetasTablero = new ArrayList<Etiqueta>();
+            etiquetasTablero.addAll(tarea.getColumna().getTablero().getEtiquetas());
+
+            tareaService.asignaEtiquetaTarea(idTarea, etiquetaId);
+
+            return ok(detalleTarea.render(usuario, tarea, etiquetas, etiquetasTablero, formFactory.form(Tarea.class)));
+          }
+       }
     }
 }

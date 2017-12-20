@@ -56,7 +56,9 @@
                   }
               </td>
               <td>@if(tarea.getEtiquetas().size() > 0) {
-                    @tarea.getEtiquetas()
+                    @for(etiqueta <- tarea.getEtiquetas()) {
+                      @etiqueta.getNombre()
+                    }
                   }
 
               </td>
