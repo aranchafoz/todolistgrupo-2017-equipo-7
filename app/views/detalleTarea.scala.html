@@ -1,4 +1,4 @@
-@(usuario: Usuario, tarea: Tarea)
+@(usuario: Usuario, tarea: Tarea, etiquetas: List[Etiqueta], etiquetaForm: Form[Tarea])
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -111,7 +111,7 @@
     <div class="col-sm-12">
 
       <hr>
-      
+
       <h5>
         <strong>Tablero: </strong>
          @tarea.getColumna().getTablero().getNombre()
