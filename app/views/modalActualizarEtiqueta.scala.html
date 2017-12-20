@@ -1,0 +1,32 @@
+@(usuario: Usuario, tablero: Tablero, etiqueta: Etiqueta)
+<div id="modalActualizarEtiqueta@etiqueta.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
+       role="dialog" aria-hidden="true">
+  <div class='modal-dialog modal-xs'>
+   @helper.form(action = routes.GestionEtiquetasController.grabaNombreEtiquetaModificado(usuario.getId(), tablero.getId(), etiqueta.getId())) {
+    <div class='modal-content'>
+      <div class='modal-header'>
+         <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+           <span aria-hidden='true'>×</span>
+         </button>
+         <h4 class='modal-title'>Etiqueta: @etiqueta.getNombre()</h4>
+      </div>
+      <div class='modal-body'>
+         <div class="form-group">
+           <div class="col-md-6">
+             <input type="text" placeholder="Nuevo nombre" name="nombre" class="form-control">
+           </div>
+         </div>
+      </div>
+      <div class="modal-footer" style="margin-top: 30px">
+
+        <a onmouseover="" style="cursor: pointer;" class="btn btn-xs btn-danger pull-left"
+        onclick="del('@routes.GestionEtiquetasController.borraEtiqueta(usuario.getId(), tablero.getId(), etiqueta.getId())')">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+
+       <input type="submit" value="Aceptar" class="btn btn-info">
+       <button type='button' class='btn btn-default pull-right' data-dismiss='modal'>Cancelar</button>
+      </div>
+    </div>
+   }
+  </div>
+ </div>

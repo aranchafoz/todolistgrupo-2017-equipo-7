@@ -1,4 +1,5 @@
-@(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario, editable: Boolean, mensaje: String)
+@(tablero: Tablero, participantes: List[Usuario], columnas: List[Columna], columnaForm: Form[Columna], usuario: Usuario,
+editable: Boolean, etiquetas: List[Etiqueta], etiquetaForm: Form[Etiqueta], mensaje: String)
 
 @main("Detalle de tablero", usuario) {
     @if(mensaje != "") {
@@ -50,6 +51,8 @@
             }
       </table>
     </div>
+
+    @listaEtiquetas(usuario, tablero, etiquetas, etiquetaForm)
 
     @if(!editable) {
       @listaColumnas(usuario, tablero, columnas, columnaForm)
