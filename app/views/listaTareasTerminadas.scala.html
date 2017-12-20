@@ -46,11 +46,12 @@
             </td>
             <td>
               @if(tarea.getUsuario() != usuario) {
-                <span class="glyphicon glyphicon-trash disabled" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-trash disabled" aria-hidden="true" style="color: #d9534f;"></span>
               } else {
-                <a onmouseover="" style="cursor: pointer;"
-                onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                <a class="btn btn-xs" onmouseover="" style="cursor: pointer;"
+                  onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
+                  <i class="glyphicon glyphicon-trash" aria-hidden="true" style="color: #d9534f;"></i>
+                </a>
               }
             </td>
         </tr>
