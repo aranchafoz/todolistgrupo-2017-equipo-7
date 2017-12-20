@@ -96,10 +96,13 @@
     }
     </h5>
     <hr>
-    <hr>
       <strong>Etiquetas: </strong>
-        @tarea.getColumna().getTablero().getEtiquetas()
-    </hr>
+      @for(etiqueta <- tarea.getColumna().getTablero().getEtiquetas()) {
+        <i class="glyphicon glyphicon-tag"></i> @etiqueta.getNombre()
+      }
+
+      <button type="button" class="btn btn-info">Añadir etiqueta</button>
+    <hr>
     <h5>
       <strong>Tablero: </strong>
        @tarea.getColumna().getTablero().getNombre()
