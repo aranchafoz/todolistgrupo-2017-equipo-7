@@ -18,6 +18,7 @@ import services.ColumnaService;
 import models.Usuario;
 import models.Tablero;
 import models.Columna;
+import models.Etiqueta;
 import security.ActionAuthenticator;
 
 
@@ -103,7 +104,8 @@ public class GestionColumnasController extends Controller {
          List<Columna> columnas = columnaService.allColumnasTablero(idTablero);
          Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
          boolean editable = true;
-         return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, editable, ""));
+         List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+         return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, editable, etiquetas, formFactory.form(Etiqueta.class), ""));
        }
      }
    }
