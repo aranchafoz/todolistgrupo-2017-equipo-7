@@ -1,4 +1,4 @@
-@(usuario: Usuario, tarea: Tarea)
+@(usuario: Usuario, tarea: Tarea, etiquetas: List[Etiqueta], etiquetaForm: Form[Etiqueta])
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -96,12 +96,36 @@
     }
     </h5>
     <hr>
+    <div class="col-xs-12 col-ls-12">
       <strong>Etiquetas: </strong>
-      @for(etiqueta <- tarea.getColumna().getTablero().getEtiquetas()) {
+      @for(etiqueta <- tarea.getEtiquetas()) {
         <i class="glyphicon glyphicon-tag"></i> @etiqueta.getNombre()
       }
+      &nbsp;
+    </div>
 
-      <button type="button" class="btn btn-info">Añadir etiqueta</button>
+    <div class="col-xs-12 col-ls-12">
+      <div class="form-group col-xs-3 col-ls-3">
+        <select class="form-control" id="exampleFormControlSelect1">
+          @for(etiqueta <- tarea.getColumna().getTablero().getEtiquetas()) {
+            <option><i class="glyphicon glyphicon-tag"></i> @etiqueta.getNombre()</option>
+            }
+        </select>
+      </div>
+
+      <div>
+        &nbsp;
+        <a class="btn btn-xs btn-info" style="cursor: pointer"
+        onclick="terminar('@routes.GestionTareasController.asignaTarea(tarea.getId())')">
+          <i data-placement='top' title='Terminar tarea'></i>
+          &nbsp;
+          Añadir etiqueta
+        </a>
+      </div>
+
+    </div>
+
+
     <hr>
     <h5>
       <strong>Tablero: </strong>
