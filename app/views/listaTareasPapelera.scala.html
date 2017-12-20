@@ -63,12 +63,15 @@
                   }
               </td>
               <td>
-                  <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs"
-                  onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                  <a onmouseover="" style="cursor: pointer;" class="btn btn-info btn-xs"
-                  onclick="getBack('@routes.GestionTareasController.recuperarTarea(tarea.getId())')">
-                  <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></a></td>
+                  <a class="btn btn-xs" onmouseover="" style="cursor: pointer;"
+                    onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                    <i class="glyphicon glyphicon-trash" aria-hidden="true" style="color: #d9534f;"></i>
+                  </a>
+                  <a class="btn btn-xs" onmouseover="" style="cursor: pointer;" class="btn btn-info btn-xs"
+                    onclick="getBack('@routes.GestionTareasController.recuperarTarea(tarea.getId())')">
+                    <i class="glyphicon glyphicon-repeat" aria-hidden="true" style="color: #5bc0de;"></i>
+                  </a>
+              </td>
           </tr>
       }
 

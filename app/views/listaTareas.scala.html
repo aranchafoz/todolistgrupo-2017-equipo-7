@@ -61,20 +61,21 @@
 
               </td>
               <td>
-                <a class="btn btn-xs btn-info" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
-                  <span class="glyphicon glyphicon-pencil"></span>
+                <a class="btn btn-xs" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
+                  <i class="glyphicon glyphicon-pencil" style="color: #5bc0de;"></i>
                 </a>
-                <a class="btn btn-xs btn-success" style="cursor: pointer"
-                  onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
-
-                <i class="fa fa-check-square-o"
-                data-placement='top' title='Cerrar tarea'></i>
-                  <a onmouseover="" style="cursor: pointer;" class="btn btn-danger btn-xs"
-                  onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                <a class="btn btn-xs btn-primary" style="cursor: pointer"
+                <a class="btn btn-xs" style="cursor: pointer"
                 href="@routes.GestionTareasController.formularioAsignaTarea(tarea.getId())">
-                <i class="fa fa-user-plus"></i></a>
+                  <i class="fa fa-user-plus" style="color: #3379b7;"></i>
+                </a>
+                <a class="btn btn-xs" style="cursor: pointer"
+                  onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
+                  <i class="fa fa-check-square-o" data-placement='top' title='Cerrar tarea' style="color: #5cb85c;"></i>
+                </a>
+                <a class="btn btn-xs" onmouseover="" style="cursor: pointer;"
+                  onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
+                  <i class="glyphicon glyphicon-trash" aria-hidden="true" style="color: #d9534f;"></i>
+                </a>
               </td>
           </tr>
         }
