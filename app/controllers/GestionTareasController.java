@@ -283,7 +283,7 @@ public class GestionTareasController extends Controller {
           Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
           List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
 
-          return ok(detalleTarea.render(usuario, tarea, etiquetas, formFactory.form(Etiqueta.class)));
+          return ok(detalleTarea.render(usuario, tarea, etiquetas, formFactory.form(Tarea.class)));
         }
       }
    }
@@ -396,19 +396,21 @@ public class GestionTareasController extends Controller {
     @Security.Authenticated(ActionAuthenticator.class)
     public Result asignaEtiquetaTarea(Long idTarea) {
        Tarea tarea = tareaService.obtenerTarea(idTarea);
-       Etiqueta etiquetas = etiquetaService.allEtiquetasTarea(idTarea);
+       List<Etiqueta> etiquetas = etiquetaService.allEtiquetasTarea(idTarea);
        if (tarea == null) {
           return notFound("Tarea no encontrada");
        } else {
           String connectedUserStr = session("connected");
           Long connectedUser =  Long.valueOf(connectedUserStr);
+          Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
           if (connectedUser != tarea.getUsuario().getId()) {
              return unauthorized("Lo siento, no estás autorizado");
           } else {
+            DynamicForm form = Form.form().bindFromRequest();
 
-            Long etiquetaID = Long.parseLong(form.get("etiqueta"), 10);
+            Long etiquetaId = Long.parseLong(form.get("etiqueta"), 10);
 
-            tarea.asignaEtiquetaTarea(idTarea, etiquetaID);
+            tareaService.asignaEtiquetaTarea(idTarea, etiquetaId);
 
             return ok(detalleTarea.render(usuario, tarea, etiquetas, formFactory.form(Tarea.class)));
           }

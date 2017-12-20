@@ -98,32 +98,36 @@
     <hr>
     <div class="col-xs-12 col-ls-12">
       <strong>Etiquetas: </strong>
-      @for(etiqueta <- tarea.getEtiquetas()) {
-        <i class="glyphicon glyphicon-tag"></i> @etiqueta.getNombre()
+      @if(tarea.getEtiquetas().size() > 0){
+        @for(etiqueta <- tarea.getEtiquetas()) {
+          <i class="glyphicon glyphicon-tag"></i> @etiqueta.getNombre()
+        }
+        &nbsp;
+      } else {
+        <p>No se ha asignado ninguna etiqueta</p>
       }
-      &nbsp;
+
     </div>
 
     <div class="col-xs-12 col-ls-12">
-      <div class="form-group col-xs-3 col-ls-3">
-        <select class="form-control" id="exampleFormControlSelect1">
-          @for(etiqueta <- tarea.getColumna().getTablero().getEtiquetas()) {
-            <option><i class="glyphicon glyphicon-tag"></i> @etiqueta.getNombre()</option>
-            }
-        </select>
-      </div>
 
-      @helper.form(action = routes.GestionTareasController.asignaEtiquetaTarea(tarea.getId()))
-      {
+      @helper.form( action = routes.GestionTareasController.asignaEtiquetaTarea( tarea.getId() ) ) {
         <fieldset>
-          @helper.select(etiquetaForm("etiqueta"),
-            options = etiquetas.map(etiqueta=>etiqueta.getId().toString() -> etiqueta.getNombre())
-            )
+          @helper.select(
+            field = etiquetaForm("etiqueta"),
+            options = etiquetas.map(etiqueta=>etiqueta.getId().toString() -> etiqueta.getNombre()),
+            '_default -> "-- Elige una etiqueta --",
+            '_label -> "Nueva etiqueta",
+            'name -> "etiqueta",
+            'id -> "etiqueta",
+            'class -> "form-control"
+          )
         </fieldset>
           <div>
             <input type="submit" class="btn btn-primary" value="Añadir etiqueta">
           </div>
       }
+      <hr>
 
     </div>
 
