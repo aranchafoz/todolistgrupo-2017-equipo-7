@@ -110,26 +110,30 @@
 
     <div class="col-xs-12 col-ls-12">
 
-      @helper.form( action = routes.GestionTareasController.asignaEtiquetaTarea( tarea.getId() ) ) {
-        <fieldset>
-          @helper.select(
-            field = etiquetaForm("etiqueta"),
-            options = etiquetas.map(etiqueta=>etiqueta.getId().toString() -> etiqueta.getNombre()),
-            '_default -> "-- Elige una etiqueta --",
-            '_label -> "Nueva etiqueta",
-            'name -> "etiqueta",
-            'id -> "etiqueta",
-            'class -> "form-control"
-          )
-        </fieldset>
-          <div>
-            <input type="submit" class="btn btn-primary" value="Añadir etiqueta">
-          </div>
-      }
+      <a href="#demo" class="btn btn-info btn-sm" data-toggle="collapse">+</a>
+      <div id="demo" class="collapse">
+        @helper.form( action = routes.GestionTareasController.asignaEtiquetaTarea( tarea.getId() ) ) {
+          <fieldset>
+            @helper.select(
+              field = etiquetaForm("etiqueta"),
+              options = etiquetas.map(etiqueta=>etiqueta.getId().toString() -> etiqueta.getNombre()),
+              '_default -> "-- Elige una etiqueta --",
+              '_label -> "Nueva etiqueta",
+              'name -> "etiqueta",
+              'id -> "etiqueta",
+              'class -> "form-control"
+            )
+          </fieldset>
+            <div>
+              <input type="submit" class="btn btn-primary" value="Añadir">
+            </div>
+        }
+      </div>
+
+
       <hr>
 
     </div>
-
 
     <hr>
     <h5>
