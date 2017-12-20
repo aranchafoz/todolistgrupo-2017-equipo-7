@@ -61,8 +61,16 @@ public class GestionTareasController extends Controller {
           List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(idUsuario);
 
           List<Tablero> tableros = new ArrayList<Tablero>();
-          tableros.addAll(tablerosAdministrados);
-          tableros.addAll(tablerosParticipados);
+          for(Tablero tab : tablerosAdministrados) {
+            if(tab.getCerrado() == false){
+              tableros.add(tab);
+            }
+          }
+          for(Tablero tab : tablerosParticipados) {
+            if(tab.getCerrado() == false){
+              tableros.add(tab);
+            }
+          }
 
           return badRequest(listaTareas.render(tareas, usuario, tableros, formFactory.form(Tarea.class), "Hay errores en el formulario"));
         }
@@ -180,8 +188,16 @@ public class GestionTareasController extends Controller {
          List<Tablero> tablerosParticipados = tableroService.allTablerosParticipadosUsuario(idUsuario);
 
          List<Tablero> tableros = new ArrayList<Tablero>();
-         tableros.addAll(tablerosAdministrados);
-         tableros.addAll(tablerosParticipados);
+         for(Tablero tab : tablerosAdministrados) {
+           if(tab.getCerrado() == false){
+             tableros.add(tab);
+           }
+         }
+         for(Tablero tab : tablerosParticipados) {
+           if(tab.getCerrado() == false){
+             tableros.add(tab);
+           }
+         }
 
          return ok(listaTareas.render(tareas, usuario, tableros, formFactory.form(Tarea.class), aviso));
       }
