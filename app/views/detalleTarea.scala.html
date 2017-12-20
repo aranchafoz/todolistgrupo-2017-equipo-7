@@ -1,4 +1,4 @@
-@(usuario: Usuario, tarea: Tarea, etiquetas: List[Etiqueta], etiquetaForm: Form[Tarea])
+@(usuario: Usuario, tarea: Tarea, etiquetas: List[Etiqueta], etiquetasTablero: List[Etiqueta], etiquetaForm: Form[Tarea])
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -117,7 +117,7 @@
           <fieldset>
             @helper.select(
               field = etiquetaForm("etiqueta"),
-              options = etiquetas.map(etiqueta=>etiqueta.getId().toString() -> etiqueta.getNombre()),
+              options = etiquetasTablero.map(etiqueta=>etiqueta.getId().toString() -> etiqueta.getNombre()),
               '_default -> "-- Elige una etiqueta --",
               '_label -> "Nueva etiqueta",
               'name -> "etiqueta",
