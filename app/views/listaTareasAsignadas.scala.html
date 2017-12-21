@@ -1,0 +1,55 @@
+@(tareas: List[Tarea], usuario: Usuario)
+@scripts = {
+  <script type="text/javascript">
+        function terminar(urlTerminar) {
+          $.ajax({
+            url: urlTerminar,
+            type: 'POST',
+            success: function (results) {
+              location.reload();
+            }
+          })
+        }
+    </script>
+}
+@main("Tareas asignadas @usuario.getLogin()", usuario, scripts) {
+  <h2> Listado de tareas de @usuario.getLogin()</h2>
+
+  <ul class="nav nav-tabs">
+    <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Administradas</a></li>
+    <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
+    <li role="presentation"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
+    <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareasAsignadas(usuario.getId())">Asignadas</a></li>
+  </ul>
+
+  <table class="table table-striped">
+      <tr>
+          <th>Tareas</th>
+          <th>Descripción</th>
+          <th>Fecha Límite</th>
+          <th>Acciones</th>
+      </tr>
+  @for(tarea <- tareas) {
+    @if(tarea.getTerminada() != true && tarea.getDeletedAt() == null) {
+    <tr>
+        <td>
+          <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
+              @tarea.getTitulo()
+          </a>
+        </td>
+        <td>@tarea.getDescripcion()</td>
+        <td>@if(tarea.getFechaLimite() != null) {
+                @tarea.getFechaLimite().format("dd-MM-yyyy")
+            }
+        </td>
+        <td>
+          <a class="btn btn-xs" style="cursor: pointer"
+            onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
+            <i class="fa fa-check-square-o" data-placement='top' title='Cerrar tarea' style="color: #5cb85c;"></i>
+          </a>
+        </td>
+    </tr>
+    }
+  }
+  </table>
+}

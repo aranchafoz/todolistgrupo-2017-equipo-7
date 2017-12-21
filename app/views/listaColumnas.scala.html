@@ -1,0 +1,108 @@
+@(usuario: Usuario, tablero: Tablero, columnas: List[Columna], columnaForm: Form[Columna])
+
+<script type="text/javascript">
+    function del(urlBorrar) {
+        $.ajax({
+            url: urlBorrar,
+            type: 'DELETE',
+            success: function(results) {
+                //refresh the page
+                location.reload();
+            }
+        });
+    }
+</script>
+
+<div style="overflow-x: show">
+    </br>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <h5>
+          <strong>Columnas</strong>
+          &nbsp;
+
+          @if(columnas.size() > 1) {
+            <a class="btn btn-info btn-xs" href="@routes.GestionColumnasController.listaColumnasDesplazables(usuario.getId(), tablero.getId())">
+              <i class="glyphicon glyphicon-transfer"></i>&nbsp; Editar posición
+            </a>
+          }
+        </h5>
+      </div>
+    </div>
+    </br>
+    <div id="grid">
+    @for(columna <- columnas) {
+        <div class="col-lg-3 col-md-3" data-id=@columna.getId() data-userId=@usuario.getId() data-tableroId=@tablero.getId()>
+
+          @modalActualizarColumna(usuario, tablero, columna)
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                  @columna.getNombre()
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6" align="right">
+                  <a data-toggle="modal" data-target="#modalActualizarColumna@columna.getId()"><i class="glyphicon glyphicon-pencil"></i></a>
+                  <a onmouseover="" style="cursor: pointer;" class="btn btn-xs"
+                  onclick="del('@routes.GestionColumnasController.borraColumna(usuario.getId(), tablero.getId(), columna.getId())')">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:red"></span></a>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped">
+                @for(tarea <- columna.getTareas()) {
+                  @if(tarea.getTerminada() != true) {
+                      <tr>
+                          <td>
+                              <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
+                                  @tarea.getTitulo()
+                              </a>
+                          </td>
+                      </tr>
+                    }
+                  }
+
+                  @modalCrearTareaEnColumna(usuario, tablero, columna)
+
+                  <tr>
+                      <td>
+                        <a data-toggle="modal" data-target="#modalCrearTareaEnColumna@columna.getId()">
+                          <span class="glyphicon glyphicon-plus"></span>
+                          &nbsp;
+                          Añadir tarea
+                        </a>
+                      </td>
+                  </tr>
+
+              </table>
+            </div>
+            <input id="columna@columna.getId()" name="columna@columna.getId()" value= "@columna.getPosicion()" type="hidden">
+          </div>
+
+        </div>
+    }
+    </div>
+
+    <div class="col-lg-3 col-md-3" id="addColumna">
+      <input type="button" class="btn btn-primary btn-block" onclick="hideAddColumnaButton()"
+
+       value="Añadir una columna...">
+    </div>
+
+    @formNuevaColumna(usuario, tablero, columnaForm)
+
+</div>
+
+<script type="text/javascript">
+    function hideAddColumnaButton() {
+      $("#addColumna").hide();
+      $("#newColumnaForm").fadeIn();
+    }
+    function showAddColumnaButton() {
+      $("#newColumnaForm").hide();
+      $("#addColumna").fadeIn();
+      console.log("a pastar")
+    }
+</script>

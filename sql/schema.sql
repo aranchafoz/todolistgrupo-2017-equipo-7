@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.19, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: mads
 -- ------------------------------------------------------
--- Server version	5.7.19
+-- Server version	5.7.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,41 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Columna`
+--
+
+DROP TABLE IF EXISTS `Columna`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Columna` (
+  `id` bigint(20) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `posicion` int(11) DEFAULT NULL,
+  `tableroId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK5t3s9tmlcxo05co7xxalympgg` (`tableroId`),
+  CONSTRAINT `FK5t3s9tmlcxo05co7xxalympgg` FOREIGN KEY (`tableroId`) REFERENCES `Tablero` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Etiqueta`
+--
+
+DROP TABLE IF EXISTS `Etiqueta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Etiqueta` (
+  `id` bigint(20) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `tableroId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKqhvnrs00mpblhwhp2ondwu2vo` (`tableroId`),
+  CONSTRAINT `FKqhvnrs00mpblhwhp2ondwu2vo` FOREIGN KEY (`tableroId`) REFERENCES `Tablero` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `Persona_Tablero`
@@ -41,6 +76,7 @@ DROP TABLE IF EXISTS `Tablero`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tablero` (
   `id` bigint(20) NOT NULL,
+  `cerrado` bit(1) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `administradorId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -58,12 +94,36 @@ DROP TABLE IF EXISTS `Tarea`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tarea` (
   `id` bigint(20) NOT NULL,
+  `deleted_at` date DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `fechaCreacion` date DEFAULT NULL,
+  `fechaLimite` date DEFAULT NULL,
   `terminada` bit(1) NOT NULL,
   `titulo` varchar(255) DEFAULT NULL,
+  `columnaId` bigint(20) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `FK30n0ojdgfxnkm0768tnqddi91` (`columnaId`),
   KEY `FKepne2t52y8dmn8l9da0dd7l51` (`usuarioId`),
+  CONSTRAINT `FK30n0ojdgfxnkm0768tnqddi91` FOREIGN KEY (`columnaId`) REFERENCES `Columna` (`id`),
   CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Tarea_Etiqueta`
+--
+
+DROP TABLE IF EXISTS `Tarea_Etiqueta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Tarea_Etiqueta` (
+  `tareas_id` bigint(20) NOT NULL,
+  `etiquetas_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`tareas_id`,`etiquetas_id`),
+  KEY `FKlkb4xdc8vxt63t1ihylcc36s6` (`etiquetas_id`),
+  CONSTRAINT `FKlkb4xdc8vxt63t1ihylcc36s6` FOREIGN KEY (`etiquetas_id`) REFERENCES `Etiqueta` (`id`),
+  CONSTRAINT `FKqjbjoqqylxa92bunkrndg0nx7` FOREIGN KEY (`tareas_id`) REFERENCES `Tarea` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -107,4 +167,4 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-21 18:17:57
+-- Dump completed on 2017-12-10 15:01:42

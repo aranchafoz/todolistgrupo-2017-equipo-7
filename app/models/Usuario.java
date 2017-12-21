@@ -31,6 +31,8 @@ public class Usuario {
    private Set<Tablero> administrados = new HashSet<Tablero>();
    @ManyToMany(mappedBy="participantes", fetch=FetchType.EAGER)
    private Set<Tablero> tableros = new HashSet<Tablero>();
+   @ManyToMany(mappedBy="usuariosAsignados", fetch=FetchType.EAGER)
+   public Set<Tarea> tareasAsignadas = new HashSet<Tarea>();
 
    // Un constructor vacío necesario para JPA
    public Usuario() {}
@@ -121,6 +123,14 @@ public class Usuario {
 
    public void setTableros(Set<Tablero> tableros) {
       this.tableros = tableros;
+   }
+
+   public Set<Tarea> getTareasAsignadas() {
+      return tareasAsignadas;
+   }
+
+   public void setTareasAsignadas(Set<Tarea> tareasAsignadas) {
+      this.tareasAsignadas = tareasAsignadas;
    }
 
    public String toString() {

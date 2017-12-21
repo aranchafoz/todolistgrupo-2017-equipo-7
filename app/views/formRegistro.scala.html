@@ -5,17 +5,20 @@
           @mensaje
       </div>
    }
-   <h1>Registrar nuevo usuario</h1>
-   @helper.form(action = routes.UsuarioController.registroUsuario()) {
+   <div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3">
+    <h1>Registrar nuevo usuario</h1>
+    <hr>
+    @helper.form(action = routes.UsuarioController.registroUsuario()) {
       <fieldset>
-         @helper.inputText(registroForm("login"), '_label -> "Login")
-         @helper.inputText(registroForm("email"), '_label -> "Email")
-         @helper.inputPassword(registroForm("password"), '_label -> "Contraseña")
-         @helper.inputPassword(registroForm("confirmacion"), '_label -> "Repite contraseña")
+         @helper.inputText(registroForm("login"), '_label -> "Login", 'type -> "text", 'class -> "form-control")
+         @helper.inputText(registroForm("email"), '_label -> "Email", 'type -> "text", 'class -> "form-control")
+         @helper.inputPassword(registroForm("password"), '_label -> "Contraseña", 'type -> "password", 'id -> "password", 'name -> "password", 'class -> "form-control")
+         @helper.inputPassword(registroForm("confirmacion"), '_label -> "Repite contraseña", 'type -> "password", 'id -> "confirmation", 'name -> "confirmation", 'class -> "form-control")
       </fieldset>
       <p>
          <button type="submit" class="btn btn-primary">Registro</button>
          <a class="btn btn-link" href="@routes.UsuarioController.loginUsuario()">Ir a login</a>
       </p>
-      }
-   }
+    }
+  </div>
+}

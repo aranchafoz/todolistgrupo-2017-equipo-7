@@ -1,10 +1,10 @@
-@(tareas: List[Tarea], usuario: Usuario, mensaje: String)
+@(tareas: List[Tarea], usuario: Usuario, tableros: List[Tablero], tableroParaTareaForm: Form[Tarea], mensaje: String)
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
             $.ajax({
                 url: urlBorrar,
-                type: 'DELETE',
+                type: 'PUT',
                 success: function(results) {
                     //refresh the page
                     location.reload();
@@ -24,46 +24,74 @@
     </script>
 }
 @main("Tareas del usuario @usuario.getLogin()", usuario, scripts) {
-  
+
     <h2> Listado de tareas de @usuario.getLogin()</h2>
 
     <ul class="nav nav-tabs">
-      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Activas</a></li>
+      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Administradas</a></li>
       <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
+      <li role="presentation"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
+      <li role="presentation"><a href="@routes.GestionTareasController.listaTareasAsignadas(usuario.getId())">Asignadas</a></li>
     </ul>
 
     <table class="table table-striped">
         <tr>
             <th>Tareas</th>
+            <th>Descripción</th>
             <th>Fecha Límite</th>
+            <th>Etiquetas</th>
             <th>Acción</th>
         </tr>
     @for(tarea <- tareas) {
-      @if(tarea.getTerminada() != true) {
+      @if(tarea.getTerminada() != true && tarea.getDeletedAt() == null) {
           <tr>
-              <td>@tarea.getTitulo()</td>
+              <td>
+                  <a href="@routes.GestionTareasController.detalleTarea(usuario.getId(), tarea.getId())">
+                      @tarea.getTitulo()
+                  </a>
+              </td>
+              <td>@tarea.getDescripcion()</td>
               <td>@if(tarea.getFechaLimite() != null) {
                       @tarea.getFechaLimite().format("dd-MM-yyyy")
                   }
               </td>
+              <td>@if(tarea.getEtiquetas().size() > 0) {
+                    @for(etiqueta <- tarea.getEtiquetas()) {
+                      @etiqueta.getNombre()
+                    }
+                  }
+
+              </td>
               <td>
-                @if(tarea.getTerminada() != true) {
-                <a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
-                  <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-                  <a style="cursor: pointer"
+                <a class="btn btn-xs" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
+                  <i class="glyphicon glyphicon-pencil" style="color: #5bc0de;"></i>
+                </a>
+                <a class="btn btn-xs" style="cursor: pointer"
+                href="@routes.GestionTareasController.formularioAsignaTarea(tarea.getId())">
+                  <i class="fa fa-user-plus" style="color: #3379b7;"></i>
+                </a>
+                <a class="btn btn-xs" style="cursor: pointer"
                   onclick="terminar('@routes.GestionTareasController.terminaTarea(tarea.getId())')">
-                  <span class="glyphicon glyphicon-off"></span></a>
-                }
-                  <a onmouseover="" style="cursor: pointer;"
-                  onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                  <i class="fa fa-check-square-o" data-placement='top' title='Cerrar tarea' style="color: #5cb85c;"></i>
+                </a>
+                <a class="btn btn-xs" onmouseover="" style="cursor: pointer;"
+                  onclick="del('@routes.GestionTareasController.enviarPapelera(tarea.getId())')">
+                  <i class="glyphicon glyphicon-trash" aria-hidden="true" style="color: #d9534f;"></i>
+                </a>
+              </td>
           </tr>
         }
       }
 
       <tr>
-          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
-              <span class="glyphicon glyphicon-plus"/></a></td>
+          <td>
+            @modalSeleccionarTableroTarea(usuario, tableros, tableroParaTareaForm)
+            <a data-toggle="modal" data-target="#modalSeleccionarTableroTarea">
+              <i class="glyphicon glyphicon-plus"></i>
+            </a>
+          </td>
+          <td></td>
+          <td></td>
           <td></td>
           <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
       </tr>

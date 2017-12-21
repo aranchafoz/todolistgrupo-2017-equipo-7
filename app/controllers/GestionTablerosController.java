@@ -14,8 +14,12 @@ import java.util.ArrayList;
 
 import services.UsuarioService;
 import services.TableroService;
+import services.ColumnaService;
+import services.EtiquetaService;
 import models.Usuario;
 import models.Tablero;
+import models.Columna;
+import models.Etiqueta;
 import security.ActionAuthenticator;
 
 public class GestionTablerosController extends Controller {
@@ -23,6 +27,8 @@ public class GestionTablerosController extends Controller {
    @Inject FormFactory formFactory;
    @Inject UsuarioService usuarioService;
    @Inject TableroService tableroService;
+   @Inject ColumnaService columnaService;
+   @Inject EtiquetaService etiquetaService;
 
 
   // Comprobamos si hay alguien logeado con @Security.Authenticated(ActionAuthenticator.class)
@@ -99,11 +105,50 @@ public class GestionTablerosController extends Controller {
       if (tablero == null) {
          return notFound("Tablero no encontrado");
       } else {
+        String aviso = flash("aviso");
         List<Usuario> participantes = new ArrayList<Usuario>();
         participantes.addAll(tablero.getParticipantes());
+        List<Columna> columnas = columnaService.allColumnasTablero(idTablero);
+        List<Etiqueta> etiquetas = etiquetaService.allEtiquetasTablero(idTablero);
         Usuario usuario = usuarioService.findUsuarioPorId(connectedUser);
-        return ok(detalleTablero.render(tablero, participantes, usuario));
+
+        return ok(detalleTablero.render(tablero, participantes, columnas, formFactory.form(Columna.class), usuario, false, etiquetas, formFactory.form(Etiqueta.class), aviso));
       }
+    }
+  }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result cerrarTablero(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      Tablero tablero = tableroService.obtenerTablero(idTablero);
+      if (tablero == null) {
+         return notFound("Tablero no encontrado");
+      } else {
+        tableroService.cerrarTablero(idTablero);
+        flash("aviso", "El tablero se ha cerrado correctamente");
+        return redirect(controllers.routes.GestionTablerosController.listaTableros(idUsuario));
+      }
+    }
+  }
+
+  @Security.Authenticated(ActionAuthenticator.class)
+  public Result editarTablero(Long idUsuario, Long idTablero) {
+    String connectedUserStr = session("connected");
+    Long connectedUser =  Long.valueOf(connectedUserStr);
+    if (connectedUser != idUsuario) {
+      return unauthorized("Lo siento, no estás autorizado");
+    } else {
+      DynamicForm requestData = formFactory.form().bindFromRequest();
+      String nuevoNombre = requestData.get("nombre");
+
+      Tablero tablero = tableroService.obtenerTablero(idTablero);
+      tablero = tableroService.editarTablero(tablero.getId(), nuevoNombre);
+
+      return redirect(controllers.routes.GestionTablerosController.detalleTablero(idUsuario, idTablero));
     }
   }
  }

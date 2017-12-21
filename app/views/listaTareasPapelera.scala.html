@@ -1,0 +1,85 @@
+@(tareas: List[Tarea], usuario: Usuario, mensaje: String)
+@scripts = {
+    <script type="text/javascript">
+        function del(urlBorrar) {
+            $.ajax({
+                url: urlBorrar,
+                type: 'DELETE',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+
+        function getBack(urlBack) {
+            $.ajax({
+                url: urlBack,
+                type: 'PUT',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+
+        function terminar(urlTerminar) {
+          $.ajax({
+            url: urlTerminar,
+            type: 'POST',
+            success: function (results) {
+              location.reload();
+            }
+          })
+        }
+    </script>
+}
+@main("Tareas del usuario @usuario.getLogin()", usuario, scripts) {
+
+    <h2> Listado de tareas de @usuario.getLogin()</h2>
+
+    <ul class="nav nav-tabs">
+      <li role="presentation"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Administradas</a></li>
+      <li role="presentation"><a href="@routes.GestionTareasController.listaTareasTerminadas(usuario.getId())">Terminadas</a></li>
+      <li role="presentation" class="active"><a href="@routes.GestionTareasController.listarTareasPapelera(usuario.getId())">Papelera</a></li>
+      <li role="presentation"><a href="@routes.GestionTareasController.listaTareasAsignadas(usuario.getId())">Asignadas</a></li>
+    </ul>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Tareas</th>
+            <th>Descripción</th>
+            <th>Fecha Límite</th>
+            <th>Acción</th>
+        </tr>
+    @for(tarea <- tareas) {
+          <tr>
+              <td>
+                  @tarea.getTitulo()
+              </td>
+              <td>@tarea.getDescripcion()</td>
+              <td>@if(tarea.getFechaLimite() != null) {
+                      @tarea.getFechaLimite().format("dd-MM-yyyy")
+                  }
+              </td>
+              <td>
+                  <a class="btn btn-xs" onmouseover="" style="cursor: pointer;"
+                    onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                    <i class="glyphicon glyphicon-trash" aria-hidden="true" style="color: #d9534f;"></i>
+                  </a>
+                  <a class="btn btn-xs" onmouseover="" style="cursor: pointer;" class="btn btn-info btn-xs"
+                    onclick="getBack('@routes.GestionTareasController.recuperarTarea(tarea.getId())')">
+                    <i class="glyphicon glyphicon-repeat" aria-hidden="true" style="color: #5bc0de;"></i>
+                  </a>
+              </td>
+          </tr>
+      }
+
+  </table>
+
+  @if(mensaje != null) {
+      <div class="alert alert-success">
+          @mensaje
+      </div>
+  }
+}

@@ -1,5 +1,4 @@
 @(usuario: Usuario)
-@if(usuario != null) {
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -13,30 +12,46 @@
       <a class="navbar-brand" href="#">TodoList</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Mis tareas</a></li>
-        <li><a href="@routes.GestionTablerosController.listaTableros(usuario.getId())">Mis tableros</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a
-            href="#"
-            class="dropdown-toggle"
-            data-toggle="dropdown"
-            role="button"
-            aria-haspopup="true"
-            aria-expanded="false">
-            @usuario.getLogin() <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">Perfil</a></li>
-            <li><a href="@routes.UsuarioController.logout()">Salir</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
+    @if(usuario != null) {
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="@routes.GestionTareasController.listaTareas(usuario.getId())">Mis tareas</a></li>
+          <li><a href="@routes.GestionTablerosController.listaTableros(usuario.getId())">Mis tableros</a></li>
+          <li>
+            <a href="@routes.GestionTareasController.vistaCalendario(usuario.getId())">
+              <i class="fa fa-calendar"></i>
+              &nbsp;
+              Mi calendario
+            </a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a
+              href="#"
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false">
+              @usuario.getLogin() <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">Perfil</a></li>
+              <li><a href="@routes.UsuarioController.logout()">Salir</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    } else {
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="@routes.UsuarioController.loginUsuario()">Login</a></li>
+          <li><a href="@routes.UsuarioController.registroUsuario()">Registro</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    }
   </div><!-- /.container-fluid -->
 </nav>
-}

@@ -1,5 +1,18 @@
 @(tablerosAdministrados: List[Tablero], tablerosParticipados: List[Tablero], restoTableros: List[Tablero], usuario: Usuario, mensaje: String)
-@main("Tableros administrados del usuario @usuario.getLogin()", usuario) {
+@scripts = {
+  <script type="text/javascript">
+    function cerrarTablero(urlCerrar) {
+        $.ajax({
+          url: urlCerrar,
+          type: 'POST',
+          success: function (results) {
+            location.reload();
+          }
+        });
+    }
+  </script>
+}
+@main("Tableros administrados del usuario @usuario.getLogin()", usuario, scripts) {
 
   @if(mensaje != null) {
       <div class="alert alert-success">
@@ -12,14 +25,45 @@
   <table class="table table-striped">
         <tr>
             <th>Administrados</th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     @for(tablero <- tablerosAdministrados) {
         <tr>
-            <td><a href="@routes.GestionTablerosController.detalleTablero(usuario.getId(), tablero.getId())">
-              @tablero.getNombre()
-            </a></td>
-            <td></td>
+            @if(tablero.getCerrado()) {
+              <td>@tablero.getNombre() (cerrado)</td>
+            } else {
+              <td><a href="@routes.GestionTablerosController.detalleTablero(usuario.getId(), tablero.getId())">
+                @tablero.getNombre()
+              </a></td>
+            }
+
+            <td>
+              @if(!tablero.getCerrado()) {
+              <button id="buttonUpdate" class="btn btn-danger btn-xs" data-toggle="modal"
+              data-target="#modalCerrarTablero@tablero.getId()"><i class="fa fa-archive"
+              data-placement='top' title='Cerrar tablero'></i></button></td>
+            }
+              <div id="modalCerrarTablero@tablero.getId()" class="modal fade bs-example-modal-xs" tabindex="-1"
+                role="dialog" aria-hidden="true">
+                <div class='modal-dialog modal-xs'>
+                  <div class='modal-content'>
+                    <div class='modal-header'>
+                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span>
+											</button>
+										  <h4 class='modal-title'>Cerrar tablero @tablero.getNombre()</h4>
+                    </div>
+                    <div class='modal-body'>
+                      <p>¿Estás completamente seguro de cerrar el tablero?</p>
+                      <p>No podrás <strong>volver a abrirlo o editar de nuevo</strong> en él</p>
+                    </div>
+                    <div class="modal-footer">
+                      <a onclick="cerrarTablero('@routes.GestionTablerosController.cerrarTablero(usuario.getId(), tablero.getId())')"
+                        class="btn btn-info">Aceptar</a>
+                      <button type='button' class='btn btn-default pull-right' data-dismiss='modal'>Cancelar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </tr>
       }
 

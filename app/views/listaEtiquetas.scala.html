@@ -1,0 +1,66 @@
+@(usuario: Usuario, tablero: Tablero, etiquetas: List[Etiqueta], etiquetaForm: Form[Etiqueta])
+
+<script type="text/javascript">
+    function del(urlBorrar) {
+        $.ajax({
+            url: urlBorrar,
+            type: 'DELETE',
+            success: function(results) {
+                //refresh the page
+                location.reload();
+            }
+        });
+    }
+</script>
+
+<div style="overflow-x: show">
+    </br>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <h5>
+          <strong>Etiquetas</strong>
+          &nbsp;
+        </h5>
+      </div>
+    </div>
+    </br>
+
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="col-sm-11 col-md-11 col-lg-11">
+        <ol class="breadcrumb">
+            @for(etiqueta <- etiquetas) {
+              @modalActualizarEtiqueta(usuario, tablero, etiqueta)
+                  <li>
+                    &nbsp;
+                    <a data-toggle="modal" data-target="#modalActualizarEtiqueta@etiqueta.getId()">
+                      @etiqueta.getNombre()
+                    </a>
+                  </li>
+
+            }
+        </ol>
+      </div>
+
+      <div class="col-sm-1 col-md-1 col-lg-1" id="addEtiqueta">
+        <input type="button" class="btn btn-primary" onclick="hideAddEtiquetaButton()" value="+">
+      </div>
+    </div>
+
+
+
+  </div>
+
+    @formNuevaEtiqueta(usuario, tablero, etiquetaForm)
+
+</div>
+
+<script type="text/javascript">
+    function hideAddEtiquetaButton() {
+      $("#addEtiqueta").hide();
+      $("#newEtiquetaForm").fadeIn();
+    }
+    function showAddEtiquetaButton() {
+      $("#newEtiquetaForm").hide();
+      $("#addEtiqueta").fadeIn();
+    }
+</script>

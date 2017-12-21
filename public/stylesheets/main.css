@@ -1,6 +1,6 @@
 .navbar{
-  background-color: #FFC107;
-  border-color: #FFC107;
+  background-color: #0097A7;
+  border-color: #0097A7;
 }
 
 .navbar-default .navbar-brand {
@@ -20,7 +20,7 @@
 }
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
-    border-color: #FFC107;
+    border-color: #0097A7;
 }
 .navbar-default .navbar-nav>li>a {
     color: #fff;
@@ -31,10 +31,16 @@
 }
 
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
-    color: #FFC107;
+    color: #0097A7;
     background-color: #fff;
 }
 
 .dropdown-menu {
-  background-color: #FFC107;
+  background-color: #0097A7;
+}
+
+@media(min-width: 768px) {
+  .navbar {
+      border-radius: 0px;
+  }
 }

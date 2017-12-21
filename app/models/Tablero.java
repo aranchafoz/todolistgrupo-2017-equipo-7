@@ -12,6 +12,7 @@ public class Tablero {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
   private String nombre;
+  private boolean cerrado;
 
   @ManyToOne
   @JoinColumn(name="administradorId")
@@ -19,12 +20,18 @@ public class Tablero {
   @ManyToMany(fetch=FetchType.EAGER)
   @JoinTable(name="Persona_Tablero")
   private Set<Usuario> participantes = new HashSet<Usuario>();
+  // Relación uno-a-muchos entre tablero y columna
+  @OneToMany(mappedBy="tablero", fetch=FetchType.EAGER)
+  private Set<Columna> columnas = new HashSet<Columna>();
+  @OneToMany(mappedBy="tablero", fetch=FetchType.EAGER)
+  private Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
 
   public Tablero() {}
 
   public Tablero(Usuario administrador, String nombre) {
     this.administrador = administrador;
     this.nombre = nombre;
+    this.cerrado = false;
   }
 
   public Long getId() {
@@ -57,6 +64,30 @@ public class Tablero {
 
    public void setParticipantes(Set<Usuario> participantes) {
       this.participantes = participantes;
+   }
+
+   public Set<Columna> getColumnas() {
+     return columnas;
+   }
+
+   public void setColumnas(Set<Columna> columnas) {
+     this.columnas = columnas;
+   }
+
+   public boolean getCerrado() {
+     return this.cerrado;
+   }
+
+   public void setCerrado(boolean cerrado) {
+     this.cerrado = cerrado;
+   }
+
+   public Set<Etiqueta> getEtiquetas() {
+     return etiquetas;
+   }
+
+   public void setEtiquetas(Set<Etiqueta> etiquetas) {
+     this.etiquetas = etiquetas;
    }
 
    @Override

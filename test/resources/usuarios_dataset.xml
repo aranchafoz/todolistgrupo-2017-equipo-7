@@ -6,16 +6,33 @@
          password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
     <Usuario id="1002" login="juangutierrez3" nombre="Juan" apellidos="Gutierrez Tres"
          password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
-    <Tarea id="1000" titulo="Renovar DNI" usuarioId="1000" terminada="false" fechaCreacion="1996-12-10" fechaLimite="2017-12-10"/>
-    <Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000" terminada="false"/>
     <Usuario id="2000" login="pepemartinez" nombre="Pepe" apellidos="Martinez"
         password="qwerty" eMail="pepe.martinez@gmail.com" fechaNacimiento="1996-12-10"/>
-    <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000" terminada="false"/>
-    <Tablero id="1000" nombre="Tablero test 1" administradorId="1000"/>
-    <Tablero id="1001" nombre="Tablero test 2" administradorId="1000"/>
-    <Tablero id="2000" nombre="Tablero test propio 1" administradorId="2000"/>
-    <Tablero id="2001" nombre="Tablero test propio 2" administradorId="2000"/>
-    <Tablero id="2002" nombre="Tablero test propio 3" administradorId="2000"/>
+    <Tablero id="1000" nombre="Tablero test 1" administradorId="1000" cerrado="false"/>
+    <Tablero id="1001" nombre="Tablero test 2" administradorId="1000" cerrado="false"/>
+    <Tablero id="2000" nombre="Tablero test propio 1" administradorId="2000" cerrado="false"/>
+    <Tablero id="2001" nombre="Tablero test propio 2" administradorId="2000" cerrado="false"/>
+    <Tablero id="2002" nombre="Tablero test propio 3" administradorId="2000" cerrado="false"/>
     <Persona_Tablero tableros_id="2000" participantes_id="2000"/>
     <Persona_Tablero tableros_id="2001" participantes_id="2000"/>
+    <Columna id="1000" nombre="Columna test 1" posicion="1" tableroId="1001"/>
+    <Columna id="1001" nombre="Columna test 2" posicion="2" tableroId="1001"/>
+    <Columna id="2000" nombre="Columna test crear 1" posicion="1" tableroId="2000"/>
+    <Columna id="2001" nombre="Columna test crear 2" posicion="2" tableroId="2000"/>
+    <Columna id="3000" nombre="Columna test borrar 1" posicion="2" tableroId="2000"/>
+    <Columna id="3001" nombre="Columna test borrar 2" posicion="2" tableroId="2000"/>
+    <Etiqueta id="1000" nombre="Etiqueta test 1" tableroId="1001"/>
+    <Etiqueta id="1001" nombre="Etiqueta test 2" tableroId="1001"/>
+    <Etiqueta id="2000" nombre="Etiqueta test crear 1" tableroId="2000"/>
+    <Etiqueta id="2001" nombre="Etiqueta test crear 2" tableroId="2000"/>
+    <Etiqueta id="3000" nombre="Etiqueta test borrar 1" tableroId="2000"/>
+    <Etiqueta id="3001" nombre="Etiqueta test borrar 2" tableroId="2000"/>
+    <Tarea id="1000" titulo="Renovar DNI" usuarioId="1000" columnaId="1000" terminada="false" fechaCreacion="1996-12-10" fechaLimite="2017-12-10" descripcion="Descripcion para test"/>
+    <Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000" columnaId="1000" terminada="false"/>
+    <Tarea id="2000" titulo="Renovar DNI" usuarioId="2000" columnaId="1000" terminada="false"/>
+    <Tarea id="3000" titulo="Renovar DNI para Borrar Columna" usuarioId="2000" columnaId="3001" terminada="false"/>
+    <Tarea_Etiqueta tareas_id="1000" etiquetas_id="1000"/>
+    <Tarea_Etiqueta tareas_id="1000" etiquetas_id="1001"/>
+    <Tarea_Etiqueta tareas_id="1000" etiquetas_id="2000"/>
+    <Usuario_Tarea usuariosAsignados_id="2000" tareasAsignadas_id="1000"/>
  </dataset>
